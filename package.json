@@ -22,14 +22,10 @@
     "tailwindcss": "^4",
     "eslint": "^9",
     "eslint-config-next": "15.3.5",
-    "@eslint/eslintrc": "^3"
-  },
-  "branches": [
-    "main"
-  ],
-  "plugins": [
-    "@semantic-release/commit-analyzer",
-    "@semantic-release/release-notes-generator",
-    "@semantic-release/github"
-  ]
+    "@eslint/eslintrc": "^3",
+    "semantic-release": "^23.0.0",
+    "@semantic-release/commit-analyzer": "^11.0.0",
+    "@semantic-release/release-notes-generator": "^12.0.0",
+    "@semantic-release/github": "^9.0.0"
+  }
 }

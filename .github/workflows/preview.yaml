@@ -55,6 +55,11 @@ jobs:
           echo "deploy_url=$DEPLOY_URL" >> $GITHUB_OUTPUT
           echo "🚀 Preview deployment URL: $DEPLOY_URL"
 
+      - name: Add Deployment URL Annotation
+        if: success()
+        run: |
+          echo "::notice title=🚀 Deployment Successful::Preview deployment completed successfully! URL: ${{ steps.deploy.outputs.deploy_url }}"
+
       - name: Preview Deployment Success Notification
         if: success()
         run: echo "🎉 successfully deployed to preview on Vercel! URL:" ${{ steps.deploy.outputs.deploy_url }}

@@ -16,10 +16,10 @@ jobs:
       - name: Setup Bun
         uses: oven-sh/setup-bun@v1
         with:
-          bun-version: latestfi
+          bun-version: latest
 
       - name: Cache Bun dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.bun/install/cache
           key: ${{ runner.os }}-bun-preview-${{ hashFiles('**/bun.lock') }}
@@ -28,9 +28,9 @@ jobs:
             ${{ runner.os }}-bun-
 
       - name: Cache Vercel CLI
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
-          path: ~/.npm
+          path: ~/.local/share/pnpm/global
           key: ${{ runner.os }}-vercel-cli-preview-${{ hashFiles('**/package.json') }}
           restore-keys: |
             ${{ runner.os }}-vercel-cli-preview-
@@ -49,12 +49,17 @@ jobs:
         run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Deploy Project Artifacts to Vercel
-        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+        id: deploy
+        run: |
+          DEPLOY_URL=$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})
+          echo "deploy_url=$DEPLOY_URL" >> $GITHUB_OUTPUT
+          echo "🚀 Preview deployment URL: $DEPLOY_URL"
 
       - name: Preview Deployment Success Notification
         if: success()
-        run: echo "🎉 successfully deployed to preview on Vercel!"
+        run: echo "🎉 successfully deployed to preview on Vercel! URL:" ${{ steps.deploy.outputs.deploy_url }}
 
       - name: Preview Deployment Failure Notification
         if: failure()
-        run: echo "❌ deployment to preview on Vercel failed. Please check the logs for details."
+        run: |
+          echo "❌ deployment to preview on Vercel failed. Please check the logs for details."

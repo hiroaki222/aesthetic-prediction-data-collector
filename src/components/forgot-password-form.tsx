@@ -11,7 +11,7 @@ export function ForgotPasswordForm({ className, ...props }: React.ComponentProps
       <Card>
         <CardHeader className="text-center">
           <CardTitle className="text-xl">Reset your password</CardTitle>
-          <CardDescription>Enter your email address and we'll send you a link to reset your password</CardDescription>
+          <CardDescription>Enter your email address and we&apos;ll send you a link to reset your password</CardDescription>
         </CardHeader>
         <CardContent>
           <form>

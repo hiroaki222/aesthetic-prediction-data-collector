@@ -1,4 +1,5 @@
 'use client';
+import { getHttpErrorInfo } from "@/utils/errors";
 import Link from "next/link";
 import { use } from "react";
 
@@ -11,47 +12,7 @@ interface ErrorPageProps {
 export default function ErrorPage({ params }: ErrorPageProps) {
   const { code } = use(params);
 
-  const getErrorContent = (errorCode: string) => {
-    switch (errorCode) {
-      case "404":
-        return {
-          title: "404",
-          message: "Not Found",
-          description: "The page you are looking for could not be found.",
-          showGoBack: false,
-        };
-      case "500":
-        return {
-          title: "500",
-          message: "Internal Server Error",
-          description: "Something went wrong on our end. Please try again later.",
-          showGoBack: true,
-        };
-      case "403":
-        return {
-          title: "403",
-          message: "Forbidden",
-          description: "You don&#39;t have permission to access this resource.",
-          showGoBack: true,
-        };
-      case "401":
-        return {
-          title: "401",
-          message: "Unauthorized",
-          description: "Authentication is required to access this page.",
-          showGoBack: true,
-        };
-      default:
-        return {
-          title: code,
-          message: "Something went wrong",
-          description: "An unexpected error occurred.",
-          showGoBack: true,
-        };
-    }
-  };
-
-  const errorContent = getErrorContent(code);
+  const errorContent = getHttpErrorInfo(code);
 
   return (
     <div className="flex min-h-[100dvh] flex-col items-center justify-center bg-background px-4 py-12 sm:px-6 lg:px-8">

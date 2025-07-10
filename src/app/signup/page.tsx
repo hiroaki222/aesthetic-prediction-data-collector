@@ -1,3 +1,4 @@
+import { SignupForm } from "@/components/signup-form"
 import { FilePenLine } from "lucide-react"
 
 export default function SignupPage() {

@@ -18,8 +18,6 @@ export function EmailVerificationForm({
   className,
   email = "user@example.com",
   type = "signup",
-  onResend,
-  isResending = false,
   ...props
 }: EmailVerificationFormProps) {
   const isSignup = type === "signup"

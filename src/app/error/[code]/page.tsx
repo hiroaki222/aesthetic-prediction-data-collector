@@ -3,6 +3,9 @@ import { getHttpErrorInfo } from "@/utils/errors";
 import Link from "next/link";
 import { use } from "react";
 
+
+import { useSearchParams } from "next/navigation";
+
 interface ErrorPageProps {
   params: Promise<{
     code: string;
@@ -11,20 +14,24 @@ interface ErrorPageProps {
 
 export default function ErrorPage({ params }: ErrorPageProps) {
   const { code } = use(params);
-
   const errorContent = getHttpErrorInfo(code);
+  const searchParams = useSearchParams();
+
+  const displayTitle = errorContent.title;
+  const displayMessage = searchParams.get("message") || errorContent.message;
+  const displayDescription = searchParams.get("description") || errorContent.description;
 
   return (
     <div className="flex min-h-[100dvh] flex-col items-center justify-center bg-background px-4 py-12 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-md text-center">
         <h1 className="mt-4 text-6xl font-bold tracking-tight text-foreground sm:text-7xl">
-          {errorContent.title}
+          {displayTitle}
         </h1>
         <h2 className="mt-4 text-xl font-semibold text-foreground">
-          {errorContent.message}
+          {displayMessage}
         </h2>
         <p className="mt-4 text-muted-foreground">
-          {errorContent.description}
+          {displayDescription}
         </p>
         <div className="mt-6 space-x-4">
           <Link

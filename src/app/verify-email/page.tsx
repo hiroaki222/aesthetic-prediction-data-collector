@@ -13,6 +13,7 @@ export default function VerifyEmailPage() {
     if (!searchParams.get("email")) {
       router.replace("/error/400")
     }
+    handleResend()
   }, [searchParams, router])
 
   // In a real app, you would get these from URL params or auth context
@@ -28,6 +29,7 @@ export default function VerifyEmailPage() {
 
   // for testing purposes
   console.log(type, isResending)
+
 
   return (
     <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-muted p-6 md:p-10">

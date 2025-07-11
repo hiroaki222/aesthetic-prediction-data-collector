@@ -24,12 +24,12 @@ export function ResetPasswordForm({ className, ...props }: React.ComponentPropsW
                 <Label htmlFor="confirm-password">Confirm new password</Label>
                 <Input id="confirm-password" type="password" required />
               </div>
-              <Button type="submit" className="w-full">
+              <Button className="w-full">
                 Update password
               </Button>
               <div className="text-center text-sm">
                 Remember your password?{" "}
-                <a href="#" className="underline underline-offset-4">
+                <a href="/login" className="underline underline-offset-4">
                   Back to login
                 </a>
               </div>

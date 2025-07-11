@@ -1,13 +1,15 @@
 "use client"
 export const dynamic = "force-dynamic"
 
-import { useEffect, useState, Suspense } from "react"
+/* import { useEffect, useState, Suspense } from "react"
+import { useEffect, useState } from "react" */
+import { useEffect } from "react"
 import { FilePenLine } from "lucide-react"
-import { EmailVerificationForm } from "@/components/email-verification-form"
+//import { EmailVerificationForm } from "@/components/email-verification-form"
 import { useRouter, useSearchParams } from "next/navigation";
 
 export default function VerifyEmailPage() {
-  const [isResending, setIsResending] = useState(false)
+  //const [isResending, setIsResending] = useState(false)
   const searchParams = useSearchParams();
   const router = useRouter();
 

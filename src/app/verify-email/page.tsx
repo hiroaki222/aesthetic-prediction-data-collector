@@ -11,6 +11,7 @@ export default function VerifyEmailPage() {
 
   useEffect(() => {
     const storedEmail = sessionStorage.getItem('verification-email')
+    console.log("Stored email:", storedEmail)
     if (!storedEmail) {
       router.replace("/error/400")
     } else {

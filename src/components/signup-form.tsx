@@ -14,6 +14,7 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
     try {
       await signup(formData)
       sessionStorage.setItem('verification-email', email)
+      console.log('Signup successful with' + email)
     } catch (error) {
       console.error('Signup failed:', error)
     }

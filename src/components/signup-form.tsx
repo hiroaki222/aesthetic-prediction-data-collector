@@ -1,3 +1,4 @@
+"use client"
 import type React from "react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -7,6 +8,13 @@ import { Label } from "@/components/ui/label"
 import { signup } from "@/utils/supabase/actions"
 
 export function SignupForm({ className, ...props }: React.ComponentPropsWithoutRef<"div">) {
+  const handleSubmit = async (formData: FormData) => {
+    const email = formData.get("email") as string
+    if (email) {
+      sessionStorage.setItem('verification-email', email)
+    }
+    await signup(formData)
+  }
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -52,7 +60,7 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
                 <Label htmlFor="confirm-password">Confirm password</Label>
                 <Input id="confirm-password" type="password" name="password" required />
               </div>
-              <Button formAction={signup} className="w-full">
+              <Button formAction={handleSubmit} className="w-full">
                 Create account
               </Button>
             </form>

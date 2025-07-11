@@ -1,23 +1,28 @@
 "use client"
 import { useEffect, useState } from "react"
 import { FilePenLine } from "lucide-react"
-//import { EmailVerificationForm } from "@/components/email-verification-form"
-import { useRouter, useSearchParams } from "next/navigation";
+import { EmailVerificationForm } from "@/components/email-verification-form"
+import { useRouter, } from "next/navigation";
 
 export default function VerifyEmailPage() {
   const [isResending, setIsResending] = useState(false)
-  const searchParams = useSearchParams();
-  const router = useRouter();
+  const [email, setEmail] = useState<string | null>(null)
+  const router = useRouter()
 
   useEffect(() => {
-    if (!searchParams.get("email")) {
+    const storedEmail = sessionStorage.getItem('verification-email')
+    if (!storedEmail) {
       router.replace("/error/400")
+    } else {
+      setEmail(storedEmail)
+      sessionStorage.removeItem('verification-email')
     }
-    handleResend()
-  }, [searchParams, router])
+  }, [router])
 
-  // In a real app, you would get these from URL params or auth context
-  const email = String(searchParams.get("email"))
+  if (!email) {
+    return <div>Loading...</div>
+  }
+
   const type = "signup" // or "password-reset"
 
   const handleResend = async () => {
@@ -27,8 +32,6 @@ export default function VerifyEmailPage() {
     setIsResending(false)
   }
 
-  // for testing purposes
-  console.log(type, isResending)
 
 
   return (
@@ -40,13 +43,12 @@ export default function VerifyEmailPage() {
           </div>
           Aesthetic Prediction Data Collector
         </a>
-        {/* <EmailVerificationForm
+        <EmailVerificationForm
           email={email}
           type={type as "signup" | "password-reset"}
           onResend={handleResend}
           isResending={isResending}
-        /> */}
-        <a>{email}</a>
+        />
       </div>
     </div>
   )

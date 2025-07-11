@@ -46,7 +46,8 @@ export function EmailVerificationForm({
                 <strong>Sender: </strong>
                 <a>Supabase Auth</a>
               </div>
-              <strong>Email will be sent to:</strong> {email}<br />
+              <strong>Email will be sent to:</strong> noreply@mail.app.supabase.io<br />
+              <strong>Email sent to:</strong> {email}
             </AlertDescription>
           </Alert>
 
@@ -65,6 +66,7 @@ export function EmailVerificationForm({
               <h4 className="font-medium text-foreground mb-2">{"Didn't receive the email?"}</h4>
               <ul className="list-disc list-inside space-y-1">
                 <li>Check your spam or junk folder</li>
+                <li>Make sure {email} is correct</li>
                 <li>Wait a few minutes for the email to arrive</li>
               </ul>
             </div>
@@ -86,9 +88,9 @@ export function EmailVerificationForm({
             </Button>
 
             <Button variant="ghost" className="w-full" asChild>
-              <a href="/login">
+              <a href={isSignup ? "/login" : "/forgot-password"}>
                 <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to sign in
+                {isSignup ? "Back to sign in" : "Back to forgot password"}
               </a>
             </Button>
           </div>

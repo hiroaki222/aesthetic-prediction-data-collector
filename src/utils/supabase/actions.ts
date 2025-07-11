@@ -52,7 +52,7 @@ export async function signup(formData: FormData) {
   }
 
   revalidatePath("/", "layout");
-  redirect("/verify-email");
+  redirect("/verify-email?email=" + encodeURIComponent(data.email) + "&type=≈");
 }
 
 export async function logout() {}
@@ -79,5 +79,7 @@ export async function passwordResetEmail(formData: FormData) {
   }
 
   revalidatePath("/", "layout");
-  redirect("/verify-email");
+  redirect(
+    "/verify-email?email=" + encodeURIComponent(email) + "&type=password-reset"
+  );
 }

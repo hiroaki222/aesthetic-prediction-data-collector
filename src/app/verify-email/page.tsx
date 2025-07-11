@@ -1,13 +1,32 @@
 "use client"
-import { useState } from "react"
+import { Suspense, useEffect, useState } from "react"
 import { FilePenLine } from "lucide-react"
 import { EmailVerificationForm } from "@/components/email-verification-form"
+import { useRouter, useSearchParams } from "next/navigation"
 
-export default function VerifyEmailPage() {
+function VerifyEmailPageContent() {
   const [isResending, setIsResending] = useState(false)
+  const [email, setEmail] = useState<string>("")
+  const [type, setType] = useState<"signup" | "password-reset" | null>(null)
+  const searchParams = useSearchParams()
+  const router = useRouter()
 
-  const type = "signup" // or "password-reset"
-  const email = 'noreply@mail.app.supabase.io'
+  useEffect(() => {
+    const emailParam = searchParams.get("email")
+    const typeParam = searchParams.get("type")
+
+    if (!emailParam || (typeParam !== "signup" && typeParam !== "password-reset")) {
+      router.replace("/error/400")
+      return
+    }
+
+    setEmail(emailParam)
+    setType(typeParam)
+  }, [searchParams, router])
+
+  if (!email || !type) {
+    return null
+  }
 
   const handleResend = async () => {
     setIsResending(true)
@@ -15,8 +34,6 @@ export default function VerifyEmailPage() {
     await new Promise((resolve) => setTimeout(resolve, 2000))
     setIsResending(false)
   }
-
-
 
   return (
     <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-muted p-6 md:p-10">
@@ -29,11 +46,19 @@ export default function VerifyEmailPage() {
         </a>
         <EmailVerificationForm
           email={email}
-          type={type as "signup" | "password-reset"}
+          type={type}
           onResend={handleResend}
           isResending={isResending}
         />
       </div>
     </div>
+  )
+}
+
+export default function VerifyEmailPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <VerifyEmailPageContent />
+    </Suspense>
   )
 }

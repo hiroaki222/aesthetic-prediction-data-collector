@@ -16,7 +16,7 @@ function ResetPasswordContent() {
     if (!code) {
       const redirectTimeout = setTimeout(() => {
         router.replace("/error/400")
-      }, 0)
+      }, 3000)
 
       return () => clearTimeout(redirectTimeout)
     }

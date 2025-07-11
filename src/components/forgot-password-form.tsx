@@ -1,9 +1,11 @@
+'use client'
 import type React from "react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { passwordResetEmail } from "@/utils/supabase/actions"
 
 export function ForgotPasswordForm({ className, ...props }: React.ComponentPropsWithoutRef<"div">) {
   return (
@@ -14,11 +16,11 @@ export function ForgotPasswordForm({ className, ...props }: React.ComponentProps
           <CardDescription>Enter your email address and we&apos;ll send you a link to reset your password</CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form action={passwordResetEmail}>
             <div className="grid gap-6">
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="m@example.com" required />
+                <Input id="email" name="email" type="email" placeholder="m@example.com" required />
               </div>
               <Button type="submit" className="w-full">
                 Send reset link

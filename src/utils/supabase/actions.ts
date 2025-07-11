@@ -54,3 +54,30 @@ export async function signup(formData: FormData) {
   revalidatePath("/", "layout");
   redirect("/verify-email");
 }
+
+export async function logout() {}
+
+export async function passwordResetEmail(formData: FormData) {
+  const supabase = await createClient();
+
+  const email = formData.get("email") as string;
+
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: `${
+      process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
+    }/reset-password`,
+  });
+
+  if (error) {
+    const code = error.status?.toString() || "400";
+    const message = encodeURIComponent(
+      error.message || "Failed to send reset email"
+    );
+    const description = encodeURIComponent(error.message.replace(/_/g, " "));
+
+    redirect(`/error/${code}?message=${message}&description=${description}`);
+  }
+
+  revalidatePath("/", "layout");
+  redirect("/verify-email");
+}

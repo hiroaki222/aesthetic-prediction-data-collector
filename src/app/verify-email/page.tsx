@@ -2,30 +2,22 @@
 import { useEffect, useState } from "react"
 import { FilePenLine } from "lucide-react"
 import { EmailVerificationForm } from "@/components/email-verification-form"
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter, } from "next/navigation";
 
 export default function VerifyEmailPage() {
   const [isResending, setIsResending] = useState(false)
   const [email, setEmail] = useState<string | null>(null)
   const router = useRouter()
-  const searchParams = useSearchParams()
 
   useEffect(() => {
-    const emailFromQuery = searchParams.get('email')
-
-    if (emailFromQuery) {
-      sessionStorage.setItem('verification-email', emailFromQuery)
-      setEmail(emailFromQuery)
+    const storedEmail = sessionStorage.getItem('verification-email')
+    if (!storedEmail) {
+      router.replace("/error/400")
     } else {
-      const storedEmail = sessionStorage.getItem('verification-email')
-      if (!storedEmail) {
-        router.replace("/error/400")
-      } else {
-        setEmail(storedEmail)
-        sessionStorage.removeItem('verification-email')
-      }
+      setEmail(storedEmail)
+      sessionStorage.removeItem('verification-email')
     }
-  }, [router, searchParams])
+  }, [router])
 
   if (!email) {
     return <div>Loading...</div>

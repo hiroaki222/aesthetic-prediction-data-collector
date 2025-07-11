@@ -50,7 +50,7 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="confirm-password">Confirm password</Label>
-                <Input id="confirm-password" type="password" name="password" required />
+                <Input id="confirm-password" type="password" name="confirm-password" required />
               </div>
               <Button formAction={signup} className="w-full" type="submit">
                 Create account

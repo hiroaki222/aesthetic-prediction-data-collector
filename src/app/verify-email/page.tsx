@@ -30,7 +30,7 @@ function VerifyEmailPageContent() {
 
   const handleResend = async () => {
     setIsResending(true)
-    // Simulate API call
+
     await new Promise((resolve) => setTimeout(resolve, 2000))
     setIsResending(false)
   }

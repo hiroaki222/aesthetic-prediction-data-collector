@@ -39,6 +39,7 @@ export async function signup(formData: FormData) {
   const data = {
     email: formData.get("email") as string,
     password: formData.get("password") as string,
+    confirmPassword: formData.get("confirm-password") as string,
   };
 
   const { error } = await supabase.auth.signUp(data);
@@ -82,4 +83,29 @@ export async function passwordResetEmail(formData: FormData) {
   redirect(
     "/verify-email?email=" + encodeURIComponent(email) + "&type=password-reset"
   );
+}
+
+export async function resendVerificationEmail(email: string) {
+  if (!email) {
+    redirect(
+      "/error/400?message=Email is required&description=Please provide an email address to resend the verification link."
+    );
+  }
+
+  const supabase = await createClient();
+
+  const { error } = await supabase.auth.resend({
+    type: "signup",
+    email,
+  });
+
+  if (error) {
+    const code = error.status?.toString() || "400";
+    const message = encodeURIComponent(
+      error.message || "Failed to resend verification email"
+    );
+    const description = encodeURIComponent(error.message.replace(/_/g, " "));
+
+    redirect(`/error/${code}?message=${message}&description=${description}`);
+  }
 }

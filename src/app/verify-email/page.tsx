@@ -1,15 +1,11 @@
 "use client"
-export const dynamic = "force-dynamic"
-
-/* import { useEffect, useState, Suspense } from "react"
-import { useEffect, useState } from "react" */
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { FilePenLine } from "lucide-react"
 //import { EmailVerificationForm } from "@/components/email-verification-form"
 import { useRouter, useSearchParams } from "next/navigation";
 
 export default function VerifyEmailPage() {
-  //const [isResending, setIsResending] = useState(false)
+  const [isResending, setIsResending] = useState(false)
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -19,7 +15,7 @@ export default function VerifyEmailPage() {
     }
   }, [searchParams, router])
 
-  /* // In a real app, you would get these from URL params or auth context
+  // In a real app, you would get these from URL params or auth context
   const email = String(searchParams.get("email"))
   const type = "signup" // or "password-reset"
 
@@ -28,7 +24,10 @@ export default function VerifyEmailPage() {
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 2000))
     setIsResending(false)
-  } */
+  }
+
+  // for testing purposes
+  console.log(type, isResending)
 
   return (
     <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-muted p-6 md:p-10">
@@ -40,11 +39,12 @@ export default function VerifyEmailPage() {
           Aesthetic Prediction Data Collector
         </a>
         {/* <EmailVerificationForm
-            email={email}
-            type={type as "signup" | "password-reset"}
-            onResend={handleResend}
-            isResending={isResending}
-          /> */}
+          email={email}
+          type={type as "signup" | "password-reset"}
+          onResend={handleResend}
+          isResending={isResending}
+        /> */}
+        <a>{email}</a>
       </div>
     </div>
   )

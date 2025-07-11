@@ -10,20 +10,18 @@ import { Mail, ArrowLeft } from "lucide-react"
 interface EmailVerificationFormProps extends React.ComponentPropsWithoutRef<"div"> {
   email?: string
   type?: "signup" | "password-reset"
-  onResend?: () => void
-  isResending?: boolean
 }
 
 export function EmailVerificationForm({
   className,
   email = "user@example.com",
   type = "signup",
-  ...props
+
 }: EmailVerificationFormProps) {
   const isSignup = type === "signup"
 
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
+    <div className={cn("flex flex-col gap-6", className)}>
       <Card>
         <CardHeader className="text-center">
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100">
@@ -66,6 +64,12 @@ export function EmailVerificationForm({
           </div>
 
           <div className="space-y-3">
+            <Button
+              variant="outline"
+              className="w-full bg-transparent"
+            >
+              Resend Email
+            </Button>
             <Button variant="outline" className="w-full bg-transparent" asChild>
               <a href="/login">
                 <ArrowLeft className="mr-2 h-4 w-4" />

@@ -42,7 +42,7 @@ export function EmailVerificationForm({
           <Alert>
             <Mail className="h-4 w-4" />
             <AlertDescription>
-              <strong>Email sent to:</strong> {email}
+              <strong>Email will be sent from:</strong> {email}
             </AlertDescription>
           </Alert>
 

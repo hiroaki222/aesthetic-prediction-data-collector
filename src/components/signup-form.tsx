@@ -1,4 +1,3 @@
-'use client'
 import type React from "react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -8,17 +7,6 @@ import { Label } from "@/components/ui/label"
 import { signup } from "@/utils/supabase/actions"
 
 export function SignupForm({ className, ...props }: React.ComponentPropsWithoutRef<"div">) {
-  const handleSubmit = async (formData: FormData) => {
-    const email = formData.get('email') as string
-
-    try {
-      await signup(formData)
-      sessionStorage.setItem('verification-email', email)
-      console.log('Signup successful with' + email)
-    } catch (error) {
-      console.error('Signup failed:', error)
-    }
-  }
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -51,7 +39,7 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
             <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
               <span className="relative z-10 bg-background px-2 text-muted-foreground">Or continue with</span>
             </div>
-            <form className="grid gap-6" action={handleSubmit}>
+            <form className="grid gap-6">
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
                 <Input id="email" type="email" placeholder="m@example.com" name="email" required />

@@ -1,30 +1,13 @@
 "use client"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { FilePenLine } from "lucide-react"
 import { EmailVerificationForm } from "@/components/email-verification-form"
-import { useRouter, } from "next/navigation";
 
 export default function VerifyEmailPage() {
   const [isResending, setIsResending] = useState(false)
-  const [email, setEmail] = useState<string | null>(null)
-  const router = useRouter()
-
-  useEffect(() => {
-    const storedEmail = sessionStorage.getItem('verification-email')
-    console.log("Stored email:", storedEmail)
-    if (!storedEmail) {
-      router.replace("/error/400")
-    } else {
-      setEmail(storedEmail)
-      sessionStorage.removeItem('verification-email')
-    }
-  }, [router])
-
-  if (!email) {
-    return <div>Loading...</div>
-  }
 
   const type = "signup" // or "password-reset"
+  const email = 'noreply@mail.app.supabase.io'
 
   const handleResend = async () => {
     setIsResending(true)

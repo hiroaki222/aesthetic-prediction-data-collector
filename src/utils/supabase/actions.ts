@@ -59,7 +59,20 @@ export async function signup(formData: FormData) {
   );
 }
 
-export async function logout() {}
+export async function signout() {
+  const supabase = await createClient();
+
+  const { error } = await supabase.auth.signOut();
+
+  if (error) {
+    const code = error.status?.toString() || "400";
+    const message = encodeURIComponent(error.message || "Failed to sign out");
+    const description = encodeURIComponent(error.message.replace(/_/g, " "));
+
+    redirect(`/error/${code}?message=${message}&description=${description}`);
+  }
+  redirect("/");
+}
 
 export async function passwordResetEmail(formData: FormData) {
   const supabase = await createClient();

@@ -88,7 +88,7 @@ export function EmailVerificationForm({
             </Button>
 
             <Button variant="ghost" className="w-full" asChild>
-              <a href={isSignup ? "/signin" : "/forgot-password"}>
+              <a href={isSignup ? "/signup" : "/forgot-password"}>
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 {isSignup ? "Back to sign in" : "Back to forgot password"}
               </a>

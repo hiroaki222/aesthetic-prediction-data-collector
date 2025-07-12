@@ -19,7 +19,7 @@ export async function login(formData: FormData) {
 
   if (error) {
     const code = error.status?.toString() || "400";
-    const message = encodeURIComponent(error.message || "Failed to login");
+    const message = encodeURIComponent(error.message || "Failed to sign up");
     const description = encodeURIComponent(
       "The email address or password is incorrect."
     );
@@ -105,12 +105,12 @@ export async function resendVerificationEmail(
   email: string,
   type: "signup" | "password-reset"
 ) {
-  if (!email && !type) {
+  if (!email || !type) {
     redirect(
       "/error/400?message=" +
-        encodeURIComponent(
-          "Email is required&description=Please provide an email address to resend the verification link."
-        )
+        encodeURIComponent("Email is required") +
+        "&description=" +
+        encodeURIComponent("Please provide an email address to resend the verification link.")
     );
   }
 

@@ -88,27 +88,47 @@ export async function passwordResetEmail(formData: FormData) {
   );
 }
 
-export async function resendVerificationEmail(email: string) {
-  if (!email) {
+export async function resendVerificationEmail(
+  email: string,
+  type: "signup" | "password-reset"
+) {
+  if (!email && !type) {
     redirect(
-      "/error/400?message=Email is required&description=Please provide an email address to resend the verification link."
+      "/error/400?message=" +
+        encodeURIComponent(
+          "Email is required&description=Please provide an email address to resend the verification link."
+        )
     );
   }
 
   const supabase = await createClient();
 
-  const { error } = await supabase.auth.resend({
-    type: "signup",
-    email,
-  });
-
-  if (error) {
-    const code = error.status?.toString() || "400";
-    const message = encodeURIComponent(
-      error.message || "Failed to resend verification email"
-    );
-    const description = encodeURIComponent(error.message.replace(/_/g, " "));
-
-    redirect(`/error/${code}?message=${message}&description=${description}`);
+  switch (type) {
+    case "signup": {
+      const { error } = await supabase.auth.resend({
+        type: "signup",
+        email,
+      });
+      if (error) {
+        const code = error.status?.toString() || "400";
+        const message = encodeURIComponent(
+          error.message || "Failed to resend verification email"
+        );
+        const description = encodeURIComponent(
+          error.message.replace(/_/g, " ")
+        );
+        redirect(
+          `/error/${code}?message=${message}&description=${description}`
+        );
+      }
+      break;
+    }
+    case "password-reset": {
+      const formData = new FormData();
+      formData.append("email", email);
+      await passwordResetEmail(formData);
+      break;
+    }
   }
+  return;
 }

@@ -3,6 +3,7 @@ import { Suspense, useEffect, useState } from "react"
 import { FilePenLine } from "lucide-react"
 import { EmailVerificationForm } from "@/components/email-verification-form"
 import { useRouter, useSearchParams } from "next/navigation"
+import { resendVerificationEmail } from "@/utils/supabase/actions"
 
 function VerifyEmailPageContent() {
   const [isResending, setIsResending] = useState(false)
@@ -30,8 +31,9 @@ function VerifyEmailPageContent() {
 
   const handleResend = async () => {
     setIsResending(true)
-
-    await new Promise((resolve) => setTimeout(resolve, 2000))
+    console.log("Resending verification email...")
+    await resendVerificationEmail(email, type)
+    console.log("Verification email resent")
     setIsResending(false)
   }
 

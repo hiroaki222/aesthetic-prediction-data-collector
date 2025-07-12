@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Mail, RefreshCw, ArrowLeft } from "lucide-react"
+import { Mail, RefreshCw, ArrowLeft, Check } from "lucide-react"
 
 interface EmailVerificationFormProps extends React.ComponentPropsWithoutRef<"div"> {
   email?: string
@@ -76,8 +76,8 @@ export function EmailVerificationForm({
             <Button onClick={onResend} disabled={isResending} variant="outline" className="w-full bg-transparent">
               {isResending ? (
                 <>
-                  <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
-                  Sending...
+                  <Check className="mr-2 h-4 w-4" />
+                  Email sent
                 </>
               ) : (
                 <>
@@ -90,7 +90,7 @@ export function EmailVerificationForm({
             <Button variant="ghost" className="w-full" asChild>
               <a href={isSignup ? "/signup" : "/forgot-password"}>
                 <ArrowLeft className="mr-2 h-4 w-4" />
-                {isSignup ? "Back to sign in" : "Back to forgot password"}
+                {isSignup ? "Back to sign up" : "Back to forgot password"}
               </a>
             </Button>
           </div>

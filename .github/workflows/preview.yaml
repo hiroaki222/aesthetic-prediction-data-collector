@@ -1,13 +1,13 @@
-name: Vercel Production Deployment
+name: Vercel Preview Deployment
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 on:
   push:
-    branches:
+    branches-ignore:
       - main
 jobs:
-  Deploy-Production:
+  Deploy-Preview:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -19,40 +19,52 @@ jobs:
           bun-version: latest
 
       - name: Cache Bun dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.bun/install/cache
-          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lock') }}
+          key: ${{ runner.os }}-bun-preview-${{ hashFiles('**/bun.lock') }}
           restore-keys: |
+            ${{ runner.os }}-bun-preview-
             ${{ runner.os }}-bun-
 
       - name: Cache Vercel CLI
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-vercel-cli-${{ hashFiles('**/package.json') }}
+          path: ~/.local/share/pnpm/global
+          key: ${{ runner.os }}-vercel-cli-preview-${{ hashFiles('**/package.json') }}
           restore-keys: |
+            ${{ runner.os }}-vercel-cli-preview-
             ${{ runner.os }}-vercel-cli-
 
       - name: Install Vercel CLI
         run: bun add --global vercel@latest
 
       - name: Pull Vercel Environment Information
-        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Install Dependencies
         run: bun install --frozen-lockfile
 
       - name: Build Project Artifacts
-        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Deploy Project Artifacts to Vercel
-        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+        id: deploy
+        run: |
+          DEPLOY_URL=$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})
+          echo "deploy_url=$DEPLOY_URL" >> $GITHUB_OUTPUT
+          echo "🚀 Preview deployment URL: $DEPLOY_URL"
 
-      - name: Deployment Success Notification
+      - name: Add Deployment URL Annotation
         if: success()
-        run: echo "🎉 successfully deployed to production on Vercel!"
+        run: |
+          echo "::notice title=🚀 Deployment Successful::Preview deployment completed successfully! URL: ${{ steps.deploy.outputs.deploy_url }}"
 
-      - name: Deployment Failure Notification
+      - name: Preview Deployment Success Notification
+        if: success()
+        run: echo "🎉 successfully deployed to preview on Vercel! URL:" ${{ steps.deploy.outputs.deploy_url }}
+
+      - name: Preview Deployment Failure Notification
         if: failure()
-        run: echo "❌ deployment to production on Vercel failed. Please check the logs for details."
+        run: |
+          echo "❌ deployment to preview on Vercel failed. Please check the logs for details."

@@ -1,3 +1,4 @@
+'use client'
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -10,12 +11,24 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { login, } from '@/utils/supabase/actions'
+import { useState } from "react"
 
 
 export function SigninForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    if (isSubmitting) return
+
+    const formData = new FormData(event.currentTarget)
+    setIsSubmitting(true)
+    await login(formData)
+  }
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -52,7 +65,7 @@ export function SigninForm({
                 Or continue with
               </span>
             </div>
-            <form className="grid gap-6">
+            <form className="grid gap-6" onSubmit={handleSubmit}>
               <div className="grid gap-3">
                 <Label htmlFor="email">Email</Label>
                 <Input
@@ -75,8 +88,8 @@ export function SigninForm({
                 </div>
                 <Input id="password" type="password" name="password" required />
               </div>
-              <Button formAction={login} className="w-full">
-                Sign in
+              <Button className="w-full" type="submit" disabled={isSubmitting}>
+                {isSubmitting ? "Submitting..." : "Sign in"}
               </Button>
             </form>
             <div className="text-center text-sm">

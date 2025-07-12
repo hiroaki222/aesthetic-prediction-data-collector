@@ -27,7 +27,7 @@ export function ForgotPasswordForm({ className, ...props }: React.ComponentProps
               </Button>
               <div className="text-center text-sm">
                 Remember your password?{" "}
-                <a href="/login" className="underline underline-offset-4">
+                <a href="/signin" className="underline underline-offset-4">
                   Back to sign in
                 </a>
               </div>

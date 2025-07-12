@@ -1,3 +1,4 @@
+'use client'
 import type React from "react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -5,8 +6,21 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { signup } from "@/utils/supabase/actions"
+import { useState } from "react"
 
 export function SignupForm({ className, ...props }: React.ComponentPropsWithoutRef<"div">) {
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    if (isSubmitting) return
+
+    const formData = new FormData(event.currentTarget)
+    setIsSubmitting(true)
+    await signup(formData)
+  }
+
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -39,7 +53,7 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
             <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
               <span className="relative z-10 bg-background px-2 text-muted-foreground">Or continue with</span>
             </div>
-            <form className="grid gap-6">
+            <form className="grid gap-6" onSubmit={handleSubmit}>
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
                 <Input id="email" type="email" placeholder="m@example.com" name="email" required />
@@ -52,8 +66,8 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
                 <Label htmlFor="confirm-password">Confirm password</Label>
                 <Input id="confirm-password" type="password" name="password" required />
               </div>
-              <Button formAction={signup} className="w-full" type="submit">
-                Create account
+              <Button className="w-full" type="submit" disabled={isSubmitting}>
+                {isSubmitting ? "Submitting..." : "Create account"}
               </Button>
             </form >
             <div className="text-center text-sm">

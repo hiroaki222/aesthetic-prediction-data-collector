@@ -24,9 +24,10 @@ interface GetStartedStepProps {
   isFirst: boolean
   isLast: boolean
   isFinishDisabled?: boolean
+  isNextDisabled?: boolean
 }
 
-export function GetStartedStep({ step, onNext, onPrevious, onComplete, isFirst, isLast, isFinishDisabled }: GetStartedStepProps) {
+export function GetStartedStep({ step, onNext, onPrevious, onComplete, isFirst, isLast, isFinishDisabled, isNextDisabled }: GetStartedStepProps) {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="">
@@ -62,7 +63,7 @@ export function GetStartedStep({ step, onNext, onPrevious, onComplete, isFirst, 
             {isLast ? (
               <Button onClick={onComplete} disabled={isFinishDisabled}>Finish Setup</Button>
             ) : (
-              <Button onClick={onNext}>
+              <Button onClick={onNext} disabled={isNextDisabled}>
                 Next Step
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>

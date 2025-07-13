@@ -10,18 +10,21 @@ import {
 } from "@/components/step-contents"
 import { useRouter, useSearchParams } from "next/navigation"
 import { ProfileData } from "@/types/profile"
-import { saveUserProfile } from "@/utils/supabase/actions"
+import { fetchUser, saveUserProfile } from "@/utils/supabase/actions"
+import { StepSigninForm } from "@/components/step-signin-form"
 
 function GetStartedPageContent() {
   const [currentStep, setCurrentStep] = useState(1)
   const [completedSteps, setCompletedSteps] = useState<number[]>([])
   const [profileData, setProfileData] = useState<ProfileData | null>(null)
+  const [isSignedIn, setIsSignedIn] = useState(false)
+  const [isCompleting, setIsCompleting] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
 
   const defaultProfileData: ProfileData = useMemo(() => ({
     uuid: '',
-    age: -1,
+    age: 0,
     gender: '',
     edu: '',
     art: '',
@@ -37,11 +40,10 @@ function GetStartedPageContent() {
       router.replace("/error/400")
       return
     }
-    const uuidValue = String(codeParam)
 
     setProfileData({
-      uuid: uuidValue,
-      age: -1,
+      uuid: '',
+      age: 0,
       gender: '',
       edu: '',
       art: '',
@@ -49,7 +51,7 @@ function GetStartedPageContent() {
       fas: '',
       mus: '',
       titpj: {},
-    })
+    });
 
   }, [searchParams, router])
 
@@ -99,9 +101,26 @@ function GetStartedPageContent() {
     })
   }
 
+  const isTIPIJComplete = () => {
+    if (!profileData?.titpj) return false
+
+    const requiredTIPIJItems = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
+    return requiredTIPIJItems.every(item =>
+      profileData.titpj[item] && profileData.titpj[item] !== ''
+    )
+  }
+
   const steps = [
     {
       id: 1,
+      title: "Sign In First",
+      description: "Let's sign in first.",
+      content: <StepSigninForm onSignInSuccess={() => setIsSignedIn(true)} />,
+      isCompleted: false,
+      isOptional: false,
+    },
+    {
+      id: 2,
       title: "Register Basic Information",
       description: "Enter your age, gender, and other personal details to help personalize your experience.",
       content: <ProfileSetupContent handleStepComplete={handleStepComplete} updateProfileData={updateProfileData} profileData={profileData} />,
@@ -109,7 +128,7 @@ function GetStartedPageContent() {
       isOptional: false,
     },
     {
-      id: 2,
+      id: 3,
       title: "Register Experience",
       description: "Tell us about your experience in art, photography, fashion, and music. This helps us tailor recommendations and features for you.",
       content: <ExperienceSetupContent handleStepComplete={handleStepComplete} updateProfileData={updateProfileData} profileData={profileData} />,
@@ -117,7 +136,7 @@ function GetStartedPageContent() {
       isOptional: false,
     },
     {
-      id: 3,
+      id: 4,
       title: "Register TIPIJ",
       description: "Configure your TIPIJ (This Is Personal Information Journal)",
       content: <TIPIJSetupContent1 handleStepComplete={handleStepComplete} updateProfileData={updateProfileData} profileData={profileData} />,
@@ -127,12 +146,30 @@ function GetStartedPageContent() {
   ]
 
   const handleComplete = async () => {
-    if (!profileData) {
-      router.push("/error/400?message=Profile data is missing&description=Please ensure your profile data is set before completing the setup.")
-      return
+    if (isCompleting) return
+
+    setIsCompleting(true)
+
+    try {
+      if (!profileData) {
+        router.push("/error/400?message=Profile data is missing&description=Please ensure your profile data is set before completing the setup.")
+        return
+      }
+      const userData = await fetchUser();
+      const uuidValue = userData?.id
+      if (!uuidValue) {
+        router.push("/error/400?message=User UUID is missing&description=Please ensure you are logged in before completing the setup.")
+        return
+      }
+
+      const profileDataWithUuid = { ...profileData, uuid: uuidValue }
+      await saveUserProfile(profileDataWithUuid)
+      router.push("/dashboard")
+    } catch (error) {
+      setIsCompleting(false)
+      console.error("Error completing setup:", error)
+      router.push("/error/500?message=Failed to complete setup&description=An error occurred while saving your profile data. Please try again later.")
     }
-    await saveUserProfile(profileData)
-    router.push("/dashboard")
   }
 
   const currentStepData = {
@@ -150,7 +187,8 @@ function GetStartedPageContent() {
         onComplete={handleComplete}
         isFirst={currentStep === 1}
         isLast={currentStep === steps.length}
-        isFinishDisabled={isProfileDataUnchanged()}
+        isFinishDisabled={isCompleting || isProfileDataUnchanged() || (currentStep === steps.length && !isTIPIJComplete())}
+        isNextDisabled={currentStep === 1 && !isSignedIn}
       />
     </div>
   )

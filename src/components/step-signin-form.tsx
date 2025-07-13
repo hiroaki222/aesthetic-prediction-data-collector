@@ -16,8 +16,11 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
 export function StepSigninForm({
   className,
+  onSignInSuccess,
   ...props
-}: React.ComponentProps<"div">) {
+}: React.ComponentProps<"div"> & {
+  onSignInSuccess?: () => void
+}) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -43,6 +46,8 @@ export function StepSigninForm({
       }
 
       setShowSuccess(true)
+
+      onSignInSuccess?.()
 
     } catch (error) {
       console.error("Sign in error:", error)

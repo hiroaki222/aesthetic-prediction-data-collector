@@ -17,6 +17,7 @@ function GetStartedPageContent() {
   const [currentStep, setCurrentStep] = useState(1)
   const [completedSteps, setCompletedSteps] = useState<number[]>([])
   const [profileData, setProfileData] = useState<ProfileData | null>(null)
+  const [isSignedIn, setIsSignedIn] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
 
@@ -104,7 +105,7 @@ function GetStartedPageContent() {
       id: 1,
       title: "Sign In First",
       description: "Let's sign in first.",
-      content: <StepSigninForm />,
+      content: <StepSigninForm onSignInSuccess={() => setIsSignedIn(true)} />,
       isCompleted: false,
       isOptional: false,
     },
@@ -167,6 +168,7 @@ function GetStartedPageContent() {
         isFirst={currentStep === 1}
         isLast={currentStep === steps.length}
         isFinishDisabled={isProfileDataUnchanged()}
+        isNextDisabled={currentStep === 1 && !isSignedIn}
       />
     </div>
   )

@@ -11,6 +11,7 @@ import {
 import { useRouter, useSearchParams } from "next/navigation"
 import { ProfileData } from "@/types/profile"
 import { fetchUser, saveUserProfile } from "@/utils/supabase/actions"
+import { StepSigninForm } from "@/components/step-signin-form"
 
 function GetStartedPageContent() {
   const [currentStep, setCurrentStep] = useState(1)
@@ -101,6 +102,14 @@ function GetStartedPageContent() {
   const steps = [
     {
       id: 1,
+      title: "Sign In First",
+      description: "Let's sign in first.",
+      content: <StepSigninForm />,
+      isCompleted: false,
+      isOptional: false,
+    },
+    {
+      id: 2,
       title: "Register Basic Information",
       description: "Enter your age, gender, and other personal details to help personalize your experience.",
       content: <ProfileSetupContent handleStepComplete={handleStepComplete} updateProfileData={updateProfileData} profileData={profileData} />,
@@ -108,7 +117,7 @@ function GetStartedPageContent() {
       isOptional: false,
     },
     {
-      id: 2,
+      id: 3,
       title: "Register Experience",
       description: "Tell us about your experience in art, photography, fashion, and music. This helps us tailor recommendations and features for you.",
       content: <ExperienceSetupContent handleStepComplete={handleStepComplete} updateProfileData={updateProfileData} profileData={profileData} />,
@@ -116,7 +125,7 @@ function GetStartedPageContent() {
       isOptional: false,
     },
     {
-      id: 3,
+      id: 4,
       title: "Register TIPIJ",
       description: "Configure your TIPIJ (This Is Personal Information Journal)",
       content: <TIPIJSetupContent1 handleStepComplete={handleStepComplete} updateProfileData={updateProfileData} profileData={profileData} />,

@@ -162,12 +162,13 @@ function GetStartedPageContent() {
         return
       }
 
-      setProfileData((prev) => prev ? { ...prev, uuid: uuidValue } : prev)
-      await saveUserProfile(profileData)
+      const profileDataWithUuid = { ...profileData, uuid: uuidValue }
+      await saveUserProfile(profileDataWithUuid)
       router.push("/dashboard")
     } catch (error) {
-      console.error("Error completing setup:", error)
       setIsCompleting(false)
+      console.error("Error completing setup:", error)
+      router.push("/error/500?message=Failed to complete setup&description=An error occurred while saving your profile data. Please try again later.")
     }
   }
 

@@ -164,3 +164,21 @@ export async function saveUserProfile(ProfileData: ProfileData) {
     redirect(`/error/${code}?message=${message}&description=${description}`);
   }
 }
+
+export async function fetchUser() {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser();
+
+  if (error) {
+    const code = "401";
+    const message = encodeURIComponent("User not authenticated");
+    const description = encodeURIComponent(error.message.replace(/_/g, " "));
+    redirect(`/error/${code}?message=${message}&description=${description}`);
+  }
+
+  return user;
+}

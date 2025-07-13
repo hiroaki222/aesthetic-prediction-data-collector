@@ -37,7 +37,7 @@ const steps = [
   },
 ]
 
-export function GetStartedPageContent() {
+function GetStartedPageContent() {
   const [currentStep, setCurrentStep] = useState(1)
   const [completedSteps, setCompletedSteps] = useState<number[]>([])
   const [uuid, setUuid] = useState<string>('')

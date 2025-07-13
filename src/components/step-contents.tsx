@@ -137,18 +137,20 @@ export function TIPIJSetupContent1() {
     return (
       <TableRow key={option.row}>
         <TableCell className="font-medium border-r border-gray-300">{option.label}</TableCell>
-        <RadioGroup className="contents">
-          {[7, 6, 5, 4, 3, 2, 1].map(value => {
-            return (
-              <TableCell key={value}>
-                <RadioGroupItem value={String(value)} id={`row${option.row}-${value}`} />
-              </TableCell>
-            )
-          })}
-        </RadioGroup>
+        <TableCell colSpan={7}>
+          <RadioGroup className="flex items-center justify-around">
+            {[7, 6, 5, 4, 3, 2, 1].map(value => {
+              return (
+                <RadioGroupItem key={value} value={String(value)} id={`row${option.row}-${value}`} />
+              )
+            })}
+          </RadioGroup>
+        </TableCell>
+
       </TableRow>
     )
   })
+
 
   return (
     <div className="space-y-6">

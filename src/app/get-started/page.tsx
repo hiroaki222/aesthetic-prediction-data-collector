@@ -18,6 +18,7 @@ function GetStartedPageContent() {
   const [completedSteps, setCompletedSteps] = useState<number[]>([])
   const [profileData, setProfileData] = useState<ProfileData | null>(null)
   const [isSignedIn, setIsSignedIn] = useState(false)
+  const [isCompleting, setIsCompleting] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
 
@@ -145,20 +146,29 @@ function GetStartedPageContent() {
   ]
 
   const handleComplete = async () => {
-    if (!profileData) {
-      router.push("/error/400?message=Profile data is missing&description=Please ensure your profile data is set before completing the setup.")
-      return
-    }
-    const userData = await fetchUser();
-    const uuidValue = userData?.id
-    if (!uuidValue) {
-      router.push("/error/400?message=User UUID is missing&description=Please ensure you are logged in before completing the setup.")
-      return
-    }
+    if (isCompleting) return
 
-    setProfileData((prev) => prev ? { ...prev, uuid: uuidValue } : prev)
-    await saveUserProfile(profileData)
-    router.push("/dashboard")
+    setIsCompleting(true)
+
+    try {
+      if (!profileData) {
+        router.push("/error/400?message=Profile data is missing&description=Please ensure your profile data is set before completing the setup.")
+        return
+      }
+      const userData = await fetchUser();
+      const uuidValue = userData?.id
+      if (!uuidValue) {
+        router.push("/error/400?message=User UUID is missing&description=Please ensure you are logged in before completing the setup.")
+        return
+      }
+
+      setProfileData((prev) => prev ? { ...prev, uuid: uuidValue } : prev)
+      await saveUserProfile(profileData)
+      router.push("/dashboard")
+    } catch (error) {
+      console.error("Error completing setup:", error)
+      setIsCompleting(false)
+    }
   }
 
   const currentStepData = {
@@ -176,7 +186,7 @@ function GetStartedPageContent() {
         onComplete={handleComplete}
         isFirst={currentStep === 1}
         isLast={currentStep === steps.length}
-        isFinishDisabled={isProfileDataUnchanged() || (currentStep === steps.length && !isTIPIJComplete())}
+        isFinishDisabled={isCompleting || isProfileDataUnchanged() || (currentStep === steps.length && !isTIPIJComplete())}
         isNextDisabled={currentStep === 1 && !isSignedIn}
       />
     </div>

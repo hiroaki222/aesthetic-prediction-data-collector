@@ -28,10 +28,11 @@ export function ProfileSetupContent({ handleStepComplete, updateProfileData, pro
             id="age"
             name="age"
             type="number"
-            min={0}
+            min={1}
             placeholder="Enter your age"
             value={profileData?.age || ''}
             onChange={(e) => updateProfileData('age', parseInt(e.target.value, 10) || 0)}
+            required
           />
         </div>
         <div className="grid gap-2">
@@ -42,8 +43,9 @@ export function ProfileSetupContent({ handleStepComplete, updateProfileData, pro
             className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
             value={profileData?.gender || ''}
             onChange={(e) => updateProfileData('gender', e.target.value)}
+            required
           >
-            <option value="">Select gender</option>
+            <option value="" disabled>Select gender</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
             <option value="other">Other</option>
@@ -57,8 +59,9 @@ export function ProfileSetupContent({ handleStepComplete, updateProfileData, pro
             className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
             value={profileData?.edu || ''}
             onChange={(e) => updateProfileData('edu', e.target.value)}
+            required
           >
-            <option value="">Select education</option>
+            <option value="" disabled>Select education</option>
             <option value="junior_high">Junior High School</option>
             <option value="high_school">High School</option>
             <option value="vocational">Vocational School</option>
@@ -85,8 +88,9 @@ export function ExperienceSetupContent({ handleStepComplete, updateProfileData, 
             className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
             value={profileData?.art || ''}
             onChange={(e) => updateProfileData('art', e.target.value)}
+            required
           >
-            <option value="">Select level</option>
+            <option value="" disabled>Select level</option>
             <option value="none">None</option>
             <option value="beginner">Beginner</option>
             <option value="intermediate">Intermediate</option>
@@ -102,8 +106,9 @@ export function ExperienceSetupContent({ handleStepComplete, updateProfileData, 
             className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
             value={profileData?.pho || ''}
             onChange={(e) => updateProfileData('pho', e.target.value)}
+            required
           >
-            <option value="">Select level</option>
+            <option value="" disabled>Select level</option>
             <option value="none">None</option>
             <option value="beginner">Beginner</option>
             <option value="intermediate">Intermediate</option>
@@ -119,8 +124,9 @@ export function ExperienceSetupContent({ handleStepComplete, updateProfileData, 
             className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
             value={profileData?.fas || ''}
             onChange={(e) => updateProfileData('fas', e.target.value)}
+            required
           >
-            <option value="">Select level</option>
+            <option value="" disabled>Select level</option>
             <option value="none">None</option>
             <option value="beginner">Beginner</option>
             <option value="intermediate">Intermediate</option>
@@ -136,8 +142,9 @@ export function ExperienceSetupContent({ handleStepComplete, updateProfileData, 
             className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
             value={profileData?.mus || ''}
             onChange={(e) => updateProfileData('mus', e.target.value)}
+            required
           >
-            <option value="">Select level</option>
+            <option value="" disabled>Select level</option>
             <option value="none">None</option>
             <option value="beginner">Beginner</option>
             <option value="intermediate">Intermediate</option>

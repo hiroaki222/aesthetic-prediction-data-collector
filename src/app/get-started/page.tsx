@@ -1,6 +1,6 @@
 "use client"
 
-import { Suspense, useEffect, useState } from "react"
+import { Suspense, useEffect, useMemo, useState } from "react"
 import { GetStartedHeader } from "@/components/get-started-header"
 import { GetStartedStep } from "@/components/get-started-step"
 import {
@@ -19,6 +19,18 @@ function GetStartedPageContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
 
+  const defaultProfileData: ProfileData = useMemo(() => ({
+    uuid: '',
+    age: -1,
+    gender: '',
+    edu: '',
+    art: '',
+    pho: '',
+    fas: '',
+    mus: '',
+    titpj: {},
+  }), [])
+
   useEffect(() => {
     const codeParam = searchParams.get("code")
     if (!codeParam) {
@@ -29,7 +41,7 @@ function GetStartedPageContent() {
 
     setProfileData({
       uuid: uuidValue,
-      age: 0,
+      age: -1,
       gender: '',
       edu: '',
       art: '',
@@ -38,6 +50,7 @@ function GetStartedPageContent() {
       mus: '',
       titpj: {},
     })
+
   }, [searchParams, router])
 
   const handleNext = () => {
@@ -69,6 +82,23 @@ function GetStartedPageContent() {
     event.preventDefault()
   }
 
+  const isProfileDataUnchanged = () => {
+    if (!profileData) return true
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { uuid: _profileUuid, ...profileDataToCompare } = profileData
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { uuid: _defaultUuid, ...defaultDataToCompare } = defaultProfileData
+
+    return Object.entries(defaultDataToCompare).every(([key, value]) => {
+      const profileValue = profileDataToCompare[key as keyof Omit<ProfileData, 'uuid'>]
+      if (typeof value === 'object' && value !== null) {
+        return JSON.stringify(profileValue) === JSON.stringify(value)
+      }
+      return profileValue === value
+    })
+  }
+
   const steps = [
     {
       id: 1,
@@ -97,9 +127,8 @@ function GetStartedPageContent() {
   ]
 
   const handleComplete = async () => {
-    setCompletedSteps((prev) => [...prev, currentStep])
     if (!profileData) {
-      router.replace("/error/400?message=Profile data is missing")
+      router.push("/error/400?message=Profile data is missing&description=Please ensure your profile data is set before completing the setup.")
       return
     }
     await saveUserProfile(profileData)
@@ -121,6 +150,7 @@ function GetStartedPageContent() {
         onComplete={handleComplete}
         isFirst={currentStep === 1}
         isLast={currentStep === steps.length}
+        isFinishDisabled={isProfileDataUnchanged()}
       />
     </div>
   )

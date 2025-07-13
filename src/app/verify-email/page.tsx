@@ -31,9 +31,7 @@ function VerifyEmailPageContent() {
 
   const handleResend = async () => {
     setIsResending(true)
-    console.log("Resending verification email...")
     await resendVerificationEmail(email, type)
-    console.log("Verification email resent")
     setIsResending(false)
   }
 

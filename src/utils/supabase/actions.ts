@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { createClient } from "./server";
+import { ProfileData } from "@/types/profile";
 
 export async function login(formData: FormData) {
   const supabase = await createClient();
@@ -110,7 +111,9 @@ export async function resendVerificationEmail(
       "/error/400?message=" +
         encodeURIComponent("Email is required") +
         "&description=" +
-        encodeURIComponent("Please provide an email address to resend the verification link.")
+        encodeURIComponent(
+          "Please provide an email address to resend the verification link."
+        )
     );
   }
 
@@ -144,4 +147,20 @@ export async function resendVerificationEmail(
     }
   }
   return;
+}
+
+export async function saveUserProfile(ProfileData: ProfileData) {
+  const supabase = await createClient();
+
+  const { error } = await supabase
+    .from("user-data")
+    .insert(ProfileData)
+    .select();
+
+  if (error) {
+    const code = "400";
+    const message = encodeURIComponent("Failed to save profile");
+    const description = encodeURIComponent(error.message.replace(/_/g, " "));
+    redirect(`/error/${code}?message=${message}&description=${description}`);
+  }
 }

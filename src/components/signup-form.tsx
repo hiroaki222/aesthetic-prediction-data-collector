@@ -2,7 +2,8 @@
 import type React from "react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+//import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { signup } from "@/utils/supabase/actions"
@@ -26,11 +27,11 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
       <Card>
         <CardHeader className="text-center">
           <CardTitle className="text-xl">Create an account</CardTitle>
-          <CardDescription>Sign up with your Apple or Google account</CardDescription>
+          {/* <CardDescription>Sign up with your Apple or Google account</CardDescription> */}
         </CardHeader>
         <CardContent>
           <div className="grid gap-6">
-            <div className="flex flex-col gap-4">
+            {/* <div className="flex flex-col gap-4">
               <Button variant="outline" className="w-full bg-transparent">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                   <path
@@ -52,7 +53,7 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
             </div>
             <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
               <span className="relative z-10 bg-background px-2 text-muted-foreground">Or continue with</span>
-            </div>
+            </div> */}
             <form className="grid gap-6" onSubmit={handleSubmit}>
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>

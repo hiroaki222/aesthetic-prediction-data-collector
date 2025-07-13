@@ -100,6 +100,15 @@ function GetStartedPageContent() {
     })
   }
 
+  const isTIPIJComplete = () => {
+    if (!profileData?.titpj) return false
+
+    const requiredTIPIJItems = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
+    return requiredTIPIJItems.every(item =>
+      profileData.titpj[item] && profileData.titpj[item] !== ''
+    )
+  }
+
   const steps = [
     {
       id: 1,
@@ -167,7 +176,7 @@ function GetStartedPageContent() {
         onComplete={handleComplete}
         isFirst={currentStep === 1}
         isLast={currentStep === steps.length}
-        isFinishDisabled={isProfileDataUnchanged()}
+        isFinishDisabled={isProfileDataUnchanged() || (currentStep === steps.length && !isTIPIJComplete())}
         isNextDisabled={currentStep === 1 && !isSignedIn}
       />
     </div>

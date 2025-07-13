@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { use, useEffect, useState } from "react"
 import { GetStartedHeader } from "@/components/get-started-header"
 import { GetStartedStep } from "@/components/get-started-step"
 import {
@@ -8,7 +8,7 @@ import {
   ExperienceSetupContent,
   TIPIJSetupContent1,
 } from "@/components/step-contents"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 
 const steps = [
   {
@@ -40,7 +40,17 @@ const steps = [
 export default function GetStartedPage() {
   const [currentStep, setCurrentStep] = useState(1)
   const [completedSteps, setCompletedSteps] = useState<number[]>([])
+  const [uuid, setUuid] = useState<string>('')
   const router = useRouter()
+  const searchParams = useSearchParams()
+
+  useEffect(() => {
+    setUuid(String(searchParams.get("code")))
+    if (!uuid) {
+      router.replace("/error/400")
+      return
+    }
+  }, [searchParams, router, uuid])
 
   const handleNext = () => {
     if (currentStep < steps.length) {
@@ -57,8 +67,8 @@ export default function GetStartedPage() {
 
   const handleComplete = () => {
     setCompletedSteps((prev) => [...prev, currentStep])
-    // Redirect to dashboard or welcome page
-    router.push("/welcome")
+
+    router.push("/dashboard")
   }
 
   const currentStepData = {

@@ -28,7 +28,7 @@ interface GetStartedStepProps {
 export function GetStartedStep({ step, onNext, onPrevious, onComplete, isFirst, isLast }: GetStartedStepProps) {
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="mx-auto max-w-2xl">
+      <div className="">
         <div className="mb-8">
           <div className="flex items-center gap-2 mb-4">
             {step.isCompleted ? (

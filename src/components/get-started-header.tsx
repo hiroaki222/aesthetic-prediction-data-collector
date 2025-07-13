@@ -6,10 +6,9 @@ import { FilePenLine } from "lucide-react"
 interface GetStartedHeaderProps {
   currentStep: number
   totalSteps: number
-  onClose?: () => void
 }
 
-export function GetStartedHeader({ currentStep, totalSteps, onClose }: GetStartedHeaderProps) {
+export function GetStartedHeader({ currentStep, totalSteps }: GetStartedHeaderProps) {
   const progress = (currentStep / totalSteps) * 100
 
   return (

@@ -38,25 +38,17 @@ function GetStartedPageContent() {
       return
     }
 
-    (async () => {
-      const userData = await fetchUser();
-      const uuidValue = userData?.id
-      if (!uuidValue || uuidValue == null) {
-        router.replace("/error/400?message=User not found&description=Please ensure you are logged in.")
-        return
-      }
-      setProfileData({
-        uuid: uuidValue,
-        age: 0,
-        gender: '',
-        edu: '',
-        art: '',
-        pho: '',
-        fas: '',
-        mus: '',
-        titpj: {},
-      });
-    })();
+    setProfileData({
+      uuid: '',
+      age: 0,
+      gender: '',
+      edu: '',
+      art: '',
+      pho: '',
+      fas: '',
+      mus: '',
+      titpj: {},
+    });
 
   }, [searchParams, router])
 
@@ -138,6 +130,14 @@ function GetStartedPageContent() {
       router.push("/error/400?message=Profile data is missing&description=Please ensure your profile data is set before completing the setup.")
       return
     }
+    const userData = await fetchUser();
+    const uuidValue = userData?.id
+    if (!uuidValue) {
+      router.push("/error/400?message=User UUID is missing&description=Please ensure you are logged in before completing the setup.")
+      return
+    }
+
+    setProfileData((prev) => prev ? { ...prev, uuid: uuidValue } : prev)
     await saveUserProfile(profileData)
     router.push("/dashboard")
   }

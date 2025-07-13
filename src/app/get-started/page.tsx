@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { Suspense, useEffect, useState } from "react"
 import { GetStartedHeader } from "@/components/get-started-header"
 import { GetStartedStep } from "@/components/get-started-step"
 import {
@@ -37,7 +37,7 @@ const steps = [
   },
 ]
 
-export default function GetStartedPage() {
+export function GetStartedPageContent() {
   const [currentStep, setCurrentStep] = useState(1)
   const [completedSteps, setCompletedSteps] = useState<number[]>([])
   const [uuid, setUuid] = useState<string>('')
@@ -88,5 +88,13 @@ export default function GetStartedPage() {
         isLast={currentStep === steps.length}
       />
     </div>
+  )
+}
+
+export default function GetStartedPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <GetStartedPageContent />
+    </Suspense>
   )
 }

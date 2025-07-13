@@ -10,7 +10,7 @@ import {
 } from "@/components/step-contents"
 import { useRouter, useSearchParams } from "next/navigation"
 import { ProfileData } from "@/types/profile"
-import { saveUserProfile } from "@/utils/supabase/actions"
+import { fetchUser, saveUserProfile } from "@/utils/supabase/actions"
 
 function GetStartedPageContent() {
   const [currentStep, setCurrentStep] = useState(1)
@@ -21,7 +21,7 @@ function GetStartedPageContent() {
 
   const defaultProfileData: ProfileData = useMemo(() => ({
     uuid: '',
-    age: -1,
+    age: 0,
     gender: '',
     edu: '',
     art: '',
@@ -37,19 +37,26 @@ function GetStartedPageContent() {
       router.replace("/error/400")
       return
     }
-    const uuidValue = String(codeParam)
 
-    setProfileData({
-      uuid: uuidValue,
-      age: -1,
-      gender: '',
-      edu: '',
-      art: '',
-      pho: '',
-      fas: '',
-      mus: '',
-      titpj: {},
-    })
+    (async () => {
+      const userData = await fetchUser();
+      const uuidValue = userData?.id
+      if (!uuidValue || uuidValue == null) {
+        router.replace("/error/400?message=User not found&description=Please ensure you are logged in.")
+        return
+      }
+      setProfileData({
+        uuid: uuidValue,
+        age: 0,
+        gender: '',
+        edu: '',
+        art: '',
+        pho: '',
+        fas: '',
+        mus: '',
+        titpj: {},
+      });
+    })();
 
   }, [searchParams, router])
 

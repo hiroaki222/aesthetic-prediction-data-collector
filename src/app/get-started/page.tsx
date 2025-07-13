@@ -9,48 +9,36 @@ import {
   TIPIJSetupContent1,
 } from "@/components/step-contents"
 import { useRouter, useSearchParams } from "next/navigation"
-
-const steps = [
-  {
-    id: 1,
-    title: "Register Basic Information",
-    description: "Enter your age, gender, and other personal details to help personalize your experience.",
-    content: <ProfileSetupContent />,
-    isCompleted: false,
-    isOptional: false,
-  },
-  {
-    id: 2,
-    title: "Register Experience",
-    description: "Tell us about your experience in art, photography, fashion, and music. This helps us tailor recommendations and features for you.",
-    content: <ExperienceSetupContent />,
-    isCompleted: false,
-    isOptional: false,
-  },
-  {
-    id: 3,
-    title: "Configure Notifications",
-    description: "Choose how and when you want to be notified about important updates.",
-    content: <TIPIJSetupContent1 />,
-    isCompleted: false,
-    isOptional: false,
-  },
-]
+import { ProfileData } from "@/types/profile"
+import { saveUserProfile } from "@/utils/supabase/actions"
 
 function GetStartedPageContent() {
   const [currentStep, setCurrentStep] = useState(1)
   const [completedSteps, setCompletedSteps] = useState<number[]>([])
-  const [uuid, setUuid] = useState<string>('')
+  const [profileData, setProfileData] = useState<ProfileData | null>(null)
   const router = useRouter()
   const searchParams = useSearchParams()
 
   useEffect(() => {
-    setUuid(String(searchParams.get("code")))
-    if (!uuid) {
+    const codeParam = searchParams.get("code")
+    if (!codeParam) {
       router.replace("/error/400")
       return
     }
-  }, [searchParams, router, uuid])
+    const uuidValue = String(codeParam)
+
+    setProfileData({
+      uuid: uuidValue,
+      age: 0,
+      gender: '',
+      edu: '',
+      art: '',
+      pho: '',
+      fas: '',
+      mus: '',
+      titpj: {},
+    })
+  }, [searchParams, router])
 
   const handleNext = () => {
     if (currentStep < steps.length) {
@@ -65,9 +53,56 @@ function GetStartedPageContent() {
     }
   }
 
-  const handleComplete = () => {
-    setCompletedSteps((prev) => [...prev, currentStep])
 
+
+  const updateProfileData = (field: string, value: string | number | Record<string, unknown>) => {
+    setProfileData((prev) => {
+      if (!prev) return null
+      return {
+        ...prev,
+        [field]: value,
+      }
+    })
+  }
+
+  const handleStepComplete = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+  }
+
+  const steps = [
+    {
+      id: 1,
+      title: "Register Basic Information",
+      description: "Enter your age, gender, and other personal details to help personalize your experience.",
+      content: <ProfileSetupContent handleStepComplete={handleStepComplete} updateProfileData={updateProfileData} profileData={profileData} />,
+      isCompleted: false,
+      isOptional: false,
+    },
+    {
+      id: 2,
+      title: "Register Experience",
+      description: "Tell us about your experience in art, photography, fashion, and music. This helps us tailor recommendations and features for you.",
+      content: <ExperienceSetupContent handleStepComplete={handleStepComplete} updateProfileData={updateProfileData} profileData={profileData} />,
+      isCompleted: false,
+      isOptional: false,
+    },
+    {
+      id: 3,
+      title: "Register TIPIJ",
+      description: "Configure your TIPIJ (This Is Personal Information Journal)",
+      content: <TIPIJSetupContent1 handleStepComplete={handleStepComplete} updateProfileData={updateProfileData} profileData={profileData} />,
+      isCompleted: false,
+      isOptional: false,
+    },
+  ]
+
+  const handleComplete = async () => {
+    setCompletedSteps((prev) => [...prev, currentStep])
+    if (!profileData) {
+      router.replace("/error/400?message=Profile data is missing")
+      return
+    }
+    await saveUserProfile(profileData)
     router.push("/dashboard")
   }
 

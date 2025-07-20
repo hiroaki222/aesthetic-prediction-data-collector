@@ -14,6 +14,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { CardDescription } from "./ui/card"
 
 type ProfileSetupContentProps = {
   handleStepComplete: React.FormEventHandler<HTMLFormElement>
@@ -219,7 +220,7 @@ export function TIPIJSetupContent1({ handleStepComplete, updateProfileData, prof
 
   return (
     <form onSubmit={handleStepComplete} className="space-y-6">
-      <div className="space-y-4">
+      <div className="space-y-4 flex flex-col items-center">
         <Table>
           <TableHeader>
             <TableRow>
@@ -237,6 +238,7 @@ export function TIPIJSetupContent1({ handleStepComplete, updateProfileData, prof
             {tableRows}
           </TableBody>
         </Table>
+        <CardDescription>← {t('description')} →</CardDescription>
       </div>
     </form>
   )

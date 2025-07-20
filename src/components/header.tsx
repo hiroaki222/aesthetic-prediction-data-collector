@@ -1,4 +1,5 @@
 import { CircleUserRound, FilePenLine } from "lucide-react"
+import { useTranslations } from "next-intl"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,7 +11,7 @@ import {
 import { signout } from "@/utils/supabase/actions"
 
 export function Header() {
-
+  const t = useTranslations('header')
 
   return (
     <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex items-center justify-center">
@@ -18,15 +19,15 @@ export function Header() {
         <div className="flex h-10 w-10 items-center justify-center rounded-md bg-primary text-primary-foreground">
           <FilePenLine className="size-5" />
         </div>
-        <span className="ml-2 text-xl font-semibold">Aesthetic Prediction Data Collector</span>
+        <span className="ml-2 text-xl font-semibold">{t('app-title')}</span>
         <div className="flex-1"></div>
         <DropdownMenu>
           <DropdownMenuTrigger><CircleUserRound className="size-10 m-5" /></DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuLabel>{t('dropdown.my-account')}</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Setting</DropdownMenuItem>
-            <DropdownMenuItem onClick={signout}>Sigh Out</DropdownMenuItem>
+            <DropdownMenuItem>{t('dropdown.setting')}</DropdownMenuItem>
+            <DropdownMenuItem onClick={signout}>{t('dropdown.sign-out')}</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

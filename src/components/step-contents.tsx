@@ -1,3 +1,6 @@
+"use client"
+
+import { useTranslations } from "next-intl"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { ProfileData } from "@/types/profile"
@@ -19,24 +22,26 @@ type ProfileSetupContentProps = {
 }
 
 export function ProfileSetupContent({ handleStepComplete, updateProfileData, profileData }: ProfileSetupContentProps) {
+  const t = useTranslations('step-contents.profile-setup')
+
   return (
     <form onSubmit={handleStepComplete} className="space-y-6">
       <div className="grid gap-4" >
         <div className="grid gap-2">
-          <Label htmlFor="age">Age</Label>
+          <Label htmlFor="age">{t('labels.age')}</Label>
           <Input
             id="age"
             name="age"
             type="number"
             min={1}
-            placeholder="Enter your age"
+            placeholder={t('placeholders.age')}
             value={profileData?.age || ''}
             onChange={(e) => updateProfileData('age', parseInt(e.target.value, 10) || 0)}
             required
           />
         </div>
         <div className="grid gap-2">
-          <Label htmlFor="gender">Gender</Label>
+          <Label htmlFor="gender">{t('labels.gender')}</Label>
           <select
             id="gender"
             name="gender"
@@ -45,14 +50,14 @@ export function ProfileSetupContent({ handleStepComplete, updateProfileData, pro
             onChange={(e) => updateProfileData('gender', e.target.value)}
             required
           >
-            <option value="" disabled>Select gender</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
+            <option value="" disabled>{t('gender-options.select')}</option>
+            <option value="male">{t('gender-options.male')}</option>
+            <option value="female">{t('gender-options.female')}</option>
+            <option value="other">{t('gender-options.other')}</option>
           </select>
         </div>
         <div className="grid gap-2">
-          <Label htmlFor="education">Education Experience</Label>
+          <Label htmlFor="education">{t('labels.education')}</Label>
           <select
             id="education"
             name="education"
@@ -61,14 +66,14 @@ export function ProfileSetupContent({ handleStepComplete, updateProfileData, pro
             onChange={(e) => updateProfileData('edu', e.target.value)}
             required
           >
-            <option value="" disabled>Select education</option>
-            <option value="junior_high">Junior High School</option>
-            <option value="high_school">High School</option>
-            <option value="vocational">Vocational School</option>
-            <option value="junior_college">Junior College</option>
-            <option value="university">University (4-year)</option>
-            <option value="graduate">Graduate School</option>
-            <option value="other">Other</option>
+            <option value="" disabled>{t('education-options.select')}</option>
+            <option value="junior_high">{t('education-options.junior-high')}</option>
+            <option value="high_school">{t('education-options.high-school')}</option>
+            <option value="vocational">{t('education-options.vocational')}</option>
+            <option value="junior_college">{t('education-options.junior-college')}</option>
+            <option value="university">{t('education-options.university')}</option>
+            <option value="graduate">{t('education-options.graduate')}</option>
+            <option value="other">{t('education-options.other')}</option>
           </select>
         </div>
       </div>
@@ -77,11 +82,13 @@ export function ProfileSetupContent({ handleStepComplete, updateProfileData, pro
 }
 
 export function ExperienceSetupContent({ handleStepComplete, updateProfileData, profileData }: ProfileSetupContentProps) {
+  const t = useTranslations('step-contents.experience-setup')
+
   return (
     <form onSubmit={handleStepComplete} className="space-y-6">
       <div className="grid gap-4">
         <div className="grid gap-2">
-          <Label htmlFor="artisticExperience">Artistic Experience</Label>
+          <Label htmlFor="artisticExperience">{t('labels.artistic-experience')}</Label>
           <select
             id="artisticExperience"
             name="artisticExperience"
@@ -90,16 +97,16 @@ export function ExperienceSetupContent({ handleStepComplete, updateProfileData, 
             onChange={(e) => updateProfileData('art', e.target.value)}
             required
           >
-            <option value="" disabled>Select level</option>
-            <option value="none">None</option>
-            <option value="beginner">Beginner</option>
-            <option value="intermediate">Intermediate</option>
-            <option value="advanced">Advanced</option>
-            <option value="professional">Professional</option>
+            <option value="" disabled>{t('level-options.select')}</option>
+            <option value="none">{t('level-options.none')}</option>
+            <option value="beginner">{t('level-options.beginner')}</option>
+            <option value="intermediate">{t('level-options.intermediate')}</option>
+            <option value="advanced">{t('level-options.advanced')}</option>
+            <option value="professional">{t('level-options.professional')}</option>
           </select>
         </div>
         <div className="grid gap-2">
-          <Label htmlFor="photographicExperience">Photographic Experience</Label>
+          <Label htmlFor="photographicExperience">{t('labels.photographic-experience')}</Label>
           <select
             id="photographicExperience"
             name="photographicExperience"
@@ -108,16 +115,16 @@ export function ExperienceSetupContent({ handleStepComplete, updateProfileData, 
             onChange={(e) => updateProfileData('pho', e.target.value)}
             required
           >
-            <option value="" disabled>Select level</option>
-            <option value="none">None</option>
-            <option value="beginner">Beginner</option>
-            <option value="intermediate">Intermediate</option>
-            <option value="advanced">Advanced</option>
-            <option value="professional">Professional</option>
+            <option value="" disabled>{t('level-options.select')}</option>
+            <option value="none">{t('level-options.none')}</option>
+            <option value="beginner">{t('level-options.beginner')}</option>
+            <option value="intermediate">{t('level-options.intermediate')}</option>
+            <option value="advanced">{t('level-options.advanced')}</option>
+            <option value="professional">{t('level-options.professional')}</option>
           </select>
         </div>
         <div className="grid gap-2">
-          <Label htmlFor="fashionExperience">Fashion Experience</Label>
+          <Label htmlFor="fashionExperience">{t('labels.fashion-experience')}</Label>
           <select
             id="fashionExperience"
             name="fashionExperience"
@@ -126,16 +133,16 @@ export function ExperienceSetupContent({ handleStepComplete, updateProfileData, 
             onChange={(e) => updateProfileData('fas', e.target.value)}
             required
           >
-            <option value="" disabled>Select level</option>
-            <option value="none">None</option>
-            <option value="beginner">Beginner</option>
-            <option value="intermediate">Intermediate</option>
-            <option value="advanced">Advanced</option>
-            <option value="professional">Professional</option>
+            <option value="" disabled>{t('level-options.select')}</option>
+            <option value="none">{t('level-options.none')}</option>
+            <option value="beginner">{t('level-options.beginner')}</option>
+            <option value="intermediate">{t('level-options.intermediate')}</option>
+            <option value="advanced">{t('level-options.advanced')}</option>
+            <option value="professional">{t('level-options.professional')}</option>
           </select>
         </div>
         <div className="grid gap-2">
-          <Label htmlFor="musicalExperience">Musical Experience</Label>
+          <Label htmlFor="musicalExperience">{t('labels.musical-experience')}</Label>
           <select
             id="musicalExperience"
             name="musicalExperience"
@@ -144,12 +151,12 @@ export function ExperienceSetupContent({ handleStepComplete, updateProfileData, 
             onChange={(e) => updateProfileData('mus', e.target.value)}
             required
           >
-            <option value="" disabled>Select level</option>
-            <option value="none">None</option>
-            <option value="beginner">Beginner</option>
-            <option value="intermediate">Intermediate</option>
-            <option value="advanced">Advanced</option>
-            <option value="professional">Professional</option>
+            <option value="" disabled>{t('level-options.select')}</option>
+            <option value="none">{t('level-options.none')}</option>
+            <option value="beginner">{t('level-options.beginner')}</option>
+            <option value="intermediate">{t('level-options.intermediate')}</option>
+            <option value="advanced">{t('level-options.advanced')}</option>
+            <option value="professional">{t('level-options.professional')}</option>
           </select>
         </div>
       </div>
@@ -158,19 +165,21 @@ export function ExperienceSetupContent({ handleStepComplete, updateProfileData, 
 }
 
 export function TIPIJSetupContent1({ handleStepComplete, updateProfileData, profileData }: ProfileSetupContentProps) {
+  const t = useTranslations('step-contents.tipij-setup')
+
   const options = [
     {
-      row: '1', label: 'Extraverted, enthusiastic'
+      row: '1', label: t('statements.1')
     },
-    { row: '2', label: 'Critical, quarrelsome' },
-    { row: '3', label: 'Dependable, self-disciplined' },
-    { row: '4', label: 'Anxious, easily upset' },
-    { row: '5', label: 'Open to new experiences, complex' },
-    { row: '6', label: 'Reserved, quiet' },
-    { row: '7', label: 'Sympathetic, warm' },
-    { row: '8', label: 'Disorganized, careless' },
-    { row: '9', label: 'Calm, emotionally stable' },
-    { row: '10', label: 'Conventional, uncreative' },
+    { row: '2', label: t('statements.2') },
+    { row: '3', label: t('statements.3') },
+    { row: '4', label: t('statements.4') },
+    { row: '5', label: t('statements.5') },
+    { row: '6', label: t('statements.6') },
+    { row: '7', label: t('statements.7') },
+    { row: '8', label: t('statements.8') },
+    { row: '9', label: t('statements.9') },
+    { row: '10', label: t('statements.10') },
   ]
 
   const handleTIPIJChange = (row: string, value: string) => {
@@ -214,14 +223,14 @@ export function TIPIJSetupContent1({ handleStepComplete, updateProfileData, prof
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[100px] border-r border-gray-300">I see myself as someone who...</TableHead>
-              <TableHead>Strongly agree</TableHead>
-              <TableHead>Moderately agree</TableHead>
-              <TableHead>Slightly agree</TableHead>
-              <TableHead>Neither agree nor disagree</TableHead>
-              <TableHead>Slightly disagree</TableHead>
-              <TableHead>Moderately disagree</TableHead>
-              <TableHead>Strongly disagree</TableHead>
+              <TableHead className="w-[100px] border-r border-gray-300">{t('table-headers.statement')}</TableHead>
+              <TableHead>{t('table-headers.strongly-agree')}</TableHead>
+              <TableHead>{t('table-headers.moderately-agree')}</TableHead>
+              <TableHead>{t('table-headers.slightly-agree')}</TableHead>
+              <TableHead>{t('table-headers.neither')}</TableHead>
+              <TableHead>{t('table-headers.slightly-disagree')}</TableHead>
+              <TableHead>{t('table-headers.moderately-disagree')}</TableHead>
+              <TableHead>{t('table-headers.strongly-disagree')}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>

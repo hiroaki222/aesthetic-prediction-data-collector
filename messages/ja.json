@@ -226,12 +226,12 @@
   "step-signin-form": {
     "success": "ログイン完了",
     "error": "エラー",
-    "description": "AppleアカウントやGoogleアカウントで続ける",
+    "description": "AppleやGoogleアカウントでログイン",
     "social-buttons": {
       "sign-in-with-apple": "Appleアカウント",
       "sign-in-with-google": "Googleアカウント"
     },
-    "divider": "メールアドレスで続ける",
+    "divider": "メールアドレスでログイン",
     "labels": {
       "email": "メールアドレス",
       "password": "パスワード"

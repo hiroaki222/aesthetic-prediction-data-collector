@@ -243,7 +243,7 @@ export function TIPIJSetupContent1({ handleStepComplete, updateProfileData, prof
             </TableBody>
           </Table>
         </div>
-        <CardDescription>{t('description')}</CardDescription>
+        <CardDescription className="block md:hidden">{t('description')}</CardDescription>
       </div>
     </form>
   )

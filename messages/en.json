@@ -1,0 +1,275 @@
+{
+  "home-page": {
+    "title": "welcome",
+    "description": "Get started with your account",
+    "sign-in": "Sign In",
+    "sign-up": "Sign Up"
+  },
+  "email-verification-form": {
+    "signup": {
+      "title": "Check your email",
+      "description": "We've sent a verification link to your email address",
+      "back-button": "Back to sign up"
+    },
+    "password-reset": {
+      "title": "Reset link sent",
+      "description": "We've sent a password reset link to your email address",
+      "back-button": "Back to forgot password"
+    },
+    "sender-info": {
+      "sender": "Sender:",
+      "sender-name": "Supabase Auth",
+      "email-from": "Email will be sent to:",
+      "email-sent-to": "Email sent to:"
+    },
+    "instructions": {
+      "next-steps-title": "What to do next:",
+      "steps": {
+        "check-inbox": "Check your email inbox",
+        "look-for-email": "Look for an email from Supabase Auth",
+        "click-verification-link": "Click the verification link in the email",
+        "click-reset-link": "Click the reset link in the email",
+        "complete-setup": "Complete your account setup"
+      },
+      "no-email-title": "Didn't receive the email?",
+      "troubleshooting": {
+        "check-spam": "Check your spam or junk folder",
+        "verify-email": "Make sure {email} is correct",
+        "wait-minutes": "Wait a few minutes for the email to arrive"
+      }
+    },
+    "buttons": {
+      "resend-email": "Resend email",
+      "email-sent": "Email sent"
+    },
+    "support": {
+      "trouble-text": "Having trouble? Contact our",
+      "support-team": "support team",
+      "assistance": "for assistance."
+    }
+  },
+  "forgot-password-form": {
+    "title": "Reset your password",
+    "description": "Enter your email address and we'll send you a link to reset your password",
+    "email-label": "Email",
+    "email-placeholder": "m@example.com",
+    "buttons": {
+      "sending": "Sending...",
+      "sent": "Link sent!",
+      "send-reset-link": "Send reset link"
+    },
+    "success-message": "Reset link has been sent to your email address.",
+    "back-to-signin": {
+      "text": "Remember your password?",
+      "link": "Back to sign in"
+    }
+  },
+  "get-started-header": {
+    "app-title": "Aesthetic Prediction Data Collector",
+    "getting-started": "Getting Started",
+    "step-label": "Step",
+    "step-counter": "{currentStep} of {totalSteps}"
+  },
+  "get-started-step": {
+    "badges": {
+      "optional": "Optional"
+    },
+    "buttons": {
+      "previous": "Previous",
+      "next-step": "Next Step",
+      "skip-for-now": "Skip for now",
+      "finish-setup": "Finish Setup"
+    }
+  },
+  "header": {
+    "app-title": "Aesthetic Prediction Data Collector",
+    "dropdown": {
+      "my-account": "My Account",
+      "setting": "Setting",
+      "sign-out": "Sign Out"
+    }
+  },
+  "reset-password-form": {
+    "title": "Set new password",
+    "description": "Enter your new password below",
+    "labels": {
+      "new-password": "New password",
+      "confirm-password": "Confirm new password"
+    },
+    "buttons": {
+      "update-password": "Update password"
+    },
+    "back-to-login": {
+      "text": "Remember your password?",
+      "link": "Back to login"
+    }
+  },
+  "signin-form": {
+    "title": "Welcome back",
+    "description": "Sign in with your Apple or Google account",
+    "social-buttons": {
+      "sign-in-with-apple": "Sign in with Apple",
+      "sign-in-with-google": "Sign in with Google"
+    },
+    "divider": "Or continue with",
+    "labels": {
+      "email": "Email",
+      "password": "Password"
+    },
+    "placeholders": {
+      "email": "m@example.com"
+    },
+    "links": {
+      "forgot-password": "Forgot your password?"
+    },
+    "buttons": {
+      "submitting": "Submitting...",
+      "sign-in": "Sign in"
+    },
+    "sign-up": {
+      "text": "Don't have an account?",
+      "link": "Sign up"
+    }
+  },
+  "signup-form": {
+    "title": "Create an account",
+    "labels": {
+      "email": "Email",
+      "password": "Password",
+      "confirm-password": "Confirm password"
+    },
+    "placeholders": {
+      "email": "m@example.com"
+    },
+    "buttons": {
+      "submitting": "Submitting...",
+      "create-account": "Create account"
+    },
+    "sign-in": {
+      "text": "Already have an account?",
+      "link": "Sign in"
+    },
+    "terms": {
+      "text1": "By clicking continue, you agree to our",
+      "privacy-policy": "Privacy Policy",
+      "text2": "."
+    }
+  },
+  "step-contents": {
+    "profile-setup": {
+      "labels": {
+        "age": "Age",
+        "gender": "Gender",
+        "education": "Education Experience"
+      },
+      "placeholders": {
+        "age": "Enter your age"
+      },
+      "gender-options": {
+        "select": "Select gender",
+        "male": "Male",
+        "female": "Female",
+        "other": "Other"
+      },
+      "education-options": {
+        "select": "Select education",
+        "junior-high": "Junior High School",
+        "high-school": "High School",
+        "vocational": "Vocational School",
+        "junior-college": "Junior College",
+        "university": "University (4-year)",
+        "graduate": "Graduate School",
+        "other": "Other"
+      }
+    },
+    "experience-setup": {
+      "labels": {
+        "artistic-experience": "Artistic Experience",
+        "photographic-experience": "Photographic Experience",
+        "fashion-experience": "Fashion Experience",
+        "musical-experience": "Musical Experience"
+      },
+      "level-options": {
+        "select": "Select level",
+        "none": "None",
+        "beginner": "Beginner",
+        "intermediate": "Intermediate",
+        "advanced": "Advanced",
+        "professional": "Professional"
+      }
+    },
+    "tipij-setup": {
+      "table-headers": {
+        "statement": "",
+        "strongly-agree": "強くそう思う",
+        "moderately-agree": "まぁまぁそう思う",
+        "slightly-agree": "少しそう思う",
+        "neither": "どちらでもない",
+        "slightly-disagree": "少し違うと思う",
+        "moderately-disagree": "おおよそ違うと思う",
+        "strongly-disagree": "全く違うと思う"
+      },
+      "statements": {
+        "1": "強くそう思う",
+        "2": "他人に不満をもち、もめごとを起こしやすいと思う。",
+        "3": "しっかりしていて、自分に厳しいと思う。",
+        "4": "心配性で、うろたえやすいと思う。",
+        "5": "新しいことが好きで、変わった考えをもつと思う。",
+        "6": "ひかえめで、おとなしいと思う。",
+        "7": "人に気をつかう、やさしい人間だと思う。",
+        "8": "だらしなく、うっかりしていると思う。",
+        "9": "冷静で、気分が安定していると思う。",
+        "10": "発想力に欠けた、平凡な人間だと思う。"
+      }
+    }
+  },
+  "step-signin-form": {
+    "success": "Success",
+    "error": "Error",
+    "description": "Sign in with your Apple or Google account",
+    "social-buttons": {
+      "sign-in-with-apple": "Sign in with Apple",
+      "sign-in-with-google": "Sign in with Google"
+    },
+    "divider": "Or continue with",
+    "labels": {
+      "email": "Email",
+      "password": "Password"
+    },
+    "placeholders": {
+      "email": "m@example.com"
+    },
+    "links": {
+      "forgot-password": "Forgot your password?"
+    },
+    "buttons": {
+      "submitting": "Submitting...",
+      "sign-in": "Sign in"
+    },
+    "errors": {
+      "incorrect-credentials": "The email address or password is incorrect.",
+      "unexpected-error": "An unexpected error occurred. Please try again."
+    }
+  },
+  "get-started-page": {
+    "steps": {
+      "sign-in": {
+        "title": "Sign In First",
+        "description": "Let's sign in first."
+      },
+      "profile-setup": {
+        "title": "Register Basic Information",
+        "description": "Enter your age, gender, and other personal details"
+      },
+      "experience-setup": {
+        "title": "Register Experience",
+        "description": "Tell us about your experience in art, photography, fashion, and music."
+      },
+      "tipij-setup": {
+        "title": "Register TIPIJ",
+        "description": "Please answer the TIPI-J questionnaire."
+      }
+    },
+    "loading": "Loading..."
+  }
+}

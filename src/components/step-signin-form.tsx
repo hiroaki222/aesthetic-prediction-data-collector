@@ -1,4 +1,5 @@
 'use client'
+import { useTranslations } from "next-intl"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -21,6 +22,7 @@ export function StepSigninForm({
 }: React.ComponentProps<"div"> & {
   onSignInSuccess?: () => void
 }) {
+  const t = useTranslations('step-signin-form')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -41,7 +43,7 @@ export function StepSigninForm({
       const { error } = await supabase.auth.signInWithPassword({ email, password })
 
       if (error) {
-        setError(error.message || "The email address or password is incorrect.")
+        setError(error.message || t('errors.incorrect-credentials'))
         return
       }
 
@@ -51,7 +53,7 @@ export function StepSigninForm({
 
     } catch (error) {
       console.error("Sign in error:", error)
-      setError("An unexpected error occurred. Please try again.")
+      setError(t('errors.unexpected-error'))
     } finally {
       setIsSubmitting(false)
     }
@@ -63,7 +65,7 @@ export function StepSigninForm({
         {showSuccess && (
           <div className="absolute inset-0 z-50 flex items-center justify-center bg-white">
             <div className="text-center">
-              <div className="text-2xl font-bold text-green-600 mb-4">Success</div>
+              <div className="text-2xl font-bold text-green-600 mb-4">{t('success')}</div>
               <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto">
                 <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path>
@@ -75,7 +77,7 @@ export function StepSigninForm({
 
         {error && (
           <Alert variant="destructive" className="mb-4">
-            <AlertTitle>Error</AlertTitle>
+            <AlertTitle>{t('error')}</AlertTitle>
             <AlertDescription>{error}</AlertDescription>
           </Alert>
         )}
@@ -83,7 +85,7 @@ export function StepSigninForm({
         <Card>
           <CardHeader className="text-center">
             <CardDescription>
-              Sign in with your Apple or Google account
+              {t('description')}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -96,7 +98,7 @@ export function StepSigninForm({
                       fill="currentColor"
                     />
                   </svg>
-                  Sign in with Apple
+                  {t('social-buttons.sign-in-with-apple')}
                 </Button>
                 <Button variant="outline" className="w-full" disabled>
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -105,39 +107,39 @@ export function StepSigninForm({
                       fill="currentColor"
                     />
                   </svg>
-                  Sign in with Google
+                  {t('social-buttons.sign-in-with-google')}
                 </Button>
               </div>
               <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
                 <span className="bg-card text-muted-foreground relative z-10 px-2">
-                  Or continue with
+                  {t('divider')}
                 </span>
               </div>
               <form className="grid gap-6" onSubmit={handleSubmit}>
                 <div className="grid gap-3">
-                  <Label htmlFor="email">Email</Label>
+                  <Label htmlFor="email">{t('labels.email')}</Label>
                   <Input
                     id="email"
                     type="email"
-                    placeholder="m@example.com"
+                    placeholder={t('placeholders.email')}
                     name="email"
                     required
                   />
                 </div>
                 <div className="grid gap-3">
                   <div className="flex items-center">
-                    <Label htmlFor="password">Password</Label>
+                    <Label htmlFor="password">{t('labels.password')}</Label>
                     <a
                       href="/forgot-password"
                       className="ml-auto text-sm underline-offset-4 hover:underline"
                     >
-                      Forgot your password?
+                      {t('links.forgot-password')}
                     </a>
                   </div>
                   <Input id="password" type="password" name="password" required />
                 </div>
                 <Button className="w-full" type="submit" disabled={isSubmitting}>
-                  {isSubmitting ? "Submitting..." : "Sign in"}
+                  {isSubmitting ? t('buttons.submitting') : t('buttons.sign-in')}
                 </Button>
               </form>
             </div>

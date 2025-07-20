@@ -1,5 +1,6 @@
 'use client'
 import type React from "react"
+import { useTranslations } from "next-intl"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 //import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -10,6 +11,7 @@ import { signup } from "@/utils/supabase/actions"
 import { useState } from "react"
 
 export function SignupForm({ className, ...props }: React.ComponentPropsWithoutRef<"div">) {
+  const t = useTranslations('signup-form')
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -26,7 +28,7 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader className="text-center">
-          <CardTitle className="text-xl">Create an account</CardTitle>
+          <CardTitle className="text-xl">{t('title')}</CardTitle>
           {/* <CardDescription>Sign up with your Apple or Google account</CardDescription> */}
         </CardHeader>
         <CardContent>
@@ -56,32 +58,32 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
             </div> */}
             <form className="grid gap-6" onSubmit={handleSubmit}>
               <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="m@example.com" name="email" required />
+                <Label htmlFor="email">{t('labels.email')}</Label>
+                <Input id="email" type="email" placeholder={t('placeholders.email')} name="email" required />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password">{t('labels.password')}</Label>
                 <Input id="password" type="password" required />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="confirm-password">Confirm password</Label>
+                <Label htmlFor="confirm-password">{t('labels.confirm-password')}</Label>
                 <Input id="confirm-password" type="password" name="password" required />
               </div>
               <Button className="w-full" type="submit" disabled={isSubmitting}>
-                {isSubmitting ? "Submitting..." : "Create account"}
+                {isSubmitting ? t('buttons.submitting') : t('buttons.create-account')}
               </Button>
             </form >
             <div className="text-center text-sm">
-              Already have an account?{" "}
+              {t('sign-in.text')}{" "}
               <a href="/signin" className="underline underline-offset-4">
-                Sign in
+                {t('sign-in.link')}
               </a>
             </div>
           </div>
         </CardContent>
       </Card>
-      <div className="text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 [&_a]:hover:text-primary  ">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+      <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
+        {t('terms.text')} <a href="#">{t('terms.privacy-policy')}</a> {t('terms.text2')}
       </div>
     </div>
   )

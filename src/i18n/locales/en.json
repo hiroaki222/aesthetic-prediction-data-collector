@@ -1,0 +1,8 @@
+{
+  "main-page": {
+    "title": "welcome",
+    "description": "Get started with your account",
+    "sign-in": "Sign In",
+    "sign-up": "Sign Up"
+  }
+}

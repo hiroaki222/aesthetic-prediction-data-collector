@@ -1,6 +1,7 @@
 "use client"
 
 import type React from "react"
+import { useTranslations } from "next-intl"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -28,6 +29,8 @@ interface GetStartedStepProps {
 }
 
 export function GetStartedStep({ step, onNext, onPrevious, onComplete, isFirst, isLast, isFinishDisabled, isNextDisabled }: GetStartedStepProps) {
+  const t = useTranslations('get-started-step')
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="">
@@ -39,7 +42,7 @@ export function GetStartedStep({ step, onNext, onPrevious, onComplete, isFirst, 
               <Circle className="h-6 w-6 text-muted-foreground" />
             )}
             <h1 className="text-2xl font-bold">{step.title}</h1>
-            {step.isOptional && <Badge variant="secondary">Optional</Badge>}
+            {step.isOptional && <Badge variant="secondary">{t('badges.optional')}</Badge>}
           </div>
           <p className="text-muted-foreground text-lg">{step.description}</p>
         </div>
@@ -51,20 +54,20 @@ export function GetStartedStep({ step, onNext, onPrevious, onComplete, isFirst, 
         <div className="flex items-center justify-between">
           <Button variant="outline" onClick={onPrevious} disabled={isFirst} className="bg-transparent">
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Previous
+            {t('buttons.previous')}
           </Button>
 
           <div className="flex gap-2">
             {step.isOptional && !step.isCompleted && (
               <Button variant="outline" onClick={onNext} className="bg-transparent">
-                Skip for now
+                {t('buttons.skip-for-now')}
               </Button>
             )}
             {isLast ? (
-              <Button onClick={onComplete} disabled={isFinishDisabled}>Finish Setup</Button>
+              <Button onClick={onComplete} disabled={isFinishDisabled}>{t('buttons.finish-setup')}</Button>
             ) : (
               <Button onClick={onNext} disabled={isNextDisabled}>
-                Next Step
+                {t('buttons.next-step')}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             )}

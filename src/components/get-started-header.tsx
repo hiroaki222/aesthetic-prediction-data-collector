@@ -1,5 +1,6 @@
 "use client"
 
+import { useTranslations } from "next-intl"
 import { Progress } from "@/components/ui/progress"
 import { FilePenLine } from "lucide-react"
 
@@ -9,6 +10,7 @@ interface GetStartedHeaderProps {
 }
 
 export function GetStartedHeader({ currentStep, totalSteps }: GetStartedHeaderProps) {
+  const t = useTranslations('get-started-header')
   const progress = (currentStep / totalSteps) * 100
 
   return (
@@ -19,16 +21,16 @@ export function GetStartedHeader({ currentStep, totalSteps }: GetStartedHeaderPr
             <div className="flex h-6 w-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
               <FilePenLine className="size-4" />
             </div>
-            <span className="font-semibold">Aesthetic Prediction Data Collector</span>
+            <span className="font-semibold">{t('app-title')}</span>
           </div>
-          <div className="hidden sm:block text-sm text-muted-foreground">Getting Started</div>
+          <div className="hidden sm:block text-sm text-muted-foreground">{t('getting-started')}</div>
         </div>
 
         <div className="flex items-center gap-4 ml-auto">
           <div className="flex items-center gap-2 text-sm">
-            <span className="text-muted-foreground">Step</span>
+            <span className="text-muted-foreground">{t('step-label')}</span>
             <span className="font-medium">
-              {currentStep} of {totalSteps}
+              {t('step-counter', { currentStep, totalSteps })}
             </span>
           </div>
         </div>

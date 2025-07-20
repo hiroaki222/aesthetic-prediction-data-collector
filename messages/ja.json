@@ -1,0 +1,275 @@
+{
+  "home-page": {
+    "title": "ようこそ",
+    "description": "",
+    "sign-in": "ログイン",
+    "sign-up": "アカウントを作成"
+  },
+  "email-verification-form": {
+    "signup": {
+      "title": "メールを送信しました",
+      "description": "お使いのメールボックスを確認してください",
+      "back-button": "アカウント作成に戻る"
+    },
+    "password-reset": {
+      "title": "メールを再送",
+      "description": "メールを送信しました",
+      "back-button": "パスワードを忘れた に戻る"
+    },
+    "sender-info": {
+      "sender": "送信元名:",
+      "sender-name": "Supabase Auth",
+      "email-from": "送信元アドレス:",
+      "email-sent-to": "送信先:"
+    },
+    "instructions": {
+      "next-steps-title": "やること:",
+      "steps": {
+        "check-inbox": "メールボックスを確認",
+        "look-for-email": "Supabase Authからのメールを探す",
+        "click-verification-link": "メール内の確認リンクをクリック",
+        "click-reset-link": "メール内のリセットリンクをクリック",
+        "complete-setup": "アカウント設定を完了"
+      },
+      "no-email-title": "メールが届かない場合",
+      "troubleshooting": {
+        "check-spam": "迷惑メールフォルダを確認",
+        "verify-email": "送信先 {email} が正しいか確認",
+        "wait-minutes": "メールが届くまで数分お待ち下さい"
+      }
+    },
+    "buttons": {
+      "resend-email": "メールを再送",
+      "email-sent": "メールを送信しました"
+    },
+    "support": {
+      "trouble-text": "解決しない場合は",
+      "support-team": "サポート",
+      "assistance": "までお問い合わせください。"
+    }
+  },
+  "forgot-password-form": {
+    "title": "パスワードをリセット",
+    "description": "登録済みのメールアドレスを入力してください",
+    "email-label": "メールアドレス",
+    "email-placeholder": "m@example.com",
+    "buttons": {
+      "sending": "送信中...",
+      "sent": "送信されました!",
+      "send-reset-link": "リセットリンクを送信"
+    },
+    "success-message": "リセットリンクをメールアドレスに送信しました",
+    "back-to-signin": {
+      "text": "パスワードを覚えていますか?",
+      "link": "ログインに戻る"
+    }
+  },
+  "get-started-header": {
+    "app-title": "Aesthetic Prediction Data Collector",
+    "getting-started": "アカウントのセットアップ",
+    "step-label": "ステップ",
+    "step-counter": "{currentStep} / {totalSteps}"
+  },
+  "get-started-step": {
+    "badges": {
+      "optional": "オプション"
+    },
+    "buttons": {
+      "previous": "戻る",
+      "next-step": "次へ",
+      "skip-for-now": "スキップ",
+      "finish-setup": "完了"
+    }
+  },
+  "header": {
+    "app-title": "Aesthetic Prediction Data Collector",
+    "dropdown": {
+      "my-account": "マイアカウント",
+      "setting": "設定",
+      "sign-out": "ログアウト"
+    }
+  },
+  "reset-password-form": {
+    "title": "新しいパスワードを設定",
+    "description": "新しいパスワードを入力してください",
+    "labels": {
+      "new-password": "新しいパスワードを入力",
+      "confirm-password": "再入力"
+    },
+    "buttons": {
+      "update-password": "パスワードを更新"
+    },
+    "back-to-login": {
+      "text": "パスワードを覚えていますか?",
+      "link": "ログインに戻る"
+    }
+  },
+  "signin-form": {
+    "title": "ログイン",
+    "description": "AppleアカウントやGoogleアカウントで続ける",
+    "social-buttons": {
+      "sign-in-with-apple": "Appleアカウント",
+      "sign-in-with-google": "Googleアカウント"
+    },
+    "divider": "メールアドレスで続ける",
+    "labels": {
+      "email": "メールアドレス",
+      "password": "パスワード"
+    },
+    "placeholders": {
+      "email": "m@example.com"
+    },
+    "links": {
+      "forgot-password": "パスワードを忘れた"
+    },
+    "buttons": {
+      "submitting": "ログイン中...",
+      "sign-in": "ログイン"
+    },
+    "sign-up": {
+      "text": "アカウントをお持ちでないですか?",
+      "link": "アカウントを作成"
+    }
+  },
+  "signup-form": {
+    "title": "アカウントを作成",
+    "labels": {
+      "email": "メールアドレス",
+      "password": "パスワード",
+      "confirm-password": "パスワードの再入力"
+    },
+    "placeholders": {
+      "email": "m@example.com"
+    },
+    "buttons": {
+      "submitting": "送信中...",
+      "create-account": "アカウントを作成"
+    },
+    "sign-in": {
+      "text": "アカウントをお持ちですか?",
+      "link": "ログイン"
+    },
+    "terms": {
+      "text": "ログインすることで、",
+      "privacy-policy": "利用規約",
+      "text2": "に同意したことになります"
+    }
+  },
+  "step-contents": {
+    "profile-setup": {
+      "labels": {
+        "age": "年齢",
+        "gender": "性別",
+        "education": "学歴"
+      },
+      "placeholders": {
+        "age": "年齢を入力してください"
+      },
+      "gender-options": {
+        "select": "性別を選択",
+        "male": "男性",
+        "female": "女性",
+        "other": "その他"
+      },
+      "education-options": {
+        "select": "学歴を選択",
+        "junior-high": "中学校",
+        "high-school": "高等学校",
+        "vocational": "専門学校",
+        "junior-college": "短期大学",
+        "university": "大学（4年制）",
+        "graduate": "大学院",
+        "other": "その他"
+      }
+    },
+    "experience-setup": {
+      "labels": {
+        "artistic-experience": "芸術的経験",
+        "photographic-experience": "写真撮影経験",
+        "fashion-experience": "ファッション経験",
+        "musical-experience": "音楽経験"
+      },
+      "level-options": {
+        "select": "レベルを選択",
+        "none": "なし",
+        "beginner": "初心者",
+        "intermediate": "中級者",
+        "advanced": "上級者",
+        "professional": "プロフェッショナル"
+      }
+    },
+    "tipij-setup": {
+      "table-headers": {
+        "statement": "",
+        "strongly-agree": "強くそう思う",
+        "moderately-agree": "まぁまぁそう思う",
+        "slightly-agree": "少しそう思う",
+        "neither": "どちらでもない",
+        "slightly-disagree": "少し違うと思う",
+        "moderately-disagree": "おおよそ違うと思う",
+        "strongly-disagree": "全く違うと思う"
+      },
+      "statements": {
+        "1": "強くそう思う",
+        "2": "他人に不満をもち、もめごとを起こしやすいと思う。",
+        "3": "しっかりしていて、自分に厳しいと思う。",
+        "4": "心配性で、うろたえやすいと思う。",
+        "5": "新しいことが好きで、変わった考えをもつと思う。",
+        "6": "ひかえめで、おとなしいと思う。",
+        "7": "人に気をつかう、やさしい人間だと思う。",
+        "8": "だらしなく、うっかりしていると思う。",
+        "9": "冷静で、気分が安定していると思う。",
+        "10": "発想力に欠けた、平凡な人間だと思う。"
+      }
+    }
+  },
+  "step-signin-form": {
+    "success": "ログイン完了",
+    "error": "エラー",
+    "description": "AppleアカウントやGoogleアカウントで続ける",
+    "social-buttons": {
+      "sign-in-with-apple": "Appleアカウント",
+      "sign-in-with-google": "Googleアカウント"
+    },
+    "divider": "メールアドレスで続ける",
+    "labels": {
+      "email": "メールアドレス",
+      "password": "パスワード"
+    },
+    "placeholders": {
+      "email": "m@example.com"
+    },
+    "links": {
+      "forgot-password": "パスワードを忘れた"
+    },
+    "buttons": {
+      "submitting": "ログイン中...",
+      "sign-in": "ログイン"
+    },
+    "errors": {
+      "incorrect-credentials": "メールアドレスまたはパスワードが正しくありません。",
+      "unexpected-error": "予期しないエラーが発生しました。もう一度お試しください。"
+    }
+  },
+  "get-started-page": {
+    "steps": {
+      "sign-in": {
+        "title": "ログイン",
+        "description": "最初にログインしてください"
+      },
+      "profile-setup": {
+        "title": "プロフィール設定",
+        "description": "年齢、性別、学歴を入力してください。"
+      },
+      "experience-setup": {
+        "title": "経験を教えてください",
+        "description": "芸術、写真、ファッション、音楽の経験を選択してください。"
+      },
+      "tipij-setup": {
+        "title": "TIPI-J",
+        "description": "TIPI-J質問票に回答してください。"
+      }
+    },
+    "loading": "ロード中..."
+  }
+}

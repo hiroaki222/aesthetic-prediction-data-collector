@@ -1,12 +1,10 @@
-'use client'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { FilePenLine } from "lucide-react"
-import { useTranslation } from "react-i18next";
-
+import { useTranslations } from 'next-intl';
 
 export default function HomePage() {
-  const { t } = useTranslation();
+  const t = useTranslations('home-page');
   return (
     <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-muted p-6 md:p-10">
       <div className="flex w-full max-w-sm flex-col gap-6">
@@ -20,15 +18,15 @@ export default function HomePage() {
 
         <Card>
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl">{t('main-page.title')}</CardTitle>
-            <CardDescription>Get started with your account</CardDescription>
+            <CardTitle className="text-2xl">{t('title')}</CardTitle>
+            <CardDescription>{t('description')}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <Button asChild className="w-full">
-              <a href="/signin">Sign In</a>
+              <a href="/signin">{t('sign-in')}</a>
             </Button>
             <Button asChild variant="outline" className="w-full bg-transparent">
-              <a href="/signup">Sign Up</a>
+              <a href="/signup">{t('sign-up')}</a>
             </Button>
           </CardContent>
         </Card>

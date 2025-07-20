@@ -200,7 +200,18 @@
     },
     "tipij-setup": {
       "table-headers": {
-        "statement": "",
+        "statement": "設問",
+        "rating": "評価",
+        "strongly-agree": "強くそう思う",
+        "moderately-agree": "まぁまぁそう思う",
+        "slightly-agree": "少しそう思う",
+        "neither": "どちらでもない",
+        "slightly-disagree": "少し違うと思う",
+        "moderately-disagree": "おおよそ違うと思う",
+        "strongly-disagree": "全く違うと思う"
+      },
+      "scale-options": {
+        "select": "選択してください",
         "strongly-agree": "強くそう思う",
         "moderately-agree": "まぁまぁそう思う",
         "slightly-agree": "少しそう思う",
@@ -221,7 +232,7 @@
         "9": "冷静で、気分が安定していると思う。",
         "10": "発想力に欠けた、平凡な人間だと思う。"
       },
-      "description": "スクロールして選択してください"
+      "description": "スクロールして選択してください →"
     }
   },
   "step-signin-form": {

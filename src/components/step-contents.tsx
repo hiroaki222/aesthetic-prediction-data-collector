@@ -13,7 +13,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { CardDescription } from "./ui/card"
 
 type ProfileSetupContentProps = {
@@ -192,27 +191,37 @@ export function TIPIJSetupContent1({ handleStepComplete, updateProfileData, prof
     updateProfileData('titpj', updatedTitpj)
   }
 
+  const scaleOptions = [
+    { value: '7', label: t('scale-options.strongly-agree') },
+    { value: '6', label: t('scale-options.moderately-agree') },
+    { value: '5', label: t('scale-options.slightly-agree') },
+    { value: '4', label: t('scale-options.neither') },
+    { value: '3', label: t('scale-options.slightly-disagree') },
+    { value: '2', label: t('scale-options.moderately-disagree') },
+    { value: '1', label: t('scale-options.strongly-disagree') },
+  ]
+
   const tableRows = options.map(option => {
     const currentValue = profileData?.titpj?.[option.row] as string || ''
 
     return (
       <TableRow key={option.row}>
-        <TableCell className="font-medium border-r border-gray-300">{option.label}</TableCell>
-        <TableCell colSpan={7}>
-          <RadioGroup
-            className="flex items-center justify-around"
-            name={`row${option.row}`}
+        <TableCell className="font-medium border-r border-gray-300 break-words py-4 pr-4 align-top">{option.label}</TableCell>
+        <TableCell className="px-2 py-4 min-w-0">
+          <select
+            className="flex h-10 w-full rounded-md border border-input bg-background px-2 py-2 text-sm min-w-0"
             value={currentValue}
-            onValueChange={(value) => handleTIPIJChange(option.row, value)}
+            onChange={(e) => handleTIPIJChange(option.row, e.target.value)}
+            required
           >
-            {[7, 6, 5, 4, 3, 2, 1].map(value => {
-              return (
-                <RadioGroupItem key={value} value={String(value)} id={`row${option.row}-${value}`} />
-              )
-            })}
-          </RadioGroup>
+            <option value="" disabled>{t('scale-options.select')}</option>
+            {scaleOptions.map(scale => (
+              <option key={scale.value} value={scale.value}>
+                {scale.label}
+              </option>
+            ))}
+          </select>
         </TableCell>
-
       </TableRow>
     )
   })
@@ -221,24 +230,20 @@ export function TIPIJSetupContent1({ handleStepComplete, updateProfileData, prof
   return (
     <form onSubmit={handleStepComplete} className="space-y-6">
       <div className="space-y-4 flex flex-col items-center">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[100px] border-r border-gray-300">{t('table-headers.statement')}</TableHead>
-              <TableHead>{t('table-headers.strongly-agree')}</TableHead>
-              <TableHead>{t('table-headers.moderately-agree')}</TableHead>
-              <TableHead>{t('table-headers.slightly-agree')}</TableHead>
-              <TableHead>{t('table-headers.neither')}</TableHead>
-              <TableHead>{t('table-headers.slightly-disagree')}</TableHead>
-              <TableHead>{t('table-headers.moderately-disagree')}</TableHead>
-              <TableHead>{t('table-headers.strongly-disagree')}</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {tableRows}
-          </TableBody>
-        </Table>
-        <CardDescription>← {t('description')} →</CardDescription>
+        <div className="w-full max-w-4xl overflow-hidden">
+          <Table className="w-full">
+            <TableHeader>
+              <TableRow>
+                <TableHead className="border-r border-gray-300 h-12 py-3 text-left">{t('table-headers.statement')}</TableHead>
+                <TableHead className="text-center h-12 py-3 min-w-[200px]">{t('table-headers.rating')}</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {tableRows}
+            </TableBody>
+          </Table>
+        </div>
+        <CardDescription>{t('description')}</CardDescription>
       </div>
     </form>
   )

@@ -200,28 +200,39 @@
     },
     "tipij-setup": {
       "table-headers": {
-        "statement": "",
-        "strongly-agree": "強くそう思う",
-        "moderately-agree": "まぁまぁそう思う",
-        "slightly-agree": "少しそう思う",
-        "neither": "どちらでもない",
-        "slightly-disagree": "少し違うと思う",
-        "moderately-disagree": "おおよそ違うと思う",
-        "strongly-disagree": "全く違うと思う"
+        "statement": "Statement",
+        "rating": "Rating",
+        "strongly-agree": "Strongly Agree",
+        "moderately-agree": "Moderately Agree",
+        "slightly-agree": "Slightly Agree",
+        "neither": "Neither Agree nor Disagree",
+        "slightly-disagree": "Slightly Disagree",
+        "moderately-disagree": "Moderately Disagree",
+        "strongly-disagree": "Strongly Disagree"
+      },
+      "scale-options": {
+        "select": "Please select",
+        "strongly-agree": "Strongly Agree",
+        "moderately-agree": "Moderately Agree",
+        "slightly-agree": "Slightly Agree",
+        "neither": "Neither Agree nor Disagree",
+        "slightly-disagree": "Slightly Disagree",
+        "moderately-disagree": "Moderately Disagree",
+        "strongly-disagree": "Strongly Disagree"
       },
       "statements": {
-        "1": "活発、外向的だと思う。",
-        "2": "他人に不満をもち、もめごとを起こしやすいと思う。",
-        "3": "しっかりしていて、自分に厳しいと思う。",
-        "4": "心配性で、うろたえやすいと思う。",
-        "5": "新しいことが好きで、変わった考えをもつと思う。",
-        "6": "ひかえめで、おとなしいと思う。",
-        "7": "人に気をつかう、やさしい人間だと思う。",
-        "8": "だらしなく、うっかりしていると思う。",
-        "9": "冷静で、気分が安定していると思う。",
-        "10": "発想力に欠けた、平凡な人間だと思う。"
+        "1": "I see myself as extraverted, enthusiastic.",
+        "2": "I see myself as critical, quarrelsome.",
+        "3": "I see myself as dependable, self-disciplined.",
+        "4": "I see myself as anxious, easily upset.",
+        "5": "I see myself as open to new experiences, complex.",
+        "6": "I see myself as reserved, quiet.",
+        "7": "I see myself as sympathetic, warm.",
+        "8": "I see myself as disorganized, careless.",
+        "9": "I see myself as calm, emotionally stable.",
+        "10": "I see myself as conventional, uncreative."
       },
-      "description": "Please scroll and select"
+      "description": "Please select the most appropriate rating for each statement"
     }
   },
   "step-signin-form": {

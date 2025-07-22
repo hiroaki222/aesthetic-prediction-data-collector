@@ -9,7 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { fetchUser, signout } from "@/utils/supabase/actions"
+import { fetchRole, fetchUser, signout } from "@/utils/supabase/actions"
 import { redirect } from "next/navigation"
 import { useEffect, useState } from "react"
 
@@ -19,9 +19,8 @@ export function Header() {
 
   const adminPanel = async () => {
     const user = await fetchUser();
-    const response = await fetch(`/api/get-role?uuid=${user?.id}`);
-    const data = await response.json();
-    if (data.role.role === true) {
+    const isAdmin = await fetchRole(user?.id);
+    if (isAdmin) {
       setRole(true);
     }
   }

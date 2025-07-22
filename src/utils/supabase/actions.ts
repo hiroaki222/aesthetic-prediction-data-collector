@@ -182,3 +182,24 @@ export async function fetchUser() {
 
   return user;
 }
+
+export async function fetchRole(uuid: string | undefined) {
+  const supabase = await createClient();
+  if (!uuid) {
+    console.error("UUID is required to fetch user role");
+    return false;
+  }
+
+  const { data, error } = await supabase
+    .from("user-data")
+    .select("role")
+    .eq("uuid", uuid)
+    .single();
+
+  if (error) {
+    console.error("Error fetching user role:", error);
+    return false;
+  }
+
+  return data;
+}

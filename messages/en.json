@@ -86,7 +86,8 @@
     "dropdown": {
       "my-account": "My Account",
       "setting": "Setting",
-      "sign-out": "Sign Out"
+      "sign-out": "Sign Out",
+      "admin": "Admin Panel"
     }
   },
   "reset-password-form": {

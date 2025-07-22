@@ -86,7 +86,8 @@
     "dropdown": {
       "my-account": "マイアカウント",
       "setting": "設定",
-      "sign-out": "ログアウト"
+      "sign-out": "ログアウト",
+      "admin": "管理画面"
     }
   },
   "reset-password-form": {

@@ -312,5 +312,11 @@
       "privacy": "Privacy Policy",
       "github": "GitHub"
     }
+  },
+  "error-page": {
+    "buttons": {
+      "go-home": "Go to Homepage",
+      "go-back": "Go Back"
+    }
   }
 }

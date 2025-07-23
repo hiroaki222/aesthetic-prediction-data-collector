@@ -9,10 +9,10 @@ export function Footer() {
             &copy; {new Date().getFullYear()} Takahara Hiroaki | Licensed under the MIT License
           </p>
           <div className="flex items-center gap-4">
-            <a href="#" className="text-xs text-muted-foreground hover:text-foreground">
+            <a href="https://github.com/hiroaki222/aesthetic-prediction-data-collector/blob/main/LICENSE" className="text-xs text-muted-foreground hover:text-foreground">
               License
             </a>
-            <a href="#" className="text-xs text-muted-foreground hover:text-foreground">
+            <a href="https://github.com/hiroaki222/aesthetic-prediction-data-collector/blob/main/PRIVACY.md" className="text-xs text-muted-foreground hover:text-foreground">
               Privacy Policy
             </a>
             <a

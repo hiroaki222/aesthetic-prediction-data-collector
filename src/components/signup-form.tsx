@@ -83,7 +83,7 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
         </CardContent>
       </Card>
       <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
-        {t('terms.text')} <a href="#">{t('terms.privacy-policy')}</a> {t('terms.text2')}
+        {t('terms.text')} <a href="https://github.com/hiroaki222/aesthetic-prediction-data-collector/blob/main/PRIVACY.md">{t('terms.privacy-policy')}</a> {t('terms.text2')}
       </div>
     </div>
   )

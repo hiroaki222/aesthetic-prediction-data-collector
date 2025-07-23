@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Progress } from "@/components/ui/progress"
 import { ArrowRight } from "lucide-react"
 import Image from "next/image"
+import { useTranslations } from "next-intl"
 
 interface TaskCardProps {
   id: string
@@ -25,6 +26,8 @@ export function TaskCard({
   progress = 0,
   onStart,
 }: TaskCardProps) {
+  const t = useTranslations('task-card')
+
   const getStatusFromProgress = () => {
     if (progress === 100) return "completed"
     if (progress > 0) return "in-progress"
@@ -36,11 +39,11 @@ export function TaskCard({
   const getButtonText = () => {
     switch (status) {
       case "completed":
-        return "Review"
+        return t('buttons.review')
       case "in-progress":
-        return "Continue"
+        return t('buttons.continue')
       default:
-        return "Start Task"
+        return t('buttons.start')
     }
   }
 
@@ -64,7 +67,7 @@ export function TaskCard({
       <CardContent className="space-y-4">
         <div className="space-y-2">
           <div className="flex justify-between text-sm">
-            <span className="text-muted-foreground">Progress</span>
+            <span className="text-muted-foreground">{t('progress')}</span>
             <span className="font-medium">{progress}%</span>
           </div>
           <Progress value={progress} className="h-2" />

@@ -5,6 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { TaskCard } from "@/components/task-card"
 import { fetchTasks } from "@/utils/supabase/actions";
 import { Footer } from "@/components/footer";
+import { useTranslations } from "next-intl";
 
 interface Task {
   id: string;
@@ -15,6 +16,7 @@ interface Task {
 }
 
 export default function Dashboard() {
+  const t = useTranslations('dashboard')
   const [tasks, setTasks] = useState<Task[]>([])
   const [activeTab, setActiveTab] = useState("all")
 
@@ -53,21 +55,21 @@ export default function Dashboard() {
       <Header />
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">Dashboard</h1>
+          <h1 className="text-3xl font-bold mb-2">{t('title')}</h1>
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-8">
           <TabsList>
-            <TabsTrigger value="all">All Tasks</TabsTrigger>
-            <TabsTrigger value="not-started">Not Started</TabsTrigger>
-            <TabsTrigger value="in-progress">In Progress</TabsTrigger>
-            <TabsTrigger value="completed">Completed</TabsTrigger>
+            <TabsTrigger value="all">{t('tabs.all')}</TabsTrigger>
+            <TabsTrigger value="not-started">{t('tabs.not-started')}</TabsTrigger>
+            <TabsTrigger value="in-progress">{t('tabs.in-progress')}</TabsTrigger>
+            <TabsTrigger value="completed">{t('tabs.completed')}</TabsTrigger>
           </TabsList>
 
           <TabsContent value={activeTab} className="mt-6">
             {filteredTasks.length === 0 ? (
               <div className="text-center py-12">
-                <p className="text-muted-foreground mb-4">No tasks found in this category</p>
+                <p className="text-muted-foreground mb-4">{t('empty-state.message')}</p>
               </div>
             ) : (
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { TaskCard } from "@/components/task-card"
 import { fetchTasks } from "@/utils/supabase/actions";
+import { Footer } from "@/components/footer";
 
 interface Task {
   id: string;
@@ -78,6 +79,7 @@ export default function Dashboard() {
           </TabsContent>
         </Tabs>
       </div>
+      <Footer />
     </div>
   )
 }

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { ArrowRight } from "lucide-react"
+import Image from "next/image"
 
 interface TaskCardProps {
   id: string
@@ -46,9 +47,11 @@ export function TaskCard({
   return (
     <Card className="group hover:shadow-lg transition-all duration-200 hover:-translate-y-1">
       <div className="aspect-video relative overflow-hidden rounded-t-lg">
-        <img
-          src={image || "/placeholder.svg"}
+        <Image
+          src={image}
           alt={title}
+          width={300}
+          height={200}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
         />
       </div>

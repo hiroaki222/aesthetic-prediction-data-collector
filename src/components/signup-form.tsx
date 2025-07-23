@@ -82,9 +82,6 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
           </div>
         </CardContent>
       </Card>
-      <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
-        {t('terms.text')} <a href="#">{t('terms.privacy-policy')}</a> {t('terms.text2')}
-      </div>
     </div>
   )
 }

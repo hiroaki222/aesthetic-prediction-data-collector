@@ -86,7 +86,8 @@
     "dropdown": {
       "my-account": "My Account",
       "setting": "Setting",
-      "sign-out": "Sign Out"
+      "sign-out": "Sign Out",
+      "admin": "Admin Panel"
     }
   },
   "reset-password-form": {
@@ -283,5 +284,39 @@
       }
     },
     "loading": "Loading..."
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "tabs": {
+      "all": "All Tasks",
+      "not-started": "Not Started",
+      "in-progress": "In Progress",
+      "completed": "Completed"
+    },
+    "empty-state": {
+      "message": "No tasks found in this category"
+    }
+  },
+  "task-card": {
+    "progress": "Progress",
+    "buttons": {
+      "start": "Start Task",
+      "continue": "Continue",
+      "review": "Review"
+    }
+  },
+  "footer": {
+    "copyright": "© {year} Takahara Hiroaki | Licensed under the MIT License",
+    "links": {
+      "license": "License",
+      "privacy": "Privacy Policy",
+      "github": "GitHub"
+    }
+  },
+  "error-page": {
+    "buttons": {
+      "go-home": "Go to Homepage",
+      "go-back": "Go Back"
+    }
   }
 }

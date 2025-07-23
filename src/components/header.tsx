@@ -1,3 +1,4 @@
+'use client'
 import { CircleUserRound, FilePenLine } from "lucide-react"
 import { useTranslations } from "next-intl"
 import {
@@ -8,10 +9,25 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { signout } from "@/utils/supabase/actions"
+import { fetchRole, fetchUser, signout } from "@/utils/supabase/actions"
+import { redirect } from "next/navigation"
+import { useEffect, useState } from "react"
 
 export function Header() {
   const t = useTranslations('header')
+  const [role, setRole] = useState<boolean>(false);
+
+  const adminPanel = async () => {
+    const user = await fetchUser();
+    const isAdmin = await fetchRole(user?.id);
+    if (isAdmin) {
+      setRole(true);
+    }
+  }
+
+  useEffect(() => {
+    adminPanel();
+  }, []);
 
   return (
     <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex items-center justify-center">
@@ -27,6 +43,9 @@ export function Header() {
             <DropdownMenuLabel>{t('dropdown.my-account')}</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem>{t('dropdown.setting')}</DropdownMenuItem>
+            {role && (
+              <DropdownMenuItem onClick={() => { redirect(`/admin`) }}>{t('dropdown.admin')}</DropdownMenuItem>
+            )}
             <DropdownMenuItem onClick={signout}>{t('dropdown.sign-out')}</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

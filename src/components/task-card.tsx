@@ -45,7 +45,7 @@ export function TaskCard({
   }
 
   return (
-    <Card className="group hover:shadow-lg transition-all duration-200 hover:-translate-y-1">
+    <Card className="group hover:shadow-lg transition-all duration-200 hover:-translate-y-1 py-0 pb-6">
       <div className="aspect-video relative overflow-hidden rounded-t-lg">
         <Image
           src={image}

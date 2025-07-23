@@ -1,9 +1,9 @@
 'use client'
 import { Header } from "@/components/header";
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { TaskCard } from "@/components/task-card"
+import { fetchTasks } from "@/utils/supabase/actions";
 
 interface Task {
   id: string;
@@ -18,15 +18,16 @@ export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("all")
 
   const fetchTaskData = async (): Promise<Task[]> => {
-    return sampleTasks;
+    const data = await fetchTasks();
+    return data
   }
 
   useEffect(() => {
-    const loadTasks = async () => {
+    const fetchData = async () => {
       const data = await fetchTaskData();
       setTasks(data);
     }
-    loadTasks();
+    fetchData();
   }, [])
 
   const handleStartTask = (taskId: string) => {
@@ -66,7 +67,6 @@ export default function Dashboard() {
             {filteredTasks.length === 0 ? (
               <div className="text-center py-12">
                 <p className="text-muted-foreground mb-4">No tasks found in this category</p>
-                <Button>Create New Task</Button>
               </div>
             ) : (
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -81,55 +81,3 @@ export default function Dashboard() {
     </div>
   )
 }
-
-
-const sampleTasks = [
-  {
-    id: "1",
-    title: "Complete Project Setup",
-    description:
-      "Set up the initial project structure, configure development environment, and establish coding standards for the team.",
-    image: "https://picsum.photos/300/200",
-    progress: 0,
-  },
-  {
-    id: "2",
-    title: "Design System Implementation",
-    description:
-      "Create and implement a comprehensive design system including components, colors, typography, and spacing guidelines.",
-    image: "https://picsum.photos/300/200?random=2",
-    progress: 65,
-  },
-  {
-    id: "3",
-    title: "User Authentication Flow",
-    description:
-      "Implement secure user authentication including login, signup, password reset, and email verification features.",
-    image: "https://picsum.photos/300/200?random=3",
-    progress: 100,
-  },
-  {
-    id: "4",
-    title: "Database Schema Design",
-    description:
-      "Design and implement the database schema with proper relationships, indexes, and data validation rules.",
-    image: "https://picsum.photos/300/200?random=4",
-    progress: 0,
-  },
-  {
-    id: "5",
-    title: "API Development",
-    description:
-      "Build RESTful APIs with proper error handling, authentication, and documentation for frontend integration.",
-    image: "https://picsum.photos/300/200?random=5",
-    progress: 30,
-  },
-  {
-    id: "6",
-    title: "Mobile App Testing",
-    description:
-      "Comprehensive testing of mobile application across different devices and operating systems to ensure quality.",
-    image: "https://picsum.photos/300/200?random=6",
-    progress: 0,
-  },
-]

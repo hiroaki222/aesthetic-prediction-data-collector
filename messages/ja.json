@@ -86,7 +86,8 @@
     "dropdown": {
       "my-account": "マイアカウント",
       "setting": "設定",
-      "sign-out": "ログアウト"
+      "sign-out": "ログアウト",
+      "admin": "管理画面"
     }
   },
   "reset-password-form": {
@@ -283,5 +284,33 @@
       }
     },
     "loading": "ロード中..."
+  },
+  "dashboard": {
+    "title": "ダッシュボード",
+    "tabs": {
+      "all": "すべてのタスク",
+      "not-started": "未着手",
+      "in-progress": "進行中",
+      "completed": "完了"
+    },
+    "empty-state": {
+      "message": "このカテゴリにはタスクが見つかりません"
+    }
+  },
+  "task-card": {
+    "progress": "進捗",
+    "buttons": {
+      "start": "タスクを開始",
+      "continue": "続ける",
+      "review": "レビュー"
+    }
+  },
+  "footer": {
+    "copyright": "© {year} Takahara Hiroaki | MITライセンス下で公開",
+    "links": {
+      "license": "ライセンス",
+      "privacy": "プライバシーポリシー",
+      "github": "GitHub"
+    }
   }
 }

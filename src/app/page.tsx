@@ -32,7 +32,7 @@ export default function HomePage() {
         </Card>
 
         <div className="text-center text-xs text-muted-foreground">
-          © {new Date().getFullYear()} Takahara Hiroaki. All rights reserved.
+          © {new Date().getFullYear()} Takahara Hiroaki | Licensed under the MIT License
         </div>
       </div>
     </div>

@@ -7,8 +7,8 @@ export default function AnnotationTarget({ imageUrl }: { imageUrl: string }) {
     console.log("Expand image clicked");
   }
   return (
-    <Card className="flex-1 mx-5 mt-5 flex flex-row items-center justify-center p-5">
-      <div className="w-1/2 flex items-center justify-center">
+    <Card className="flex-1 mx-5 mt-5 flex flex-col md:flex-row items-center justify-center p-5">
+      <div className="w-full md:w-1/2 flex items-center justify-center">
         <Card className="p-0 overflow-hidden w-full flex items-center justify-center relative">
           <Image src={imageUrl} alt="Annotation Target" width={300} height={200} className="w-full" />
           <button onClick={onClickExpand} className="absolute top-2 right-2">
@@ -16,7 +16,7 @@ export default function AnnotationTarget({ imageUrl }: { imageUrl: string }) {
           </button>
         </Card>
       </div >
-      <div className="w-1/2 flex flex-col items-center justify-center">
+      <div className="w-full md:w-1/2 flex flex-col items-center justify-center mt-5 md:mt-0">
         <p>sample</p>
         <p>sample</p>
         <p>sample</p>

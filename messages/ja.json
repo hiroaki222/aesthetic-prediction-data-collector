@@ -318,5 +318,11 @@
       "go-home": "ホームページに戻る",
       "go-back": "前のページに戻る"
     }
+  },
+  "annotation-header": {
+    "title": "Aesthetic Prediction Data Collector",
+    "task": "タスク: {taskName}",
+    "step-label": "ステップ",
+    "step-counter": "{currentStep} / {totalSteps}"
   }
 }

@@ -1,4 +1,5 @@
 export async function fetchAnnotation(taskId: string) {
+  console.log(taskId);
   return;
 }
 
@@ -11,5 +12,6 @@ export async function processAnnotation(taskData: object) {
 }
 
 export async function saveAnnotation(taskData: object) {
+  console.log(taskData);
   return;
 }

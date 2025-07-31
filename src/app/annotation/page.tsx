@@ -30,7 +30,7 @@ export default function AnnotationPage() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <AnnotationHeader currentStep={step} totalSteps={Object.keys(annotationTargets).length} taskName={"タスク"} />
+      <AnnotationHeader currentStep={step} totalSteps={Object.keys(annotationTargets).length} taskName={"タスク名"} />
       <Card className="flex-1 mx-5 mt-5 flex flex-col md:flex-row items-center justify-center p-5">
         <AnnotationTarget imageUrl={imageUrl} />
         <AnnotationInput />

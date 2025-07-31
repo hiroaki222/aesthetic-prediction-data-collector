@@ -31,6 +31,7 @@ export default function AnnotationPage() {
 
   useEffect(() => {
     setImageUrl(annotationTargets[step]?.imageUrl);
+    setIsExpanded(true)
   }, [annotationTargets, step]);
 
   return (
@@ -43,13 +44,19 @@ export default function AnnotationPage() {
       <AnnotationControl step={step} setStep={setStep} range={Object.keys(annotationTargets).length} />
       {isExpanded && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm pointer-events-auto"
           onClick={() => setIsExpanded(false)}
+          onKeyDown={(e) => {
+            if (e.key === 'Escape') {
+              setIsExpanded(false);
+            }
+          }}
+          tabIndex={-1}
         >
-          <div className="relative w-[90vw] h-[90vh]">
+          <div className="relative w-[90vw] h-[90vh] pointer-events-none">
             <button
               onClick={() => setIsExpanded(false)}
-              className="absolute top-4 right-4 z-10 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-colors"
+              className="absolute top-4 right-4 z-10 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-colors pointer-events-auto"
             >
               <X size={24} />
             </button>
@@ -59,11 +66,11 @@ export default function AnnotationPage() {
                 alt="Annotation Target Expanded"
                 width={wh[0]}
                 height={wh[1]}
-                className="w-full h-full object-cover rounded-lg"
+                className="w-full h-full object-cover rounded-lg pointer-events-auto"
                 onClick={(e) => e.stopPropagation()}
               />
             ) : (
-              <div className="flex items-center justify-center w-full h-full">
+              <div className="flex items-center justify-center w-full h-full pointer-events-none">
                 <LoaderCircle className="animate-spin size-20" />
               </div>
             )}

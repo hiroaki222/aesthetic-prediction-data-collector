@@ -10,11 +10,13 @@ export default function AnnotationInput() {
     "Normal",
     "Good",
     "Very Good",
-    "Excellent"
+    "Excellent",
+    "Outstanding",
   ]
+
   return (
     <div className="w-full md:w-1/2 flex flex-col items-center justify-center mt-5 md:mt-0">
-      {Array.from({ length: 7 }, (_, index) => (
+      {Array.from({ length: title.length }, (_, index) => (
         <div key={index} className="w-full max-w-sm m-5">
           <CardTitle className="text-center pb-2">{title[index]}</CardTitle>
           <Slider defaultValue={[5]} max={range.length - 1} step={1} />

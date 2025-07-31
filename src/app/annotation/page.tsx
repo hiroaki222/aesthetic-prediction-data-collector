@@ -19,6 +19,7 @@ export default function AnnotationPage() {
   const [imageUrl, setImageUrl] = useState('');
   const [annotationTargets, setAnnotationTargets] = useState<{ [key: string]: AnnotationTargetData }>({});
   const [isExpanded, setIsExpanded] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
   const wh = [300, 200];
 
   useEffect(() => {
@@ -30,19 +31,36 @@ export default function AnnotationPage() {
   }, [])
 
   useEffect(() => {
+    const checkIsMobile = () => {
+      const width = window.innerWidth;
+      setIsMobile(width < 768);
+    };
+
+    checkIsMobile();
+    window.addEventListener('resize', checkIsMobile);
+
+    return () => window.removeEventListener('resize', checkIsMobile);
+  }, []);
+
+  useEffect(() => {
     setImageUrl(annotationTargets[step]?.imageUrl);
-    setIsExpanded(true)
-  }, [annotationTargets, step]);
+    setIsExpanded(isMobile ? false : true);
+  }, [annotationTargets, step, isMobile]);
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <AnnotationHeader currentStep={step} totalSteps={Object.keys(annotationTargets).length} taskName={"タスク名"} />
       <Card className="flex-1 mx-5 mt-5 flex flex-col md:flex-row items-center justify-center p-5">
-        <AnnotationTarget imageUrl={imageUrl} isExpanded={isExpanded} setIsExpanded={setIsExpanded} />
+        <AnnotationTarget
+          imageUrl={imageUrl}
+          isExpanded={isExpanded}
+          setIsExpanded={isMobile ? () => { } : setIsExpanded}
+          isMobile={isMobile}
+        />
         <AnnotationInput />
       </Card>
       <AnnotationControl step={step} setStep={setStep} range={Object.keys(annotationTargets).length} />
-      {isExpanded && (
+      {isExpanded && !isMobile && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm pointer-events-auto"
           onClick={() => setIsExpanded(false)}

@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Card } from "./ui/card";
 import { Expand, LoaderCircle, X } from "lucide-react";
 
-export default function AnnotationTarget({ imageUrl, isExpanded, setIsExpanded }: { imageUrl: string; isExpanded: boolean; onClickExpand: () => void }) {
+export default function AnnotationTarget({ imageUrl, setIsExpanded }: { imageUrl: string; isExpanded: boolean; setIsExpanded: (isExpanded: boolean) => void }) {
   const wh = [300, 200];
 
   return (

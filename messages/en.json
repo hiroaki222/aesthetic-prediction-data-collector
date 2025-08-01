@@ -326,13 +326,15 @@
     "step-counter": "{currentStep} of {totalSteps}"
   },
   "annotation": {
-    "1": "I found it distasteful",
-    "2": "Was overwhelmed",
-    "3": "Challenged me intellectually",
-    "4": "Motivated me to act",
-    "5": "Made me feel nostalgic",
-    "6": "Made me sad",
-    "7": "Amused me",
-    "8": "Overall aesthetic evaluation"
+    "labels": {
+      "distasteful": "I found it distasteful",
+      "overwhelmed": "Was overwhelmed",
+      "intellectually-challenged": "Challenged me intellectually",
+      "motivated-to-act": "Motivated me to act",
+      "nostalgic": "Made me feel nostalgic",
+      "sad": "Made me sad",
+      "amused": "Amused me",
+      "overall-aesthetic": "Overall aesthetic evaluation"
+    }
   }
 }

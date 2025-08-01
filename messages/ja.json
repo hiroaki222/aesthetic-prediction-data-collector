@@ -326,13 +326,15 @@
     "step-counter": "{currentStep} / {totalSteps}"
   },
   "annotation": {
-    "1": "不快に感じた",
-    "2": "圧倒された",
-    "3": "知的に刺激を受けた",
-    "4": "モチベーションが上がった",
-    "5": "懐かしさを感じた",
-    "6": "悲しくなった",
-    "7": "楽しませてくれた",
-    "8": "全体的な美的評価"
+    "labels": {
+      "distasteful": "不快に感じた",
+      "overwhelmed": "圧倒された",
+      "intellectually-challenged": "知的に刺激を受けた",
+      "motivated-to-act": "モチベーションが上がった",
+      "nostalgic": "懐かしさを感じた",
+      "sad": "悲しくなった",
+      "amused": "楽しませてくれた",
+      "overall-aesthetic": "全体的な美的評価"
+    }
   }
 }

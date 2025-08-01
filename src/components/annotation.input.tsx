@@ -5,15 +5,16 @@ import { useTranslations } from "use-intl";
 export default function AnnotationInput() {
   const t = useTranslations('annotation')
   const range = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
   const title = [
-    t('1'),
-    t('2'),
-    t('3'),
-    t('4'),
-    t('5'),
-    t('6'),
-    t('7'),
-    t('8'),
+    t('labels.distasteful'),
+    t('labels.overwhelmed'),
+    t('labels.intellectually-challenged'),
+    t('labels.motivated-to-act'),
+    t('labels.nostalgic'),
+    t('labels.sad'),
+    t('labels.amused'),
+    t('labels.overall-aesthetic'),
   ]
 
   return (

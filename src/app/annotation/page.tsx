@@ -20,6 +20,16 @@ export default function AnnotationPage() {
   const [annotationTargets, setAnnotationTargets] = useState<{ [key: string]: AnnotationTargetData }>({});
   const [isExpanded, setIsExpanded] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
+  const [annotationResult, setAnnotationResult] = useState<object[]>([{
+    "distasteful": 5,
+    "overwhelmed": 5,
+    "intellectually-challenged": 5,
+    "motivated-to-act": 5,
+    "nostalgic": 5,
+    "sad": 5,
+    "amused": 5,
+    "overall-aesthetic": 5,
+  }]);
   const wh = [300, 200];
 
   useEffect(() => {
@@ -29,6 +39,20 @@ export default function AnnotationPage() {
     };
     loadAnnotations();
   }, [])
+
+  useEffect(() => {
+    const format = Object.keys(annotationTargets).map(() => ({
+      "distasteful": 5,
+      "overwhelmed": 5,
+      "intellectually-challenged": 5,
+      "motivated-to-act": 5,
+      "nostalgic": 5,
+      "sad": 5,
+      "amused": 5,
+      "overall-aesthetic": 5,
+    }));
+    setAnnotationResult(format);
+  }, [annotationTargets])
 
   useEffect(() => {
     const checkIsMobile = () => {
@@ -57,7 +81,11 @@ export default function AnnotationPage() {
           setIsExpanded={isMobile ? () => { } : setIsExpanded}
           isMobile={isMobile}
         />
-        <AnnotationInput />
+        <AnnotationInput
+          annotationResult={annotationResult}
+          setAnnotationResult={setAnnotationResult}
+          step={step}
+        />
       </Card>
       <AnnotationControl step={step} setStep={setStep} range={Object.keys(annotationTargets).length} />
       {isExpanded && !isMobile && (

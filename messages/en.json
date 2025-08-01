@@ -324,5 +324,15 @@
     "task": "Task: {taskName}",
     "step-label": "step",
     "step-counter": "{currentStep} of {totalSteps}"
+  },
+  "annotation": {
+    "1": "I found it distasteful",
+    "2": "Was overwhelmed",
+    "3": "Challenged me intellectually",
+    "4": "Motivated me to act",
+    "5": "Made me feel nostalgic",
+    "6": "Made me sad",
+    "7": "Amused me",
+    "8": "Overall aesthetic evaluation"
   }
 }

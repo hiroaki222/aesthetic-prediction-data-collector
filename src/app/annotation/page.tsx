@@ -8,11 +8,15 @@ import { fetchAnnotation } from "@/utils/annotation";
 import { LoaderCircle, X } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import type { AnnotationData } from "@/components/annotation.input";
+
 
 interface AnnotationTargetData {
   imageUrl: string;
   [key: string]: unknown;
 }
+
+
 
 export default function AnnotationPage() {
   const [step, setStep] = useState(1);
@@ -20,16 +24,7 @@ export default function AnnotationPage() {
   const [annotationTargets, setAnnotationTargets] = useState<{ [key: string]: AnnotationTargetData }>({});
   const [isExpanded, setIsExpanded] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
-  const [annotationResult, setAnnotationResult] = useState<object[]>([{
-    "distasteful": 5,
-    "overwhelmed": 5,
-    "intellectually-challenged": 5,
-    "motivated-to-act": 5,
-    "nostalgic": 5,
-    "sad": 5,
-    "amused": 5,
-    "overall-aesthetic": 5,
-  }]);
+  const [annotationResult, setAnnotationResult] = useState<AnnotationData[]>([[5, 5, 5, 5, 5, 5, 5, 5]]);
   const wh = [300, 200];
 
   useEffect(() => {
@@ -41,16 +36,7 @@ export default function AnnotationPage() {
   }, [])
 
   useEffect(() => {
-    const format = Object.keys(annotationTargets).map(() => ({
-      "distasteful": 5,
-      "overwhelmed": 5,
-      "intellectually-challenged": 5,
-      "motivated-to-act": 5,
-      "nostalgic": 5,
-      "sad": 5,
-      "amused": 5,
-      "overall-aesthetic": 5,
-    }));
+    const format = Object.keys(annotationTargets).map(() => ([5, 5, 5, 5, 5, 5, 5, 5] as AnnotationData));
     setAnnotationResult(format);
   }, [annotationTargets])
 

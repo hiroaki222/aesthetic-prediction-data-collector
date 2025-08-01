@@ -3,28 +3,16 @@ import { CardTitle } from "./ui/card";
 import { useTranslations } from "use-intl";
 
 
-type AnnotationData = {
-  [key: string]: number; // number[]ではなくnumberに変更
-};
+export type AnnotationData = [number, number, number, number, number, number, number, number];
 
 export default function AnnotationInput({ annotationResult, setAnnotationResult, step }: { annotationResult?: AnnotationData[], setAnnotationResult: (result: AnnotationData[]) => void, step: number }) {
   const t = useTranslations('annotation')
   const range = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  const label = [
-    "distasteful",
-    "overwhelmed",
-    "intellectually-challenged",
-    "motivated-to-act",
-    "nostalgic",
-    "sad",
-    "amused",
-    "overall-aesthetic"
-  ]
 
   const handleSliderChange = (index: number, value: number[]) => {
     if (!annotationResult) return;
     const newValues = [...annotationResult];
-    newValues[step - 1][label[index]] = value[0];
+    newValues[step - 1][index] = value[0];
     setAnnotationResult(newValues);
   };
 
@@ -51,7 +39,7 @@ export default function AnnotationInput({ annotationResult, setAnnotationResult,
         <div key={index} className="w-full max-w-sm m-5">
           <CardTitle className="text-center pb-2">{title[index]}</CardTitle>
           <Slider
-            value={[annotationResult?.[step - 1]?.[label[index]] ?? 0]} // numberをnumber[]に変換
+            value={[annotationResult?.[step - 1]?.[index] ?? 0]}
             onValueChange={(value) => handleSliderChange(index, value)}
             max={range.length - 1}
             step={1}

@@ -3,8 +3,9 @@
 ## 0. 環境構築
 
 1. [bun](https://bun.sh/)をインストール．
-2. ターミナルで`bun install`を実行して依存関係をインストール．
-3. ディレクトリ移動: `cd /src/utils/make-task`
+2. プロジェクトルートに移動
+3. ターミナルで`bun install`を実行して依存関係をインストール．
+4. ディレクトリ移動: `cd /src/utils/make-task`
 
 ## 1. データの配置
 
@@ -27,7 +28,7 @@
 プロンプトに従って必要な情報を入力する．
 
 ```bash
-$ bun run make-task
+$ bun run make-dataset
 データセットを置くディレクトリ: public/tasks/images
 データセットのタイトル: title
 説明: description

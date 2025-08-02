@@ -12,7 +12,10 @@ export interface AnnotationTask {
 }
 
 async function loadAnnotationTasks(): Promise<AnnotationTask[]> {
-  const filePath = path.resolve(__dirname, "../../data/annotation-tasks.json");
+  const filePath = path.resolve(
+    __dirname,
+    "../../../data/annotation-tasks.json"
+  );
   const content = await fs.readFile(filePath, "utf8");
   return JSON.parse(content) as AnnotationTask[];
 }
@@ -57,12 +60,12 @@ const makeTask = async () => {
   });
 
   await fs.writeFile(
-    path.resolve(__dirname, "../../data/annotation-tasks.json"),
+    path.resolve(__dirname, "../../../data/annotation-tasks.json"),
     JSON.stringify(tasks, null, 2),
     "utf8"
   );
 
-  await fs.mkdir(path.resolve(__dirname, "../../", taskPath), {
+  await fs.mkdir(path.resolve(__dirname, "../../../", taskPath), {
     recursive: true,
   });
   return taskPath;
@@ -77,7 +80,7 @@ const exportData = async (sourceDir: string) => {
       rename(
         path.join(path.resolve(__dirname, ".", "tmp"), file),
         path.join(
-          path.resolve(__dirname, "../../", sourceDir),
+          path.resolve(__dirname, "../../../", sourceDir),
           `${fileNumber}${ext}`
         )
       );

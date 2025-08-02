@@ -2,6 +2,7 @@ import path from "path";
 import { promises as fs } from "fs";
 import { randomUUID } from "crypto";
 import readline from "readline";
+import { rename } from "fs/promises";
 
 export interface AnnotationTask {
   id: string;
@@ -41,16 +42,18 @@ const makeTask = async () => {
   });
 
   const description: string = await new Promise((resolve) => {
-    rl.question(": ", (answer) => resolve(answer.trim()));
+    rl.question("説明: ", (answer) => resolve(answer.trim()));
   });
 
   rl.close();
+
+  const taskPath = path.join("public/tasks", putDir, `${tasks.length + 1}/`);
 
   tasks.push({
     id: randomUUID(),
     title: title,
     description: description,
-    path: path.join("public/tasks", putDir, `${tasks.length + 1}/`),
+    path: taskPath,
   });
 
   await fs.writeFile(
@@ -58,6 +61,34 @@ const makeTask = async () => {
     JSON.stringify(tasks, null, 2),
     "utf8"
   );
+
+  await fs.mkdir(path.resolve(__dirname, "../../", taskPath), {
+    recursive: true,
+  });
+  return taskPath;
 };
 
-makeTask();
+const exportData = async (sourceDir: string) => {
+  const files = await listFiles();
+  let fileNumber = 0;
+  for (const file of files) {
+    try {
+      const ext = path.extname(file);
+      rename(
+        path.join(path.resolve(__dirname, ".", "tmp"), file),
+        path.join(
+          path.resolve(__dirname, "../../", sourceDir),
+          `${fileNumber}${ext}`
+        )
+      );
+
+      fileNumber++;
+    } catch (error) {
+      console.error(`Error processing file ${file}:`, error);
+      break;
+    }
+  }
+};
+
+const dir = await makeTask();
+exportData(dir);

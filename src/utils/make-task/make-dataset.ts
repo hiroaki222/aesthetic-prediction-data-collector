@@ -4,6 +4,7 @@ import { randomUUID } from "crypto";
 import readline from "readline";
 import { put } from "@vercel/blob";
 import inquirer from "inquirer";
+import { unlink } from "fs/promises";
 
 export interface AnnotationTask {
   id: string;
@@ -48,6 +49,17 @@ async function uploadFile(
     uploadedUrls.push(blob.url);
   }
   return uploadedUrls;
+}
+
+async function deleteFiles(filePaths: string[]): Promise<void> {
+  for (const filePath of filePaths) {
+    const fullPath = path.resolve(__dirname, ".", "tmp", filePath);
+    try {
+      await unlink(fullPath);
+    } catch (error) {
+      console.error(`Error deleting file ${fullPath}:`, error);
+    }
+  }
 }
 
 const makeTask = async () => {
@@ -109,6 +121,8 @@ const makeTask = async () => {
     JSON.stringify(tasks, null, 2),
     "utf8"
   );
+
+  await deleteFiles(await listFiles());
 
   return;
 };

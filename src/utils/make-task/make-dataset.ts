@@ -2,7 +2,6 @@ import path from "path";
 import { promises as fs } from "fs";
 import { randomUUID } from "crypto";
 import readline from "readline";
-import { rename } from "fs/promises";
 import { put } from "@vercel/blob";
 import inquirer from "inquirer";
 

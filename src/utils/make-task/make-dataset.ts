@@ -3,12 +3,15 @@ import { promises as fs } from "fs";
 import { randomUUID } from "crypto";
 import readline from "readline";
 import { rename } from "fs/promises";
+import { put } from "@vercel/blob";
+import inquirer from "inquirer";
 
 export interface AnnotationTask {
   id: string;
   title: string;
   description: string;
-  path: string;
+  tag: string;
+  urls: string[];
 }
 
 async function loadAnnotationTasks(): Promise<AnnotationTask[]> {
@@ -26,18 +29,59 @@ async function listFiles(): Promise<string[]> {
   return entries;
 }
 
+async function uploadFile(
+  filePaths: string[],
+  taskId: string
+): Promise<string[]> {
+  const uploadedUrls: string[] = [];
+  for (const filePath of filePaths) {
+    const fileBuffer = await fs.readFile(
+      path.resolve(__dirname, ".", "tmp", filePath)
+    );
+
+    const blob = await put(
+      taskId + "/" + String(randomUUID()) + path.extname(filePath),
+      fileBuffer,
+      {
+        access: "public",
+      }
+    );
+    uploadedUrls.push(blob.url);
+  }
+  return uploadedUrls;
+}
+
 const makeTask = async () => {
   const tasks = await loadAnnotationTasks();
+
+  const dataType = await inquirer.prompt([
+    {
+      type: "list",
+      name: "selection",
+      message: "データセットの種類",
+      choices: ["画像", "動画", "音声"],
+    },
+  ]);
+
+  let tag: string;
+  switch (dataType.selection) {
+    case "画像":
+      tag = "Img";
+      break;
+    case "動画":
+      tag = "video";
+      break;
+    case "音声":
+      tag = "audio";
+      break;
+    default:
+      tag = "unknown";
+      break;
+  }
 
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
-  });
-
-  const putDir: string = await new Promise((resolve) => {
-    rl.question("データセットを置くディレクトリ: public/tasks/", (answer) =>
-      resolve(answer.trim())
-    );
   });
 
   const title: string = await new Promise((resolve) => {
@@ -50,13 +94,15 @@ const makeTask = async () => {
 
   rl.close();
 
-  const taskPath = path.join("public/tasks", putDir, `${tasks.length + 1}/`);
+  const taskId = randomUUID();
+  const urls: string[] = await uploadFile(await listFiles(), taskId);
 
   tasks.push({
-    id: randomUUID(),
+    id: taskId,
     title: title,
     description: description,
-    path: taskPath,
+    tag: tag,
+    urls: urls,
   });
 
   await fs.writeFile(
@@ -65,33 +111,7 @@ const makeTask = async () => {
     "utf8"
   );
 
-  await fs.mkdir(path.resolve(__dirname, "../../../", taskPath), {
-    recursive: true,
-  });
-  return taskPath;
+  return;
 };
 
-const exportData = async (sourceDir: string) => {
-  const files = await listFiles();
-  let fileNumber = 0;
-  for (const file of files) {
-    try {
-      const ext = path.extname(file);
-      rename(
-        path.join(path.resolve(__dirname, ".", "tmp"), file),
-        path.join(
-          path.resolve(__dirname, "../../../", sourceDir),
-          `${fileNumber}${ext}`
-        )
-      );
-
-      fileNumber++;
-    } catch (error) {
-      console.error(`Error processing file ${file}:`, error);
-      break;
-    }
-  }
-};
-
-const dir = await makeTask();
-exportData(dir);
+makeTask();

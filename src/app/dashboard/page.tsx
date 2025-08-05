@@ -6,7 +6,7 @@ import { TaskCard } from "@/components/task-card"
 import { fetchUserTasks, fetchUser } from "@/utils/supabase/actions";
 import { Footer } from "@/components/footer";
 import { useTranslations } from "next-intl";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { UserTasks } from "@/types/annotation";
 import { LoaderCircle } from 'lucide-react';
 
@@ -23,6 +23,7 @@ export default function Dashboard() {
   const [tasks, setTasks] = useState<Task[]>([])
   const [activeTab, setActiveTab] = useState("all")
   const [isLoading, setIsLoading] = useState(true)
+  const router = useRouter();
 
   const fetchTasks = async () => {
     const userData = await fetchUser();
@@ -54,7 +55,7 @@ export default function Dashboard() {
   }, [])
 
   const handleStartTask = (taskId: string) => {
-    console.log("Starting task:", taskId)
+    router.push(`/annotation/${taskId}`);
   }
 
   const getStatusFromProgress = (progress: number) => {

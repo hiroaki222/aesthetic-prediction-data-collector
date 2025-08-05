@@ -6,7 +6,6 @@ import { Progress } from "@/components/ui/progress"
 import { ArrowRight, Video, AudioLines } from "lucide-react"
 import Image from "next/image"
 import { useTranslations } from "next-intl"
-import { useEffect } from "react"
 
 interface TaskCardProps {
   id: string
@@ -29,6 +28,7 @@ export function TaskCard({
   tag,
   progress = 0,
   onStart,
+  priority = false,
 }: TaskCardProps) {
   const t = useTranslations('task-card')
 
@@ -60,6 +60,7 @@ export function TaskCard({
             alt={title}
             width={300}
             height={200}
+            priority={priority}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
           />
         )}

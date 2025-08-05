@@ -40,7 +40,7 @@ export default function Dashboard() {
       description: task.data.description,
       image: task.data.urls[0],
       tag: task.data.tag,
-      progress: task.step
+      progress: task.step / task.data.urls.length * 100,
     }))
   }
 

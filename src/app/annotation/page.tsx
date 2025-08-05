@@ -77,6 +77,7 @@ function AnnotationContent() {
         router.replace('/error/400');
         return;
       }
+      if (!annotationResult) return;
       saveAnnotation(annotationTargets.task_id, annotationResult, annotationTargets, step, uuid);
     })();
   }, [annotationTargets, annotationResult, router, step]);

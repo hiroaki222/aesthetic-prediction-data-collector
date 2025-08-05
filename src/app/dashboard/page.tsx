@@ -40,7 +40,7 @@ export default function Dashboard() {
       description: task.data.description,
       image: task.data.urls[0],
       tag: task.data.tag,
-      progress: task.step
+      progress: task.step / task.data.urls.length * 100,
     }))
   }
 
@@ -55,7 +55,7 @@ export default function Dashboard() {
   }, [])
 
   const handleStartTask = (taskId: string) => {
-    router.push(`/annotation/${taskId}`);
+    router.push(`/annotation/?taskId=${taskId}`);
   }
 
   const getStatusFromProgress = (progress: number) => {

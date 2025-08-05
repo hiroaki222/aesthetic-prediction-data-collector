@@ -13,8 +13,6 @@ interface TaskCardProps {
   description: string
   image: string
   progress?: number
-  duration?: string
-  teamSize?: number
   tag?: "Img" | "audio" | "video"
   onStart?: (id: string) => void
   priority?: boolean

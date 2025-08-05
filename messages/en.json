@@ -319,5 +319,37 @@
       "go-home": "Go to Homepage",
       "go-back": "Go Back"
     }
+  },
+  "annotation-header": {
+    "title": "Aesthetic Prediction Data Collector",
+    "task": "Task: {taskName}",
+    "step-label": "step",
+    "step-counter": "{currentStep} of {totalSteps}"
+  },
+  "annotation": {
+    "labels": {
+      "distasteful": "I found it distasteful",
+      "overwhelmed": "Was overwhelmed",
+      "intellectually-challenged": "Challenged me intellectually",
+      "motivated-to-act": "Motivated me to act",
+      "nostalgic": "Made me feel nostalgic",
+      "sad": "Made me sad",
+      "amused": "Amused me",
+      "overall-aesthetic": "Overall aesthetic evaluation"
+    }
+  },
+  "finish-confirmation-dialog": {
+    "title": "Finish annotation?",
+    "description": {
+      "line1": "This will end the current annotation work and return to the dashboard.",
+      "line2": "Your input has been saved."
+    },
+    "buttons": {
+      "confirm": "Finish",
+      "cancel": "Cancel"
+    }
+  },
+  "annotation-control": {
+    "finish": "Finish"
   }
 }

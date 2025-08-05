@@ -250,10 +250,6 @@ export async function makeUserAnnotationTasks(
     (task) => !userTaskIds.has(task.task_id)
   );
   if (deficiencyAnnotationTasks.length === 0) {
-    console.error(
-      "Deficiency annotation tasks found:",
-      deficiencyAnnotationTasks.length
-    );
     return false;
   }
 

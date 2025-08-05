@@ -337,5 +337,19 @@
       "amused": "Amused me",
       "overall-aesthetic": "Overall aesthetic evaluation"
     }
+  },
+  "finish-confirmation-dialog": {
+    "title": "Finish annotation?",
+    "description": {
+      "line1": "This will end the current annotation work and return to the dashboard.",
+      "line2": "Your input has been saved."
+    },
+    "buttons": {
+      "confirm": "Finish",
+      "cancel": "Cancel"
+    }
+  },
+  "annotation-control": {
+    "finish": "Finish"
   }
 }

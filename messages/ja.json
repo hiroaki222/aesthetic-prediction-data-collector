@@ -337,5 +337,19 @@
       "amused": "楽しませてくれた",
       "overall-aesthetic": "全体的な美的評価"
     }
+  },
+  "finish-confirmation-dialog": {
+    "title": "アノテーションを終了しますか？",
+    "description": {
+      "line1": "現在のアノテーション作業を終了してダッシュボードに戻ります。",
+      "line2": "入力した内容は保存されています。"
+    },
+    "buttons": {
+      "confirm": "終了する",
+      "cancel": "キャンセル"
+    }
+  },
+  "annotation-control": {
+    "finish": "終了"
   }
 }

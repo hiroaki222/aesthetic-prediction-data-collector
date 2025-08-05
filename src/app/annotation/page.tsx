@@ -85,7 +85,11 @@ function AnnotationContent() {
 
   useEffect(() => {
     if (!annotationTargets) return;
-  }, [annotationResult])
+  }, [annotationTargets, annotationResult])
+
+  const handleFinish = () => {
+    router.push('/dashboard');
+  };
 
   useEffect(() => {
     setIsExpanded(isMobile ? false : true);
@@ -110,7 +114,12 @@ function AnnotationContent() {
                 step={step}
               />
             </Card>
-            <AnnotationControl step={step} setStep={setStep} range={Object.keys(annotationTargets.data.urls).length} />
+            <AnnotationControl
+              step={step}
+              setStep={setStep}
+              range={Object.keys(annotationTargets.data.urls).length}
+              onFinish={handleFinish}
+            />
             {isExpanded && !isMobile && (
               <div
                 className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm pointer-events-auto"

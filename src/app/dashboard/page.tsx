@@ -36,6 +36,7 @@ export default function Dashboard() {
       title: task.data.title,
       description: task.data.description,
       image: task.data.urls[0],
+      tag: task.data.tag,
       progress: task.step
     }))
   }

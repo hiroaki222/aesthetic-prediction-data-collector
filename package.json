@@ -17,7 +17,7 @@
     "@radix-ui/react-slot": "^1.2.3",
     "@radix-ui/react-tabs": "^1.1.12",
     "@supabase/ssr": "^0.6.1",
-    "@supabase/supabase-js": "^2.50.3",
+    "@supabase/supabase-js": "^2.53.0",
     "@types/inquirer": "^9.0.8",
     "@vercel/blob": "^1.1.1",
     "class-variance-authority": "^0.7.1",

@@ -5,22 +5,23 @@ import readline from "readline";
 import { put } from "@vercel/blob";
 import inquirer from "inquirer";
 import { unlink } from "fs/promises";
+import { AnnotationTask } from "@/types/annotationTaskData";
+import { createClient } from "@supabase/supabase-js";
 
-export interface AnnotationTask {
-  id: string;
-  title: string;
-  description: string;
-  tag: string;
-  urls: string[];
-}
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+);
 
-async function loadAnnotationTasks(): Promise<AnnotationTask[]> {
-  const filePath = path.resolve(
-    __dirname,
-    "../../../data/annotation-tasks.json"
-  );
-  const content = await fs.readFile(filePath, "utf8");
-  return JSON.parse(content) as AnnotationTask[];
+async function insertTask(id: string, task: AnnotationTask) {
+  const { error } = await supabase
+    .from("annotation-tasks")
+    .insert([{ task_id: id, data: task }])
+    .select();
+
+  if (error) {
+    console.error("Error inserting task:", error);
+  }
 }
 
 async function listFiles(): Promise<string[]> {
@@ -63,8 +64,6 @@ async function deleteFiles(filePaths: string[]): Promise<void> {
 }
 
 const makeTask = async () => {
-  const tasks = await loadAnnotationTasks();
-
   const dataType = await inquirer.prompt([
     {
       type: "list",
@@ -108,19 +107,12 @@ const makeTask = async () => {
   const taskId = randomUUID();
   const urls: string[] = await uploadFile(await listFiles(), taskId);
 
-  tasks.push({
-    id: taskId,
+  insertTask(taskId, {
     title: title,
     description: description,
     tag: tag,
     urls: urls,
   });
-
-  await fs.writeFile(
-    path.resolve(__dirname, "../../../data/annotation-tasks.json"),
-    JSON.stringify(tasks, null, 2),
-    "utf8"
-  );
 
   await deleteFiles(await listFiles());
 

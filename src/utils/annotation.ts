@@ -1,5 +1,7 @@
 "use server";
+import { AnnotationData } from "@/components/annotation.input";
 import { createClient } from "./supabase/server";
+import { UserTasks } from "@/types/annotation";
 
 export async function fetchAnnotation(taskId: string) {
   const supabase = await createClient();
@@ -17,15 +19,23 @@ export async function fetchAnnotation(taskId: string) {
   return data[0];
 }
 
-export async function processAnnotation(taskData: object) {
-  console.log(`Task Data: ${JSON.stringify(taskData)}`);
-
-  return {
-    success: true,
-  };
-}
-
-export async function saveAnnotation(taskData: object) {
-  console.log(taskData);
+export async function saveAnnotation(
+  taskId: string,
+  annotationResult: AnnotationData[],
+  annotationTargets: UserTasks,
+  step: number,
+  uuid: string
+) {
+  annotationTargets.step = step;
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("user-annotation-data")
+    .update(annotationTargets)
+    .match({ task_id: taskId, uuid: uuid })
+    .select();
+  if (error) {
+    console.error("Error saving annotation:", error);
+  }
+  console.log(step);
   return;
 }

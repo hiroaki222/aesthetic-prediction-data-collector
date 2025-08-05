@@ -5,13 +5,14 @@ import AnnotationTarget from "@/components/annotation-target";
 import AnnotationInput from "@/components/annotation.input";
 import { Card } from "@/components/ui/card";
 import { UserTasks } from "@/types/annotation";
-import { fetchAnnotation } from "@/utils/annotation";
+import { fetchAnnotation, saveAnnotation } from "@/utils/annotation";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState, Suspense } from "react"
 import type { AnnotationData } from "@/components/annotation.input";
 import AnnotationControl from "@/components/annotation-control";
 import Image from "next/image";
 import { LoaderCircle, X } from "lucide-react";
+import { fetchUser } from "@/utils/supabase/actions";
 
 function AnnotationContent() {
   const [annotationTargets, setAnnotationTargets] = useState<UserTasks>();
@@ -50,7 +51,7 @@ function AnnotationContent() {
     if (!annotationTargets) return;
     const format = Object.keys(annotationTargets.data.urls).map(() => ([5, 5, 5, 5, 5, 5, 5, 5] as AnnotationData));
     setAnnotationResult(format);
-    setStep(annotationTargets.step + 1)
+    setStep(annotationTargets.step)
     if (annotationTargets.data.tag === 'audio') {
       setIsExpanded(false);
       setIsMobile(true)
@@ -59,8 +60,25 @@ function AnnotationContent() {
 
   useEffect(() => {
     if (!annotationTargets) return;
+    if (annotationTargets.data.urls.length < step) {
+      router.replace('/dashboard');
+      return;
+    }
     setUrl(annotationTargets.data.urls[step - 1]);
   }, [annotationTargets, step]);
+
+  useEffect(() => {
+    if (!annotationTargets) return;
+    (async () => {
+      const userData = await fetchUser();
+      const uuid = userData?.id;
+      if (!uuid) {
+        router.replace('/error/400');
+        return;
+      }
+      saveAnnotation(annotationTargets.task_id, annotationResult, annotationTargets, step, uuid);
+    })();
+  }, [annotationTargets, annotationResult]);
 
   useEffect(() => {
     setIsExpanded(isMobile ? false : true);

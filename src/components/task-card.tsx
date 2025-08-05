@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, Video, AudioLines } from "lucide-react"
 import Image from "next/image"
 import { useTranslations } from "next-intl"
 
@@ -15,7 +15,9 @@ interface TaskCardProps {
   progress?: number
   duration?: string
   teamSize?: number
+  tag?: "Img" | "audio" | "video"
   onStart?: (id: string) => void
+  priority?: boolean
 }
 
 export function TaskCard({
@@ -23,8 +25,10 @@ export function TaskCard({
   title,
   description,
   image,
+  tag,
   progress = 0,
   onStart,
+  priority = false,
 }: TaskCardProps) {
   const t = useTranslations('task-card')
 
@@ -50,13 +54,26 @@ export function TaskCard({
   return (
     <Card className="group hover:shadow-lg transition-all duration-200 hover:-translate-y-1 py-0 pb-6">
       <div className="aspect-video relative overflow-hidden rounded-t-lg">
-        <Image
-          src={image}
-          alt={title}
-          width={300}
-          height={200}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
-        />
+        {tag === 'Img' && (
+          <Image
+            src={image}
+            alt={title}
+            width={300}
+            height={200}
+            priority={priority}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+          />
+        )}
+        {tag === 'audio' && (
+          <div className="w-full h-full bg-gradient-to-br from-pink-400 to-pink-600 flex items-center justify-center">
+            <AudioLines className="w-16 h-16 text-white drop-shadow-lg group-hover:scale-110 transition-transform duration-200" />
+          </div>
+        )}
+        {tag === 'video' && (
+          <div className="w-full h-full bg-gradient-to-br from-sky-300 to-sky-500 flex items-center justify-center">
+            <Video className="w-16 h-16 text-white drop-shadow-lg group-hover:scale-110 transition-transform duration-200" />
+          </div>
+        )}
       </div>
 
       <CardHeader className="pb-3">

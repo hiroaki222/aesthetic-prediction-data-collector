@@ -11,6 +11,7 @@ const nextConfig: NextConfig = {
         port: "",
         pathname: "/**",
       },
+      new URL("https://bvy3dtfuknsslhnc.public.blob.vercel-storage.com/**"),
     ],
   },
 };

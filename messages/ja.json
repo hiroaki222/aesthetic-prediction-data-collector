@@ -295,7 +295,8 @@
     },
     "empty-state": {
       "message": "このカテゴリにはタスクが見つかりません"
-    }
+    },
+    "loading": "ロード中..."
   },
   "task-card": {
     "progress": "進捗",

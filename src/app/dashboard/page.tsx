@@ -23,7 +23,6 @@ export default function Dashboard() {
   const [tasks, setTasks] = useState<Task[]>([])
   const [activeTab, setActiveTab] = useState("all")
   const [isLoading, setIsLoading] = useState(true)
-  const [hydrated, setHydrated] = useState(false)
 
   const fetchTasks = async () => {
     const userData = await fetchUser();
@@ -49,13 +48,10 @@ export default function Dashboard() {
     const fetchData = async () => {
       const data = await fetchTasks();
       setTasks(data);
+      setIsLoading(false);
     }
     fetchData();
   }, [])
-
-  useEffect(() => {
-    setIsLoading(false)
-  }, [tasks])
 
   const handleStartTask = (taskId: string) => {
     console.log("Starting task:", taskId)
@@ -102,11 +98,9 @@ export default function Dashboard() {
                 <div>
                   {filteredTasks.length === 0 ? (
                     <div className="text-center py-12">
-                      {hydrated && (
-                        <p className="text-muted-foreground mb-4">
-                          {t('empty-state.message')}
-                        </p>
-                      )}
+                      <p className="text-muted-foreground mb-4">
+                        {t('empty-state.message')}
+                      </p>
                     </div>
                   ) : (
                     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -116,7 +110,6 @@ export default function Dashboard() {
                           {...task}
                           onStart={handleStartTask}
                           priority={index < 3}
-                          setHydrated={setHydrated}
                         />
                       ))}
                     </div>

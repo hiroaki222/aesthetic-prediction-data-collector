@@ -7,11 +7,19 @@ import { fetchUserTasks, fetchUser } from "@/utils/supabase/actions";
 import { Footer } from "@/components/footer";
 import { useTranslations } from "next-intl";
 import { redirect } from "next/navigation";
-import { AnnotationTasks, UserTasks } from "@/types/annotation";
+import { UserTasks } from "@/types/annotation";
+
+interface Tasks {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  progress?: number;
+}
 
 export default function Dashboard() {
   const t = useTranslations('dashboard')
-  const [tasks, setTasks] = useState<any[]>([])
+  const [tasks, setTasks] = useState<Tasks[]>([])
   const [activeTab, setActiveTab] = useState("all")
 
   const fetchTasks = async () => {

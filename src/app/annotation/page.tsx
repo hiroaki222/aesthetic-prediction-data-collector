@@ -7,13 +7,13 @@ import { Card } from "@/components/ui/card";
 import { UserTasks } from "@/types/annotation";
 import { fetchAnnotation } from "@/utils/annotation";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react"
+import { useEffect, useState, Suspense } from "react"
 import type { AnnotationData } from "@/components/annotation.input";
 import AnnotationControl from "@/components/annotation-control";
 import Image from "next/image";
 import { LoaderCircle, X } from "lucide-react";
 
-export default function AnnotationPage() {
+function AnnotationContent() {
   const [annotationTargets, setAnnotationTargets] = useState<UserTasks>();
   const [annotationResult, setAnnotationResult] = useState<AnnotationData[]>([[5, 5, 5, 5, 5, 5, 5, 5]]);
   const [url, setUrl] = useState('');
@@ -44,7 +44,7 @@ export default function AnnotationPage() {
     window.addEventListener('resize', checkIsMobile);
 
     return () => window.removeEventListener('resize', checkIsMobile);
-  }, [])
+  }, [router, searchParams])
 
   useEffect(() => {
     if (!annotationTargets) return;
@@ -130,5 +130,17 @@ export default function AnnotationPage() {
       }
     </>
 
+  )
+}
+
+export default function AnnotationPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex items-center justify-center min-h-screen w-full">
+        <LoaderCircle className="animate-spin size-20" />
+      </div>
+    }>
+      <AnnotationContent />
+    </Suspense>
   )
 }

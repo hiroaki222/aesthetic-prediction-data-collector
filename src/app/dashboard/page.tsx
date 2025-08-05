@@ -3,9 +3,10 @@ import { Header } from "@/components/header";
 import { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { TaskCard } from "@/components/task-card"
-import { fetchTasks } from "@/utils/supabase/actions";
+import { fetchUserTasks, fetchUser } from "@/utils/supabase/actions";
 import { Footer } from "@/components/footer";
 import { useTranslations } from "next-intl";
+import { redirect } from "next/navigation";
 
 interface Task {
   id: string;
@@ -21,7 +22,12 @@ export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("all")
 
   const fetchTaskData = async (): Promise<Task[]> => {
-    const data = await fetchTasks();
+    const userData = await fetchUser();
+    const uuid = userData?.id
+    if (!uuid) {
+      redirect(`/error/401`);
+    }
+    const data = await fetchUserTasks(uuid);
     return data
   }
 

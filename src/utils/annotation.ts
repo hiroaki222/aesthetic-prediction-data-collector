@@ -1,5 +1,4 @@
 "use server";
-import { AnnotationData } from "@/components/annotation.input";
 import { createClient } from "./supabase/server";
 import { UserTasks } from "@/types/annotation";
 
@@ -21,20 +20,25 @@ export async function fetchAnnotation(taskId: string) {
 
 export async function saveAnnotation(
   taskId: string,
-  annotationResult: AnnotationData[],
+  annotationResult: number[][],
   annotationTargets: UserTasks,
   step: number,
   uuid: string
 ) {
-  annotationTargets.step = step;
   const supabase = await createClient();
+  if (!annotationResult) {
+    return;
+  }
+
+  annotationTargets.data.result = annotationResult;
+
   const { error } = await supabase
     .from("user-annotation-data")
-    .update(annotationTargets)
+    .update({ data: annotationTargets.data, step: step })
     .match({ task_id: taskId, uuid: uuid })
     .select();
   if (error) {
-    console.error("Error saving annotation:", error);
+    console.error(error);
   }
   return;
 }

@@ -2,10 +2,7 @@ import { Slider } from "@/components/ui/slider";
 import { CardTitle } from "./ui/card";
 import { useTranslations } from "use-intl";
 
-
-export type AnnotationData = [number, number, number, number, number, number, number, number];
-
-export default function AnnotationInput({ annotationResult, setAnnotationResult, step }: { annotationResult?: AnnotationData[], setAnnotationResult: (result: AnnotationData[]) => void, step: number }) {
+export default function AnnotationInput({ annotationResult, setAnnotationResult, step }: { annotationResult?: number[][], setAnnotationResult: (result: number[][]) => void, step: number }) {
   const t = useTranslations('annotation')
   const range = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 

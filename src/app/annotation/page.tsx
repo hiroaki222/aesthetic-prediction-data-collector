@@ -8,7 +8,6 @@ import { UserTasks } from "@/types/annotation";
 import { fetchAnnotation, saveAnnotation } from "@/utils/annotation";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState, Suspense } from "react"
-import type { AnnotationData } from "@/components/annotation.input";
 import AnnotationControl from "@/components/annotation-control";
 import Image from "next/image";
 import { LoaderCircle, X } from "lucide-react";
@@ -16,7 +15,7 @@ import { fetchUser } from "@/utils/supabase/actions";
 
 function AnnotationContent() {
   const [annotationTargets, setAnnotationTargets] = useState<UserTasks>();
-  const [annotationResult, setAnnotationResult] = useState<AnnotationData[]>([[5, 5, 5, 5, 5, 5, 5, 5]]);
+  const [annotationResult, setAnnotationResult] = useState<number[][]>();
   const [url, setUrl] = useState('');
   const [step, setStep] = useState(1)
   const [isExpanded, setIsExpanded] = useState(true);
@@ -49,8 +48,10 @@ function AnnotationContent() {
 
   useEffect(() => {
     if (!annotationTargets) return;
-    const format = Object.keys(annotationTargets.data.urls).map(() => ([5, 5, 5, 5, 5, 5, 5, 5] as AnnotationData));
-    setAnnotationResult(format);
+    if (annotationTargets.step === 0) {
+      setStep(annotationTargets.step + 1)
+    }
+    setAnnotationResult(annotationTargets.data.result);
     setStep(annotationTargets.step)
     if (annotationTargets.data.tag === 'audio') {
       setIsExpanded(false);
@@ -79,6 +80,10 @@ function AnnotationContent() {
       saveAnnotation(annotationTargets.task_id, annotationResult, annotationTargets, step, uuid);
     })();
   }, [annotationTargets, annotationResult, router, step]);
+
+  useEffect(() => {
+    if (!annotationTargets) return;
+  }, [annotationResult])
 
   useEffect(() => {
     setIsExpanded(isMobile ? false : true);

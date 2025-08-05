@@ -259,7 +259,7 @@ export async function makeUserAnnotationTasks(
       uuid: uuid,
       task_id: task.task_id,
       data: task.data,
-      step: 1,
+      step: 0,
     });
   }
 

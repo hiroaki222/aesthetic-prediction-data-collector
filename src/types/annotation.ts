@@ -8,6 +8,7 @@ export interface UserTasks {
     description: string;
     tag: string;
     urls: string[];
+    result: number[][];
   };
   step: number;
 }
@@ -23,4 +24,5 @@ export interface AnnotationTask {
   description: string;
   tag: string;
   urls: string[];
+  result: number[][];
 }

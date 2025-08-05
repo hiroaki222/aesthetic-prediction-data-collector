@@ -48,11 +48,12 @@ function AnnotationContent() {
 
   useEffect(() => {
     if (!annotationTargets) return;
-    if (annotationTargets.step === 0) {
+    if (annotationTargets.step == 0) {
       setStep(annotationTargets.step + 1)
+    } else {
+      setStep(annotationTargets.step)
     }
     setAnnotationResult(annotationTargets.data.result);
-    setStep(annotationTargets.step)
     if (annotationTargets.data.tag === 'audio') {
       setIsExpanded(false);
       setIsMobile(true)

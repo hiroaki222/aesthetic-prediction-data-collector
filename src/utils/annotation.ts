@@ -36,6 +36,5 @@ export async function saveAnnotation(
   if (error) {
     console.error("Error saving annotation:", error);
   }
-  console.log(step);
   return;
 }

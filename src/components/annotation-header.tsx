@@ -2,8 +2,7 @@ import { useTranslations } from "next-intl"
 import { Progress } from "@/components/ui/progress"
 import { FilePenLine } from "lucide-react"
 import { X } from 'lucide-react';
-import { saveAnnotation } from "@/utils/annotation";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 interface AnnotationHeaderProps {
   currentStep: number
@@ -14,10 +13,10 @@ interface AnnotationHeaderProps {
 export function AnnotationHeader({ currentStep, totalSteps, taskName }: AnnotationHeaderProps) {
   const t = useTranslations('annotation-header')
   const progress = (currentStep / totalSteps) * 100
+  const router = useRouter();
 
   const onClickClose = () => {
-    saveAnnotation({})
-    redirect('/dashboard')
+    router.replace('/dashboard');
   }
 
 

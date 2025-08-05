@@ -25,6 +25,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     })
 
     data.subscription.unsubscribe()
-  }, []);
+  }, [supabase.auth]);
   return <Component {...pageProps} />
 }

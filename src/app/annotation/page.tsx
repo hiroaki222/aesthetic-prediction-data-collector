@@ -65,7 +65,7 @@ function AnnotationContent() {
       return;
     }
     setUrl(annotationTargets.data.urls[step - 1]);
-  }, [annotationTargets, step]);
+  }, [annotationTargets, step, router]);
 
   useEffect(() => {
     if (!annotationTargets) return;
@@ -78,7 +78,7 @@ function AnnotationContent() {
       }
       saveAnnotation(annotationTargets.task_id, annotationResult, annotationTargets, step, uuid);
     })();
-  }, [annotationTargets, annotationResult]);
+  }, [annotationTargets, annotationResult, router, step]);
 
   useEffect(() => {
     setIsExpanded(isMobile ? false : true);

@@ -32,7 +32,6 @@ export default function AnnotationPage() {
     }
     (async () => {
       const data = await fetchAnnotation(taskId);
-      console.log(data)
       setAnnotationTargets(data);
     })();
 
@@ -51,6 +50,11 @@ export default function AnnotationPage() {
     if (!annotationTargets) return;
     const format = Object.keys(annotationTargets.data.urls).map(() => ([5, 5, 5, 5, 5, 5, 5, 5] as AnnotationData));
     setAnnotationResult(format);
+    setStep(annotationTargets.step + 1)
+  }, [annotationTargets]);
+
+  useEffect(() => {
+    if (!annotationTargets) return;
     setUrl(annotationTargets.data.urls[step - 1]);
   }, [annotationTargets, step]);
 
@@ -106,6 +110,7 @@ export default function AnnotationPage() {
                       sizes="100vw"
                       className="object-contain pointer-events-auto"
                       onClick={(e) => e.stopPropagation()}
+                      priority={true}
                     />
                   ) : (
                     <div className="flex items-center justify-center w-full h-full pointer-events-none">
@@ -118,7 +123,7 @@ export default function AnnotationPage() {
             )}
           </div>
         ) : (
-          <div className="flex items-center justify-center w-full h-full pointer-events-none">
+          <div className="flex items-center justify-center min-h-screen w-full">
             <LoaderCircle className="animate-spin size-20" />
           </div>
         )

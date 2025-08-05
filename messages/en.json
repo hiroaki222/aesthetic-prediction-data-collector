@@ -295,7 +295,8 @@
     },
     "empty-state": {
       "message": "No tasks found in this category"
-    }
+    },
+    "loading": "Loading..."
   },
   "task-card": {
     "progress": "Progress",

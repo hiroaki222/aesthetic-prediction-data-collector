@@ -8,6 +8,7 @@ import { Footer } from "@/components/footer";
 import { useTranslations } from "next-intl";
 import { redirect } from "next/navigation";
 import { UserTasks } from "@/types/annotation";
+import { LoaderCircle } from 'lucide-react';
 
 interface Task {
   id: string;
@@ -21,6 +22,7 @@ export default function Dashboard() {
   const t = useTranslations('dashboard')
   const [tasks, setTasks] = useState<Task[]>([])
   const [activeTab, setActiveTab] = useState("all")
+  const [isLoading, setIsLoading] = useState(true)
 
   const fetchTasks = async () => {
     const userData = await fetchUser();
@@ -49,6 +51,10 @@ export default function Dashboard() {
     }
     fetchData();
   }, [])
+
+  useEffect(() => {
+    setIsLoading(false)
+  }, [tasks])
 
   const handleStartTask = (taskId: string) => {
     console.log("Starting task:", taskId)
@@ -84,7 +90,10 @@ export default function Dashboard() {
           </TabsList>
 
           <TabsContent value={activeTab} className="mt-6">
-            {filteredTasks.length === 0 ? (
+            {isLoading ? (<a>
+              <LoaderCircle className="animate-spin h-6 w-6 text-muted-foreground mx-auto" />
+              <p className="text-center text-muted-foreground mt-2">{t('loading')}</p>
+            </a>) : (<div>{filteredTasks.length === 0 ? (
               <div className="text-center py-12">
                 <p className="text-muted-foreground mb-4">{t('empty-state.message')}</p>
               </div>
@@ -94,7 +103,7 @@ export default function Dashboard() {
                   <TaskCard key={task.id} {...task} onStart={handleStartTask} priority={index < 3} />
                 ))}
               </div>
-            )}
+            )}</div>)}
           </TabsContent>
         </Tabs>
       </div>

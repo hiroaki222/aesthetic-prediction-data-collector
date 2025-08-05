@@ -23,6 +23,7 @@ export default function Dashboard() {
   const [tasks, setTasks] = useState<Task[]>([])
   const [activeTab, setActiveTab] = useState("all")
   const [isLoading, setIsLoading] = useState(true)
+  const [hydrated, setHydrated] = useState(false)
 
   const fetchTasks = async () => {
     const userData = await fetchUser();
@@ -90,20 +91,38 @@ export default function Dashboard() {
           </TabsList>
 
           <TabsContent value={activeTab} className="mt-6">
-            {isLoading ? (<a>
-              <LoaderCircle className="animate-spin h-6 w-6 text-muted-foreground mx-auto" />
-              <p className="text-center text-muted-foreground mt-2">{t('loading')}</p>
-            </a>) : (<div>{filteredTasks.length === 0 ? (
-              <div className="text-center py-12">
-                <p className="text-muted-foreground mb-4">{t('empty-state.message')}</p>
-              </div>
-            ) : (
-              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {filteredTasks.map((task, index) => (
-                  <TaskCard key={task.id} {...task} onStart={handleStartTask} priority={index < 3} />
-                ))}
-              </div>
-            )}</div>)}
+            {isLoading
+              ? (
+                <a>
+                  <LoaderCircle className="animate-spin h-6 w-6 text-muted-foreground mx-auto" />
+                  <p className="text-center text-muted-foreground mt-2">{t('loading')}</p>
+                </a>
+              )
+              : (
+                <div>
+                  {filteredTasks.length === 0 ? (
+                    <div className="text-center py-12">
+                      {hydrated && (
+                        <p className="text-muted-foreground mb-4">
+                          {t('empty-state.message')}
+                        </p>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                      {filteredTasks.map((task, index) => (
+                        <TaskCard
+                          key={task.id}
+                          {...task}
+                          onStart={handleStartTask}
+                          priority={index < 3}
+                          setHydrated={setHydrated}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
           </TabsContent>
         </Tabs>
       </div>

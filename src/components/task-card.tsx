@@ -6,6 +6,7 @@ import { Progress } from "@/components/ui/progress"
 import { ArrowRight, Video, AudioLines } from "lucide-react"
 import Image from "next/image"
 import { useTranslations } from "next-intl"
+import { useEffect } from "react"
 
 interface TaskCardProps {
   id: string
@@ -18,6 +19,7 @@ interface TaskCardProps {
   tag?: "Img" | "audio" | "video"
   onStart?: (id: string) => void
   priority?: boolean
+  setHydrated?: (value: boolean) => void
 }
 
 export function TaskCard({
@@ -28,6 +30,7 @@ export function TaskCard({
   tag,
   progress = 0,
   onStart,
+  setHydrated
 }: TaskCardProps) {
   const t = useTranslations('task-card')
 
@@ -49,6 +52,10 @@ export function TaskCard({
         return t('buttons.start')
     }
   }
+
+  useEffect(() => {
+    setHydrated?.(true)
+  }, [])
 
   return (
     <Card className="group hover:shadow-lg transition-all duration-200 hover:-translate-y-1 py-0 pb-6">

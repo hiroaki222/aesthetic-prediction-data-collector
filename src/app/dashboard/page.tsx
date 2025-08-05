@@ -9,17 +9,17 @@ import { useTranslations } from "next-intl";
 import { redirect } from "next/navigation";
 import { UserTasks } from "@/types/annotation";
 
-interface Tasks {
+interface Task {
   id: string;
   title: string;
   description: string;
   image: string;
-  progress?: number;
+  progress: number;
 }
 
 export default function Dashboard() {
   const t = useTranslations('dashboard')
-  const [tasks, setTasks] = useState<Tasks[]>([])
+  const [tasks, setTasks] = useState<Task[]>([])
   const [activeTab, setActiveTab] = useState("all")
 
   const fetchTasks = async () => {

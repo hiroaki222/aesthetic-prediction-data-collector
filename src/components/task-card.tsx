@@ -16,6 +16,7 @@ interface TaskCardProps {
   duration?: string
   teamSize?: number
   onStart?: (id: string) => void
+  priority?: boolean
 }
 
 export function TaskCard({

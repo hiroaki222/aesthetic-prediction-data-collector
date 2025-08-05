@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 
 import { createClient } from "./server";
 import { ProfileData } from "@/types/profile";
+import { AnnotationTasks, UserTasks } from "@/types/annotation";
 
 export async function login(formData: FormData) {
   const supabase = await createClient();
@@ -204,58 +205,73 @@ export async function fetchRole(uuid: string | undefined) {
   return data;
 }
 
-export async function fetchTasks() {
-  const sampleTasks = [
-    {
-      id: "1",
-      title: "Complete Project Setup",
-      description:
-        "Set up the initial project structure, configure development environment, and establish coding standards for the team.",
-      image: "https://picsum.photos/300/200",
-      progress: 0,
-    },
-    {
-      id: "2",
-      title: "Design System Implementation",
-      description:
-        "Create and implement a comprehensive design system including components, colors, typography, and spacing guidelines.",
-      image: "https://picsum.photos/300/200?random=2",
-      progress: 65,
-    },
-    {
-      id: "3",
-      title: "User Authentication Flow",
-      description:
-        "Implement secure user authentication including login, signup, password reset, and email verification features.",
-      image: "https://picsum.photos/300/200?random=3",
-      progress: 100,
-    },
-    {
-      id: "4",
-      title: "Database Schema Design",
-      description:
-        "Design and implement the database schema with proper relationships, indexes, and data validation rules.",
-      image: "https://picsum.photos/300/200?random=4",
-      progress: 0,
-    },
-    {
-      id: "5",
-      title: "API Development",
-      description:
-        "Build RESTful APIs with proper error handling, authentication, and documentation for frontend integration.",
-      image: "https://picsum.photos/300/200?random=5",
-      progress: 30,
-    },
-    {
-      id: "6",
-      title: "Mobile App Testing",
-      description:
-        "Comprehensive testing of mobile application across different devices and operating systems to ensure quality.",
-      image: "https://picsum.photos/300/200?random=6",
-      progress: 0,
-    },
-  ];
+export async function fetchUserTasks(uuid: string) {
+  const supabase = await createClient();
 
-  const data = sampleTasks;
+  const { data, error } = await supabase
+    .from("user-annotation-data")
+    .select("*")
+    .eq("uuid", uuid);
+
+  if (error) {
+    console.error("Error fetching tasks:", error);
+    return [];
+  }
+
+  const reload = await makeUserAnnotationTasks(uuid, data);
+  if (reload) {
+    return fetchUserTasks(uuid);
+  }
+
   return data;
+}
+
+export async function fetchTasks() {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase.from("annotation-tasks").select("*");
+
+  if (error) {
+    console.error("Error fetching tasks:", error);
+    return [];
+  }
+
+  return data;
+}
+
+export async function makeUserAnnotationTasks(
+  uuid: string,
+  userTasks: UserTasks[]
+): Promise<boolean> {
+  const annotationTasks: AnnotationTasks[] = await fetchTasks();
+
+  const userTaskIds = new Set(userTasks.map((task) => task.task_id));
+  const deficiencyAnnotationTasks = annotationTasks.filter(
+    (task) => !userTaskIds.has(task.task_id)
+  );
+  if (deficiencyAnnotationTasks.length === 0) {
+    return false;
+  }
+
+  const insertTasks = [];
+  for (const task of deficiencyAnnotationTasks) {
+    insertTasks.push({
+      uuid: uuid,
+      task_id: task.task_id,
+      data: task.data,
+      step: 0,
+    });
+  }
+
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("user-annotation-data")
+    .insert(insertTasks)
+    .select();
+
+  if (error) {
+    console.error("Error inserting user annotation tasks:", error);
+    return false;
+  }
+  return false;
 }

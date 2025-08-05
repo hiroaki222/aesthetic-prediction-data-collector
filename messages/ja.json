@@ -295,7 +295,8 @@
     },
     "empty-state": {
       "message": "このカテゴリにはタスクが見つかりません"
-    }
+    },
+    "loading": "ロード中..."
   },
   "task-card": {
     "progress": "進捗",
@@ -318,5 +319,37 @@
       "go-home": "ホームページに戻る",
       "go-back": "前のページに戻る"
     }
+  },
+  "annotation-header": {
+    "title": "Aesthetic Prediction Data Collector",
+    "task": "タスク: {taskName}",
+    "step-label": "ステップ",
+    "step-counter": "{currentStep} / {totalSteps}"
+  },
+  "annotation": {
+    "labels": {
+      "distasteful": "不快に感じた",
+      "overwhelmed": "圧倒された",
+      "intellectually-challenged": "知的に刺激を受けた",
+      "motivated-to-act": "モチベーションが上がった",
+      "nostalgic": "懐かしさを感じた",
+      "sad": "悲しくなった",
+      "amused": "楽しませてくれた",
+      "overall-aesthetic": "全体的な美的評価"
+    }
+  },
+  "finish-confirmation-dialog": {
+    "title": "アノテーションを終了しますか？",
+    "description": {
+      "line1": "現在のアノテーション作業を終了してダッシュボードに戻ります。",
+      "line2": "入力した内容は保存されています。"
+    },
+    "buttons": {
+      "confirm": "終了する",
+      "cancel": "キャンセル"
+    }
+  },
+  "annotation-control": {
+    "finish": "終了"
   }
 }

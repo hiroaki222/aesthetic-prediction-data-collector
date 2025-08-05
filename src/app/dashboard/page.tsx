@@ -55,7 +55,7 @@ export default function Dashboard() {
   }, [])
 
   const handleStartTask = (taskId: string) => {
-    router.push(`/annotation/${taskId}`);
+    router.push(`/annotation/?taskId=${taskId}`);
   }
 
   const getStatusFromProgress = (progress: number) => {

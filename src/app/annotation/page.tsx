@@ -7,7 +7,7 @@ import { Card } from "@/components/ui/card";
 import { UserTasks } from "@/types/annotation";
 import { fetchAnnotation } from "@/utils/annotation";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState, Suspense } from "react"
+import React, { useEffect, useState, Suspense } from "react"
 import type { AnnotationData } from "@/components/annotation.input";
 import AnnotationControl from "@/components/annotation-control";
 import Image from "next/image";
@@ -51,6 +51,10 @@ function AnnotationContent() {
     const format = Object.keys(annotationTargets.data.urls).map(() => ([5, 5, 5, 5, 5, 5, 5, 5] as AnnotationData));
     setAnnotationResult(format);
     setStep(annotationTargets.step + 1)
+    if (annotationTargets.data.tag === 'audio') {
+      setIsExpanded(false);
+      setIsMobile(true)
+    }
   }, [annotationTargets]);
 
   useEffect(() => {
@@ -61,7 +65,6 @@ function AnnotationContent() {
   useEffect(() => {
     setIsExpanded(isMobile ? false : true);
   }, [annotationTargets, step, isMobile]);
-
 
   return (
     <>

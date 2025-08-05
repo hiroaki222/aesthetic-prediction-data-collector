@@ -5,7 +5,7 @@ import readline from "readline";
 import { put } from "@vercel/blob";
 import inquirer from "inquirer";
 import { unlink } from "fs/promises";
-import { AnnotationTask } from "@/types/annotationTaskData";
+import { AnnotationTask } from "@/types/annotation";
 import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(

@@ -17,3 +17,10 @@ export interface AnnotationTasks {
   task_id: string;
   data: object;
 }
+
+export interface AnnotationTask {
+  title: string;
+  description: string;
+  tag: string;
+  urls: string[];
+}

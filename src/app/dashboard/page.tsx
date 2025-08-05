@@ -38,7 +38,6 @@ export default function Dashboard() {
       image: task.data.urls[0],
       progress: task.step
     }))
-
   }
 
 
@@ -68,9 +67,9 @@ export default function Dashboard() {
   const filteredTasks = filterTasks(activeTab)
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       <Header />
-      <div className="container mx-auto px-4 py-8">
+      <div className="flex-1 container mx-auto px-4 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2">{t('title')}</h1>
         </div>

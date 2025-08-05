@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 
 import { createClient } from "./server";
 import { ProfileData } from "@/types/profile";
+import { AnnotationTasks, UserTasks } from "@/types/annotation";
 
 export async function login(formData: FormData) {
   const supabase = await createClient();
@@ -238,21 +239,6 @@ export async function fetchTasks() {
   return data;
 }
 
-interface UserTasks {
-  id: number;
-  create_at: string;
-  uuid: string;
-  task_id: string;
-  data: object;
-  step: number;
-}
-
-interface AnnotationTasks {
-  id: number;
-  task_id: string;
-  data: object;
-}
-
 export async function makeUserAnnotationTasks(
   uuid: string,
   userTasks: UserTasks[]
@@ -264,6 +250,10 @@ export async function makeUserAnnotationTasks(
     (task) => !userTaskIds.has(task.task_id)
   );
   if (deficiencyAnnotationTasks.length === 0) {
+    console.error(
+      "Deficiency annotation tasks found:",
+      deficiencyAnnotationTasks.length
+    );
     return false;
   }
 

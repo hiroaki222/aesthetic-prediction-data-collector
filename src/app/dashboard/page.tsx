@@ -7,33 +7,36 @@ import { fetchUserTasks, fetchUser } from "@/utils/supabase/actions";
 import { Footer } from "@/components/footer";
 import { useTranslations } from "next-intl";
 import { redirect } from "next/navigation";
-
-interface Task {
-  id: string;
-  title: string;
-  description: string;
-  image: string;
-  progress: number;
-}
+import { AnnotationTasks, UserTasks } from "@/types/annotation";
 
 export default function Dashboard() {
   const t = useTranslations('dashboard')
-  const [tasks, setTasks] = useState<Task[]>([])
+  const [tasks, setTasks] = useState<any[]>([])
   const [activeTab, setActiveTab] = useState("all")
 
-  const fetchTaskData = async (): Promise<Task[]> => {
+  const fetchTasks = async () => {
     const userData = await fetchUser();
     const uuid = userData?.id
     if (!uuid) {
       redirect(`/error/401`);
     }
-    const data = await fetchUserTasks(uuid);
-    return data
+
+    const userTasks: UserTasks[] = await fetchUserTasks(uuid)
+
+    return userTasks.map((task: UserTasks) => ({
+      id: task.task_id,
+      title: task.data.title,
+      description: task.data.description,
+      image: task.data.urls[0],
+      progress: task.step
+    }))
+
   }
+
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetchTaskData();
+      const data = await fetchTasks();
       setTasks(data);
     }
     fetchData();
@@ -79,8 +82,8 @@ export default function Dashboard() {
               </div>
             ) : (
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {filteredTasks.map((task) => (
-                  <TaskCard key={task.id} {...task} onStart={handleStartTask} />
+                {filteredTasks.map((task, index) => (
+                  <TaskCard key={task.id} {...task} onStart={handleStartTask} priority={index < 3} />
                 ))}
               </div>
             )}

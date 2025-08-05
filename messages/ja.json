@@ -313,5 +313,11 @@
       "privacy": "プライバシーポリシー",
       "github": "GitHub"
     }
+  },
+  "error-page": {
+    "buttons": {
+      "go-home": "ホームページに戻る",
+      "go-back": "前のページに戻る"
+    }
   }
 }

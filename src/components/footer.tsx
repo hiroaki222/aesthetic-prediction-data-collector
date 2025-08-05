@@ -24,7 +24,7 @@ export function Footer() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Image src="/icons/GitHub-Mark.svg" width="15" height="15" alt={t('links.github')} />
+              <Image src="/icons/github-mark.svg" width="15" height="15" alt={t('links.github')} />
               <span className="sr-only">{t('links.github')}</span>
             </a>
           </div>

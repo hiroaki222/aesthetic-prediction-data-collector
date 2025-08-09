@@ -136,11 +136,13 @@
     "title": "アカウントを作成",
     "labels": {
       "email": "メールアドレス",
+      "is-jaist-student": "JAISTの学生ですか？",
       "password": "パスワード",
       "confirm-password": "パスワードの再入力"
     },
     "placeholders": {
-      "email": "m@example.com"
+      "email": "m@example.com",
+      "jaist-user": "s0000000"
     },
     "buttons": {
       "submitting": "送信中...",

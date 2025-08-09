@@ -3,10 +3,20 @@ export interface ProfileData {
   name?: string;
   age: number;
   gender: string;
-  edu: string;
-  art: string;
-  pho: string;
+  experience: ExperienceData;
   fas: string;
   mus: string;
   titpj: Record<string, unknown>;
+}
+
+export interface ExperienceData {
+  art: DetailData;
+  fassion: DetailData;
+  photo: DetailData;
+}
+
+export interface DetailData {
+  learn: number;
+  job: boolean;
+  photoVideo: number;
 }

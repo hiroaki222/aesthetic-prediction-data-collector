@@ -16,6 +16,7 @@ import {
 import { CardDescription } from "./ui/card"
 import { useEffect, useState } from "react"
 import { fetchUser } from "@/utils/supabase/actions"
+import { LoaderCircle } from "lucide-react"
 
 type ProfileSetupContentProps = {
   handleStepComplete: React.FormEventHandler<HTMLFormElement>
@@ -36,7 +37,6 @@ export function ProfileSetupContent({ handleStepComplete, updateProfileData, pro
       const mail = await fetchUser('email');
       if (mail && mail.endsWith('@jaist.ac.jp')) {
         setIsJaistStudent(true);
-        console.log('User is a JAIST student');
       }
     })()
   }, [])
@@ -137,7 +137,6 @@ export function ProfileSetupContent({ handleStepComplete, updateProfileData, pro
             <option value="other">{t('education-options.other')}</option>
           </select>
         </div>
-        {/* 学歴が'other'選択時にカスタム学歴入力を表示 */}
         {eduSelect === 'other' && (
           <div className="grid gap-2">
             <Label htmlFor="educationOther">{t('placeholders.education-other')}</Label>
@@ -163,11 +162,25 @@ export function ProfileSetupContent({ handleStepComplete, updateProfileData, pro
 
 export function ExperienceSetupContent({ handleStepComplete, updateProfileData, profileData }: ProfileSetupContentProps) {
   const t = useTranslations('step-contents.experience-setup')
+  const [experienceComponents, setExperienceComponents] = useState<React.JSX.Element[]>([<LoaderCircle key="loader" className="animate-spin" />])
+
+  useEffect(() => {
+    const tmp = []
+    for (const key of Object.keys(profileData?.experience || {})) {
+      tmp.push(
+        <div className="grid gap-2">
+          <a>{t(`title.${key}`)}</a>
+        </div>
+      )
+    }
+    setExperienceComponents(tmp)
+  }, [])
 
   return (
     <form onSubmit={handleStepComplete} className="space-y-6">
       <div className="grid gap-4">
-        <div className="grid gap-2">
+        {experienceComponents}
+        {/* <div className="grid gap-2">
           <Label htmlFor="artisticExperience">{t('labels.artistic-experience')}</Label>
           <select
             id="artisticExperience"
@@ -238,7 +251,7 @@ export function ExperienceSetupContent({ handleStepComplete, updateProfileData, 
             <option value="advanced">{t('level-options.advanced')}</option>
             <option value="professional">{t('level-options.professional')}</option>
           </select>
-        </div>
+        </div> */}
       </div>
     </form>
   )

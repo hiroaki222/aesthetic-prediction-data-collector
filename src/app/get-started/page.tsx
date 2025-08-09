@@ -30,10 +30,11 @@ function GetStartedPageContent() {
     age: 0,
     gender: '',
     edu: '',
-    art: '',
-    pho: '',
-    fas: '',
-    mus: '',
+    experience: {
+      art: { learn: 0, job: undefined, interest: 0 },
+      fashion: { learn: 0, job: undefined, interest: 0 },
+      photoVideo: { learn: 0, job: undefined, interest: 0 },
+    },
     titpj: {},
   }), [])
 
@@ -50,10 +51,11 @@ function GetStartedPageContent() {
       age: 0,
       gender: '',
       edu: '',
-      art: '',
-      pho: '',
-      fas: '',
-      mus: '',
+      experience: {
+        art: { learn: 0, job: undefined, interest: 0 },
+        fashion: { learn: 0, job: undefined, interest: 0 },
+        photoVideo: { learn: 0, job: undefined, interest: 0 },
+      },
       titpj: {},
     });
 

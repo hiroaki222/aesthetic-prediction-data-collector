@@ -15,7 +15,12 @@ export interface ExperienceData {
 }
 
 export interface DetailData {
-  learn: number;
+  learn: LearnData;
   job: boolean | undefined;
   interest: number;
+}
+
+export interface LearnData {
+  learnedAt: string;
+  year: number;
 }

@@ -31,9 +31,9 @@ function GetStartedPageContent() {
     gender: '',
     edu: '',
     experience: {
-      art: { learn: 0, job: undefined, interest: 0 },
-      fashion: { learn: 0, job: undefined, interest: 0 },
-      photoVideo: { learn: 0, job: undefined, interest: 0 },
+      art: { learn: { learnedAt: '', year: -1 }, job: undefined, interest: -1 },
+      fashion: { learn: { learnedAt: '', year: -1 }, job: undefined, interest: -1 },
+      photoVideo: { learn: { learnedAt: '', year: -1 }, job: undefined, interest: -1 },
     },
     titpj: {},
   }), [])
@@ -52,9 +52,9 @@ function GetStartedPageContent() {
       gender: '',
       edu: '',
       experience: {
-        art: { learn: 0, job: undefined, interest: 0 },
-        fashion: { learn: 0, job: undefined, interest: 0 },
-        photoVideo: { learn: 0, job: undefined, interest: 0 },
+        art: { learn: { learnedAt: '', year: -1 }, job: undefined, interest: -1 },
+        fashion: { learn: { learnedAt: '', year: -1 }, job: undefined, interest: -1 },
+        photoVideo: { learn: { learnedAt: '', year: -1 }, job: undefined, interest: -1 },
       },
       titpj: {},
     });

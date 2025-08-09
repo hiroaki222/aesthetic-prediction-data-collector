@@ -9,7 +9,7 @@ export async function POST(req: Request) {
   console.log(name, email, subject, message);
   try {
     /*     const response = await resend.emails.send({
-      from: "contact@aesthetic.prediction.data.collector",
+      from: "contact@apdc.ai",
       to: "hiroaki.takahara@jaist.ac.jp",
       subject: "contact: " + subject,
       text: `name: ${name}\nAddress: ${email}\n\nmessage:\n${message}`,

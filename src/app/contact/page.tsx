@@ -5,6 +5,7 @@ import { Footer } from '@/components/footer'
 import { ContactForm } from '@/components/contact-form'
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
+import Link from 'next/link'
 
 const GITHUB_ISSUE_URL = "https://github.com/hiroaki222/aesthetic-prediction-data-collector/issues/new/choose"
 const GITHUB_DISCUSSIONS_URL = "https://github.com/hiroaki222/aesthetic-prediction-data-collector/discussions/new/choose"
@@ -24,7 +25,9 @@ export default function ContactPage() {
           <ContactForm />
 
           <Alert className="relative">
-            <Image src="/icons/github-mark.svg" width="20" height="20" alt="GitHub" className="absolute top-1 right-1" />
+            <Link href={"https://github.com/hiroaki222/aesthetic-prediction-data-collector"} target='_blank'>
+              <Image src="/icons/github-mark.svg" width="20" height="20" alt="GitHub" className="absolute top-1 right-1" />
+            </Link>
             <AlertDescription className="flex flex-col gap-3 text-black">
               <span className='flex justify-center'>
                 {t('github.description')}

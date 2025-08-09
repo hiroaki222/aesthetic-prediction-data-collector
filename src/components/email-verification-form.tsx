@@ -102,7 +102,7 @@ export function EmailVerificationForm({
 
       <div className="text-balance text-center text-xs text-muted-foreground">
         {t('support.trouble-text')}{" "}
-        <a href="#" className="underline underline-offset-4 hover:text-primary">
+        <a href="/contact" className="underline underline-offset-4 hover:text-primary">
           {t('support.support-team')}
         </a>{" "}
         {t('support.assistance')}

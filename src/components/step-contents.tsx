@@ -26,6 +26,10 @@ type ProfileSetupContentProps = {
 export function ProfileSetupContent({ handleStepComplete, updateProfileData, profileData }: ProfileSetupContentProps) {
   const t = useTranslations('step-contents.profile-setup')
   const [isJaistStudent, setIsJaistStudent] = useState<boolean>(false);
+  const [genderSelect, setGenderSelect] = useState<string>(profileData?.gender || '');
+  const [customGender, setCustomGender] = useState<string>('');
+  const [eduSelect, setEduSelect] = useState<string>(profileData?.edu || '');
+  const [customEdu, setCustomEdu] = useState<string>('');
 
   useEffect(() => {
     (async () => {
@@ -76,8 +80,12 @@ export function ProfileSetupContent({ handleStepComplete, updateProfileData, pro
             id="gender"
             name="gender"
             className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-            value={profileData?.gender || ''}
-            onChange={(e) => updateProfileData('gender', e.target.value)}
+            value={genderSelect}
+            onChange={(e) => {
+              const val = e.target.value;
+              setGenderSelect(val);
+              updateProfileData('gender', val);
+            }}
             required
           >
             <option value="" disabled>{t('gender-options.select')}</option>
@@ -86,14 +94,36 @@ export function ProfileSetupContent({ handleStepComplete, updateProfileData, pro
             <option value="other">{t('gender-options.other')}</option>
           </select>
         </div>
+        {genderSelect === 'other' && (
+          <div className="grid gap-2">
+            <Label htmlFor="genderOther">{t('placeholders.gender-other')}</Label>
+            <Input
+              id="genderOther"
+              name="genderOther"
+              type="text"
+              placeholder={t('placeholders.gender-other')}
+              value={customGender}
+              onChange={(e) => {
+                const val = e.target.value;
+                setCustomGender(val);
+                updateProfileData('gender', val);
+              }}
+              required
+            />
+          </div>
+        )}
         <div className="grid gap-2">
           <Label htmlFor="education">{t('labels.education')}</Label>
           <select
             id="education"
             name="education"
             className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-            value={profileData?.edu || ''}
-            onChange={(e) => updateProfileData('edu', e.target.value)}
+            value={eduSelect}
+            onChange={(e) => {
+              const val = e.target.value;
+              setEduSelect(val);
+              updateProfileData('edu', val);
+            }}
             required
           >
             <option value="" disabled>{t('education-options.select')}</option>
@@ -107,6 +137,25 @@ export function ProfileSetupContent({ handleStepComplete, updateProfileData, pro
             <option value="other">{t('education-options.other')}</option>
           </select>
         </div>
+        {/* 学歴が'other'選択時にカスタム学歴入力を表示 */}
+        {eduSelect === 'other' && (
+          <div className="grid gap-2">
+            <Label htmlFor="educationOther">{t('placeholders.education-other')}</Label>
+            <Input
+              id="educationOther"
+              name="educationOther"
+              type="text"
+              placeholder={t('placeholders.education-other')}
+              value={customEdu}
+              onChange={(e) => {
+                const val = e.target.value;
+                setCustomEdu(val);
+                updateProfileData('edu', val);
+              }}
+              required
+            />
+          </div>
+        )}
       </div>
     </form>
   )

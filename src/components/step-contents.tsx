@@ -17,6 +17,7 @@ import { CardDescription } from "./ui/card"
 import { useEffect, useState } from "react"
 import { fetchUser } from "@/utils/supabase/actions"
 import { LoaderCircle } from "lucide-react"
+import { Checkbox } from "@/components/ui/checkbox"
 
 type ProfileSetupContentProps = {
   handleStepComplete: React.FormEventHandler<HTMLFormElement>
@@ -163,13 +164,58 @@ export function ProfileSetupContent({ handleStepComplete, updateProfileData, pro
 export function ExperienceSetupContent({ handleStepComplete, updateProfileData, profileData }: ProfileSetupContentProps) {
   const t = useTranslations('step-contents.experience-setup')
   const [experienceComponents, setExperienceComponents] = useState<React.JSX.Element[]>([<LoaderCircle key="loader" className="animate-spin" />])
+  const [learned, setLearned] = useState<boolean>(false)
+  const [jobExperience, setJobExperience] = useState<boolean>(false)
+  const [interest, setInterest] = useState<number | boolean>(false)
 
   useEffect(() => {
     const tmp = []
     for (const key of Object.keys(profileData?.experience || {})) {
       tmp.push(
-        <div className="grid gap-2">
+        <div key={key} className="grid gap-2">
           <a>{t(`title.${key}`)}</a>
+          <div className="">
+            <div className="flex items-center mb-2">
+              <Label htmlFor={`learned-at-${key}`}>{t(`labels.learned-at.first`) + t(`labels.learned-at.${key}`) + t(`labels.learned-at.last`)}</Label>
+            </div>
+            <div className="flex items-end gap-2">
+              <Input
+                id={`learned-at-${key}`}
+                name={`learned-at-${key}`}
+                value={profileData?.experience?.[key as keyof typeof profileData.experience]?.learn?.learnedAt || ''}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  updateProfileData(`experience.${key}.learn.learnedAt`, val);
+                }}
+              ></Input>
+              <a>{t(`labels.learned-at.conjunction`)}</a>
+              <Input
+                id={`learned-year-${key}`}
+                name={`learned-year-${key}`}
+                type="number"
+                min="0"
+                max="100"
+                step="1"
+                className=" w-20"
+                value={profileData?.experience?.[key as keyof typeof profileData.experience]?.learn?.year || ''}
+                onChange={(e) => {
+                  const val = parseInt(e.target.value, 10);
+                  if (!isNaN(val)) {
+                    updateProfileData(`experience.${key}.learn.year`, val);
+                  }
+                }}
+              />
+              <a>{t(`labels.learned-at.year`)}</a>
+            </div>
+          </div>
+          <div className="my-5">
+            <div className="flex items-center mb-2">
+              <Label htmlFor={`job-${key}`}>{t(`labels.job-experience.${key}`) + t(`labels.job-experience.last`)}</Label>
+            </div>
+          </div>
+          <div className="">
+            <Label htmlFor={`interest-${key}`}>{t(`labels.interest.${key}`) + t(`labels.interest.last`)}</Label>
+          </div>
         </div>
       )
     }
@@ -178,7 +224,7 @@ export function ExperienceSetupContent({ handleStepComplete, updateProfileData, 
 
   return (
     <form onSubmit={handleStepComplete} className="space-y-6">
-      <div className="grid gap-4">
+      <div className="grid gap-10">
         {experienceComponents}
         {/* <div className="grid gap-2">
           <Label htmlFor="artisticExperience">{t('labels.artistic-experience')}</Label>

@@ -191,19 +191,33 @@
       }
     },
     "experience-setup": {
-      "labels": {
-        "artistic-experience": "芸術的経験",
-        "photographic-experience": "写真撮影経験",
-        "fashion-experience": "ファッション経験",
-        "musical-experience": "音楽経験"
+      "title": {
+        "art": "アート経験に関する質問",
+        "fashion": "ファッション経験に関する質問",
+        "photoVideo": "写真または動画撮影経験に関する質問"
       },
-      "level-options": {
-        "select": "レベルを選択",
-        "none": "なし",
-        "beginner": "初心者",
-        "intermediate": "中級者",
-        "advanced": "上級者",
-        "professional": "プロフェッショナル"
+      "labels": {
+        "learned-at": {
+          "first": "大学などの教育機関で",
+          "last": "体系的に学んだ経験がある．",
+          "art": "アート作品",
+          "fashion": "ファッション",
+          "photoVideo": "観光",
+          "conjunction": "で",
+          "year": "年"
+        },
+        "job-experience": {
+          "art": "アート",
+          "fashion": "ファッション",
+          "photoVideo": "写真・動画撮影",
+          "last": "関する仕事をした経験がある．"
+        },
+        "interest": {
+          "art": "アート",
+          "fashion": "ファッション",
+          "photoVideo": "写真・動画撮影",
+          "last": "に関心がある．"
+        }
       }
     },
     "tipij-setup": {
@@ -283,7 +297,7 @@
       },
       "experience-setup": {
         "title": "経験を教えてください",
-        "description": "芸術，写真，ファッション，音楽の経験を選択してください．"
+        "description": "アート，ファッション，写真・動画撮影の経験について入力してください．"
       },
       "tipij-setup": {
         "title": "TIPI-J",

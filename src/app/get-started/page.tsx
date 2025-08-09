@@ -76,7 +76,7 @@ function GetStartedPageContent() {
 
 
 
-  const updateProfileData = (field: string, value: string | number | Record<string, unknown>) => {
+  const updateProfileData = (field: string, value: string | number | boolean | Record<string, unknown>) => {
     setProfileData((prev) => {
       if (!prev) return null
       return {

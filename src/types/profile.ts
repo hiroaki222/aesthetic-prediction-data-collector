@@ -3,9 +3,8 @@ export interface ProfileData {
   name?: string;
   age: number;
   gender: string;
+  edu: string;
   experience: ExperienceData;
-  fas: string;
-  mus: string;
   titpj: Record<string, unknown>;
 }
 
@@ -17,6 +16,6 @@ export interface ExperienceData {
 
 export interface DetailData {
   learn: number;
-  job: boolean;
+  job: boolean | undefined;
   photoVideo: number;
 }

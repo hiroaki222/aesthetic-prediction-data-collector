@@ -25,6 +25,7 @@ function GetStartedPageContent() {
   const searchParams = useSearchParams()
 
   const defaultProfileData: ProfileData = useMemo(() => ({
+    name: '',
     uuid: '',
     age: 0,
     gender: '',
@@ -44,6 +45,7 @@ function GetStartedPageContent() {
     }
 
     setProfileData({
+      name: '',
       uuid: '',
       age: 0,
       gender: '',

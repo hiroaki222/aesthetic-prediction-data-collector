@@ -14,6 +14,8 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { CardDescription } from "./ui/card"
+import { useEffect, useState } from "react"
+import { fetchUser } from "@/utils/supabase/actions"
 
 type ProfileSetupContentProps = {
   handleStepComplete: React.FormEventHandler<HTMLFormElement>
@@ -23,10 +25,38 @@ type ProfileSetupContentProps = {
 
 export function ProfileSetupContent({ handleStepComplete, updateProfileData, profileData }: ProfileSetupContentProps) {
   const t = useTranslations('step-contents.profile-setup')
+  const [isJaistStudent, setIsJaistStudent] = useState<boolean>(false);
+
+  useEffect(() => {
+    (async () => {
+      const mail = await fetchUser('email');
+      if (mail && mail.endsWith('@jaist.ac.jp')) {
+        setIsJaistStudent(true);
+        console.log('User is a JAIST student');
+      }
+    })()
+  }, [])
 
   return (
     <form onSubmit={handleStepComplete} className="space-y-6">
       <div className="grid gap-4" >
+        {isJaistStudent && (
+          <div className="grid gap-2">
+            <Label htmlFor="name">{t('labels.name')}</Label>
+            <Input
+              id="name"
+              name="name"
+              type="text"
+              placeholder={t('placeholders.name')}
+              value={profileData?.name || ''}
+              onChange={(e) => {
+                const normalizedValue = e.target.value.replace(/　/g, ' ');
+                updateProfileData('name', normalizedValue);
+              }}
+              required
+            />
+          </div>
+        )}
         <div className="grid gap-2">
           <Label htmlFor="age">{t('labels.age')}</Label>
           <Input

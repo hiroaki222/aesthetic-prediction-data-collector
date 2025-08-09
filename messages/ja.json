@@ -161,12 +161,16 @@
   "step-contents": {
     "profile-setup": {
       "labels": {
+        "name": "名前",
         "age": "年齢",
         "gender": "性別",
         "education": "学歴"
       },
       "placeholders": {
-        "age": "年齢を入力してください"
+        "name": "名前を入力してください",
+        "age": "年齢を入力してください",
+        "gender-other": "性別を入力してください",
+        "education-other": "学歴を入力してください"
       },
       "gender-options": {
         "select": "性別を選択",
@@ -175,11 +179,12 @@
         "other": "その他"
       },
       "education-options": {
-        "select": "学歴を選択",
+        "select": "最終学歴を選択",
         "junior-high": "中学校",
         "high-school": "高等学校",
         "vocational": "専門学校",
         "junior-college": "短期大学",
+        "technical-college": "高等専門学校",
         "university": "大学（4年制）",
         "graduate": "大学院",
         "other": "その他"

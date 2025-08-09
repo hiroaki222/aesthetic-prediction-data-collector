@@ -1,5 +1,6 @@
 export interface ProfileData {
   uuid: string;
+  name?: string;
   age: number;
   gender: string;
   edu: string;

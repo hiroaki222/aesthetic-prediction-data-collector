@@ -11,11 +11,11 @@ export interface ProfileData {
 export interface ExperienceData {
   art: DetailData;
   fashion: DetailData;
-  photo: DetailData;
+  photoVideo: DetailData;
 }
 
 export interface DetailData {
   learn: number;
   job: boolean | undefined;
-  photoVideo: number;
+  interest: number;
 }

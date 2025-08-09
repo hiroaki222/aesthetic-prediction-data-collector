@@ -72,8 +72,7 @@ function AnnotationContent() {
   useEffect(() => {
     if (!annotationTargets) return;
     (async () => {
-      const userData = await fetchUser();
-      const uuid = userData?.id;
+      const uuid = await fetchUser('id');
       if (!uuid) {
         router.replace('/error/400');
         return;

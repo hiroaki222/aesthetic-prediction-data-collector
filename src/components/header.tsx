@@ -18,8 +18,8 @@ export function Header() {
   const [role, setRole] = useState<boolean>(false);
 
   const adminPanel = async () => {
-    const user = await fetchUser();
-    const isAdmin = await fetchRole(user?.id);
+    const uuid = await fetchUser('id');
+    const isAdmin = await fetchRole(uuid);
     if (isAdmin) {
       setRole(true);
     }

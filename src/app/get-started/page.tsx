@@ -157,14 +157,13 @@ function GetStartedPageContent() {
         router.push("/error/400?message=Profile data is missing&description=Please ensure your profile data is set before completing the setup.")
         return
       }
-      const userData = await fetchUser();
-      const uuidValue = userData?.id
-      if (!uuidValue) {
+      const uuid = await fetchUser('id');
+      if (!uuid) {
         router.push("/error/400?message=User UUID is missing&description=Please ensure you are logged in before completing the setup.")
         return
       }
 
-      const profileDataWithUuid = { ...profileData, uuid: uuidValue }
+      const profileDataWithUuid = { ...profileData, uuid: uuid }
       await saveUserProfile(profileDataWithUuid)
       router.push("/dashboard")
     } catch (error) {

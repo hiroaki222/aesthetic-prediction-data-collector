@@ -15,10 +15,10 @@ export function Footer() {
             <a href="/contact" className="text-xs text-muted-foreground hover:text-foreground">
               {t('links.contact')}
             </a>
-            <a href="https://github.com/hiroaki222/aesthetic-prediction-data-collector/blob/main/LICENSE" className="text-xs text-muted-foreground hover:text-foreground">
+            <a href="https://github.com/hiroaki222/aesthetic-prediction-data-collector/blob/main/LICENSE" className="text-xs text-muted-foreground hover:text-foreground" target="_blank">
               {t('links.license')}
             </a>
-            <a href="https://github.com/hiroaki222/aesthetic-prediction-data-collector/blob/main/PRIVACY.md" className="text-xs text-muted-foreground hover:text-foreground">
+            <a href="https://github.com/hiroaki222/aesthetic-prediction-data-collector/blob/main/PRIVACY.md" className="text-xs text-muted-foreground hover:text-foreground" target="_blank">
               {t('links.privacy')}
             </a>
             <a

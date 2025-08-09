@@ -11,7 +11,7 @@ export interface ProfileData {
 
 export interface ExperienceData {
   art: DetailData;
-  fassion: DetailData;
+  fashion: DetailData;
   photo: DetailData;
 }
 

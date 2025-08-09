@@ -101,6 +101,7 @@ export function ProfileSetupContent({ handleStepComplete, updateProfileData, pro
             <option value="high_school">{t('education-options.high-school')}</option>
             <option value="vocational">{t('education-options.vocational')}</option>
             <option value="junior_college">{t('education-options.junior-college')}</option>
+            <option value="technical_college">{t('education-options.technical-college')}</option>
             <option value="university">{t('education-options.university')}</option>
             <option value="graduate">{t('education-options.graduate')}</option>
             <option value="other">{t('education-options.other')}</option>

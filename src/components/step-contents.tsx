@@ -17,7 +17,7 @@ import { CardDescription } from "./ui/card"
 import { useEffect, useState } from "react"
 import { fetchUser } from "@/utils/supabase/actions"
 import { LoaderCircle } from "lucide-react"
-import { Checkbox } from "@/components/ui/checkbox"
+//import { Checkbox } from "@/components/ui/checkbox"
 
 type ProfileSetupContentProps = {
   handleStepComplete: React.FormEventHandler<HTMLFormElement>
@@ -164,9 +164,6 @@ export function ProfileSetupContent({ handleStepComplete, updateProfileData, pro
 export function ExperienceSetupContent({ handleStepComplete, updateProfileData, profileData }: ProfileSetupContentProps) {
   const t = useTranslations('step-contents.experience-setup')
   const [experienceComponents, setExperienceComponents] = useState<React.JSX.Element[]>([<LoaderCircle key="loader" className="animate-spin" />])
-  const [learned, setLearned] = useState<boolean>(false)
-  const [jobExperience, setJobExperience] = useState<boolean>(false)
-  const [interest, setInterest] = useState<number | boolean>(false)
 
   useEffect(() => {
     const tmp = []

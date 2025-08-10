@@ -211,7 +211,27 @@ export function ExperienceSetupContent({ handleStepComplete, updateProfileData, 
             </div>
           </div>
           <div className="">
-            <Label htmlFor={`interest-${key}`}>{t(`labels.interest.${key}`) + t(`labels.interest.last`)}</Label>
+            <Label className='mb-2' htmlFor={`interest-${key}`}>{t(`labels.interest.${key}`) + t(`labels.interest.last`)}</Label>
+            <select
+              id={`interest-${key}`}
+              name={`interest-${key}`}
+              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+              value={profileData?.experience?.[key as keyof typeof profileData.experience]?.interest || ''}
+              onChange={(e) => {
+                const val = Number(e.target.value);
+                updateProfileData(`experience.${key}.interest`, val);
+              }}
+              required
+            >
+              <option value="-1" disabled>{t('interest-options.select')}</option>
+              <option value='1'>{t(`interest-options.1`)}</option>
+              <option value='2'>{t(`interest-options.2`)}</option>
+              <option value='3'>{t(`interest-options.3`)}</option>
+              <option value='4'>{t(`interest-options.4`)}</option>
+              <option value='5'>{t(`interest-options.5`)}</option>
+              <option value='6'>{t(`interest-options.6`)}</option>
+              <option value='7'>{t(`interest-options.7`)}</option>
+            </select>
           </div>
         </div>
       )

@@ -112,7 +112,7 @@ const makeTask = async () => {
     description: description,
     tag: tag,
     urls: urls,
-    result: urls.map(() => Array(8).fill(5)),
+    result: urls.map(() => Array(8).fill(3)),
   });
 
   await deleteFiles(await listFiles());

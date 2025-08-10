@@ -6,7 +6,8 @@ export interface UserTasks {
   data: {
     title: string;
     description: string;
-    tag: string;
+    tag: "Img" | "video" | "audio" | "unknown";
+    genre: "アート作品" | "ファッション" | "映像";
     urls: string[];
     result: number[][];
   };

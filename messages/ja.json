@@ -136,11 +136,13 @@
     "title": "アカウントを作成",
     "labels": {
       "email": "メールアドレス",
+      "is-jaist-student": "JAISTの学生ですか？",
       "password": "パスワード",
       "confirm-password": "パスワードの再入力"
     },
     "placeholders": {
-      "email": "m@example.com"
+      "email": "m@example.com",
+      "jaist-user": "s0000000"
     },
     "buttons": {
       "submitting": "送信中...",
@@ -159,12 +161,16 @@
   "step-contents": {
     "profile-setup": {
       "labels": {
+        "name": "名前",
         "age": "年齢",
         "gender": "性別",
         "education": "学歴"
       },
       "placeholders": {
-        "age": "年齢を入力してください"
+        "name": "名前を入力してください",
+        "age": "年齢を入力してください",
+        "gender-other": "性別を入力してください",
+        "education-other": "学歴を入力してください"
       },
       "gender-options": {
         "select": "性別を選択",
@@ -173,33 +179,63 @@
         "other": "その他"
       },
       "education-options": {
-        "select": "学歴を選択",
+        "select": "最終学歴を選択",
         "junior-high": "中学校",
         "high-school": "高等学校",
         "vocational": "専門学校",
         "junior-college": "短期大学",
+        "technical-college": "高等専門学校",
         "university": "大学（4年制）",
         "graduate": "大学院",
         "other": "その他"
       }
     },
     "experience-setup": {
-      "labels": {
-        "artistic-experience": "芸術的経験",
-        "photographic-experience": "写真撮影経験",
-        "fashion-experience": "ファッション経験",
-        "musical-experience": "音楽経験"
+      "description": "該当する項目にチェック，選択，または入力してください．",
+      "title": {
+        "art": "アート経験に関する質問",
+        "fashion": "ファッション経験に関する質問",
+        "photoVideo": "写真または動画撮影経験に関する質問"
       },
-      "level-options": {
-        "select": "レベルを選択",
-        "none": "なし",
-        "beginner": "初心者",
-        "intermediate": "中級者",
-        "advanced": "上級者",
-        "professional": "プロフェッショナル"
+      "labels": {
+        "learned-at": {
+          "first": "大学などの教育機関で",
+          "last": "を体系的に学んだ経験がある．",
+          "art": "アート作品",
+          "fashion": "ファッション",
+          "photoVideo": "写真または動画撮影",
+          "conjunction": "で",
+          "year": "年",
+          "placeholder": "例 : 専門学校",
+          "description": "学校カテゴリと通った年数を記述してください．"
+        },
+        "job-experience": {
+          "art": "アート",
+          "fashion": "ファッション",
+          "photoVideo": "写真・動画撮影",
+          "last": "関する仕事をした経験がある．"
+        },
+        "interest": {
+          "art": "アート",
+          "fashion": "ファッション",
+          "photoVideo": "写真・動画撮影",
+          "last": "に関心がある．"
+        }
+      },
+      "interest-options": {
+        "select": "選択してください",
+        "1": "1 : 全く当てはまらない",
+        "2": "2 : 当てはまらない",
+        "3": "3 : あまり当てはまらない",
+        "4": "4 : どちらでもない",
+        "5": "5 : やや当てはまる",
+        "6": "6 : 当てはまる",
+        "7": "7 : 強く当てはまる"
       }
     },
     "tipij-setup": {
+      "instruction1": "1から10までのことばがあなた自身にどのくらい当てはまるかについて， 下のプルダウン(枠内)の1から7までの数字のうちもっとも適切なものを選択してください．",
+      "instruction2": "文章全体を総合的に見て，自分にどれだけ当てはまるかを評価してください．",
       "table-headers": {
         "statement": "設問",
         "rating": "評価",
@@ -213,31 +249,32 @@
       },
       "scale-options": {
         "select": "選択してください",
-        "strongly-agree": "強くそう思う",
-        "moderately-agree": "まぁまぁそう思う",
-        "slightly-agree": "少しそう思う",
-        "neither": "どちらでもない",
-        "slightly-disagree": "少し違うと思う",
-        "moderately-disagree": "おおよそ違うと思う",
-        "strongly-disagree": "全く違うと思う"
+        "strongly-agree": "1 : 強くそう思う",
+        "moderately-agree": "2 : まぁまぁそう思う",
+        "slightly-agree": "3 : 少しそう思う",
+        "neither": "4 : どちらでもない",
+        "slightly-disagree": "5 : 少し違うと思う",
+        "moderately-disagree": "6 : おおよそ違うと思う",
+        "strongly-disagree": "7 : 全く違うと思う"
       },
       "statements": {
-        "1": "活発，外向的だと思う．",
-        "2": "他人に不満をもち，もめごとを起こしやすいと思う．",
-        "3": "しっかりしていて，自分に厳しいと思う．",
-        "4": "心配性で，うろたえやすいと思う．",
-        "5": "新しいことが好きで，変わった考えをもつと思う．",
-        "6": "ひかえめで，おとなしいと思う．",
-        "7": "人に気をつかう，やさしい人間だと思う．",
-        "8": "だらしなく，うっかりしていると思う．",
-        "9": "冷静で，気分が安定していると思う．",
-        "10": "発想力に欠けた，平凡な人間だと思う．"
+        "1": "1 : 活発，外向的だと思う．",
+        "2": "2 : 他人に不満をもち，もめごとを起こしやすいと思う．",
+        "3": "3 : しっかりしていて，自分に厳しいと思う．",
+        "4": "4 : 心配性で，うろたえやすいと思う．",
+        "5": "5 : 新しいことが好きで，変わった考えをもつと思う．",
+        "6": "6 : ひかえめで，おとなしいと思う．",
+        "7": "7 : 人に気をつかう，やさしい人間だと思う．",
+        "8": "8 : だらしなく，うっかりしていると思う．",
+        "9": "9 : 冷静で，気分が安定していると思う．",
+        "10": "10 : 発想力に欠けた，平凡な人間だと思う．"
       },
       "description": "スクロールして選択してください →"
     }
   },
   "step-signin-form": {
     "success": "ログイン完了",
+    "next-step": "次のステップへ進んでください",
     "error": "エラー",
     "description": "AppleやGoogleアカウントでログイン",
     "social-buttons": {
@@ -276,7 +313,7 @@
       },
       "experience-setup": {
         "title": "経験を教えてください",
-        "description": "芸術，写真，ファッション，音楽の経験を選択してください．"
+        "description": "アート，ファッション，写真・動画撮影の経験について入力してください．"
       },
       "tipij-setup": {
         "title": "TIPI-J",

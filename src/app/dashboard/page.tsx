@@ -26,8 +26,7 @@ export default function Dashboard() {
   const router = useRouter();
 
   const fetchTasks = async () => {
-    const userData = await fetchUser();
-    const uuid = userData?.id
+    const uuid = await fetchUser('id');
     if (!uuid) {
       redirect(`/error/401`);
     }

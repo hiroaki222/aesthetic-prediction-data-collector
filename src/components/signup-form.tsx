@@ -9,16 +9,26 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { signup } from "@/utils/supabase/actions"
 import { useState } from "react"
+import { Checkbox } from "@/components/ui/checkbox"
 
 export function SignupForm({ className, ...props }: React.ComponentPropsWithoutRef<"div">) {
   const t = useTranslations('signup-form')
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isCheckboxChecked, setIsCheckboxChecked] = useState(false)
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     if (isSubmitting) return
 
     const formData = new FormData(event.currentTarget)
+
+    if (isCheckboxChecked) {
+      const emailInput = formData.get('email') as string
+      if (emailInput && !emailInput.includes('@')) {
+        formData.set('email', `${emailInput}@jaist.ac.jp`)
+      }
+    }
+
     setIsSubmitting(true)
     await signup(formData)
   }
@@ -58,8 +68,22 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
             </div> */}
             <form className="grid gap-6" onSubmit={handleSubmit}>
               <div className="grid gap-2">
-                <Label htmlFor="email">{t('labels.email')}</Label>
-                <Input id="email" type="email" placeholder={t('placeholders.email')} name="email" required />
+                <div className='flex flex-col'>
+                  <Label htmlFor="email">{t('labels.email')}</Label>
+                  <div className="m-1 flex items-center">
+                    <a className="text-xs mr-1">{t('labels.is-jaist-student')}</a>
+                    <Checkbox
+                      checked={isCheckboxChecked}
+                      onCheckedChange={() => setIsCheckboxChecked(!isCheckboxChecked)}
+                      name="isJaistStudent"
+                      id="jaist-student-checkbox"
+                    />
+                  </div>
+                </div>
+                {isCheckboxChecked ? (<div className='flex items-center'>
+                  <Input id="email" type="string" placeholder={t('placeholders.jaist-user')} name="email" required />
+                  <a className="ml-1">@jaist.ac.jp</a>
+                </div>) : (<Input id="email" type="email" placeholder={t('placeholders.email')} name="email" required />)}
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="password">{t('labels.password')}</Label>

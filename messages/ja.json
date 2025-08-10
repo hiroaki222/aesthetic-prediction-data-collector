@@ -205,7 +205,8 @@
           "fashion": "ファッション",
           "photoVideo": "観光",
           "conjunction": "で",
-          "year": "年"
+          "year": "年",
+          "placeholder": "例 : 専門学校"
         },
         "job-experience": {
           "art": "アート",

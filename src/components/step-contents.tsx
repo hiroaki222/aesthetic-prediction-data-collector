@@ -163,83 +163,101 @@ export function ProfileSetupContent({ handleStepComplete, updateProfileData, pro
 export function ExperienceSetupContent({ handleStepComplete, updateProfileData, profileData }: ProfileSetupContentProps) {
   const t = useTranslations('step-contents.experience-setup')
   const [isLearned, setIsLearned] = useState<Record<string, boolean>>({})
+  const [isJob, setIsJob] = useState<Record<string, boolean>>({})
 
   return (
     <form onSubmit={handleStepComplete} className="space-y-6">
       <a className="text-xl">{t('description')}</a>
       <div className="grid gap-10 mt-5">
         {profileData?.experience && Object.keys(profileData.experience).map((key) => (
-          <div key={key} className="grid gap-2">
-            <a>{t(`title.${key}`)}</a>
-            <div>
-              <div className="flex items-center mb-2">
-                <Checkbox
-                  id={`learned-checkbox-${key}`}
-                  checked={!!isLearned[key]}
-                  onCheckedChange={(checked) => {
-                    setIsLearned(prev => ({ ...prev, [key]: !!checked }))
-                    if (checked) {
-                      updateProfileData({ [`experience.${key}.learn`]: { learnedAt: '', year: 0 } });
-                    } else {
-                      updateProfileData({ [`experience.${key}.learn`]: -1 });
-                    }
-                  }}
-                  className="mr-2 w-6 h-6 border-2 border-gray-300 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
-                />
-                <Label htmlFor={`learned-checkbox-${key}`}>{t(`labels.learned-at.first`) + t(`labels.learned-at.${key}`) + t(`labels.learned-at.last`)}</Label>
-              </div>
-              {isLearned[key] && (
-                <div className="flex items-end gap-2">
-                  <Input
-                    id={`learned-at-${key}`}
-                    name={`learned-at-${key}`}
-                    value={profileData.experience[key as keyof typeof profileData.experience]?.learn?.learnedAt || ''}
-                    onChange={(e) => {
-                      const val = e.target.value;
-                      updateProfileData({ [`experience.${key}.learn.learnedAt`]: val });
-                    }}
-                  />
-                  <a>{t(`labels.learned-at.conjunction`)}</a>
-                  <Input
-                    id={`learned-year-${key}`}
-                    name={`learned-year-${key}`}
-                    type="number"
-                    min="0"
-                    max="100"
-                    step="1"
-                    className=" w-20"
-                    value={profileData.experience[key as keyof typeof profileData.experience]?.learn?.year || ''}
-                    onChange={(e) => {
-                      const val = parseInt(e.target.value, 10);
-                      if (!isNaN(val)) {
-                        updateProfileData({ [`experience.${key}.learn.year`]: val });
+          <div key={key}>
+            <div className="grid gap-2">
+              <a className="font-semibold">{t(`title.${key}`)}</a>
+              <div>
+                <div className="flex items-center mb-2">
+                  <Checkbox
+                    id={`learned-checkbox-${key}`}
+                    checked={!!isLearned[key]}
+                    onCheckedChange={(checked) => {
+                      setIsLearned(prev => ({ ...prev, [key]: !!checked }))
+                      if (checked) {
+                        updateProfileData({ [`experience.${key}.learn`]: { learnedAt: '', year: 0 } });
+                      } else {
+                        updateProfileData({ [`experience.${key}.learn`]: -1 });
                       }
                     }}
+                    className="mr-2 w-6 h-6 border-2 border-gray-300 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
                   />
-                  <a>{t(`labels.learned-at.year`)}</a>
+                  <Label htmlFor={`learned-checkbox-${key}`}>{t(`labels.learned-at.first`) + t(`labels.learned-at.${key}`) + t(`labels.learned-at.last`)}</Label>
                 </div>
-              )}
-            </div>
-            <div className="my-5">
-              <div className="flex items-center mb-2">
-                <Label htmlFor={`job-${key}`}>{t(`labels.job-experience.${key}`) + t(`labels.job-experience.last`)}</Label>
+                {isLearned[key] && (
+                  <div className="flex items-end gap-2">
+                    <Input
+                      id={`learned-at-${key}`}
+                      name={`learned-at-${key}`}
+                      value={profileData.experience[key as keyof typeof profileData.experience]?.learn?.learnedAt || ''}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        updateProfileData({ [`experience.${key}.learn.learnedAt`]: val });
+                      }}
+                      placeholder={t(`labels.learned-at.placeholder`)}
+                    />
+                    <a>{t(`labels.learned-at.conjunction`)}</a>
+                    <Input
+                      id={`learned-year-${key}`}
+                      name={`learned-year-${key}`}
+                      type="number"
+                      min="0"
+                      max="100"
+                      step="1"
+                      className=" w-20"
+                      value={profileData.experience[key as keyof typeof profileData.experience]?.learn?.year || ''}
+                      onChange={(e) => {
+                        const val = parseInt(e.target.value, 10);
+                        if (!isNaN(val)) {
+                          updateProfileData({ [`experience.${key}.learn.year`]: val });
+                        }
+                      }}
+                    />
+                    <a>{t(`labels.learned-at.year`)}</a>
+                  </div>
+                )}
               </div>
-            </div>
-            <div>
-              <Label className='mb-2' htmlFor={`interest-${key}`}>{t(`labels.interest.${key}`) + t(`labels.interest.last`)}</Label>
-              <select
-                id={`interest-${key}`}
-                name={`interest-${key}`}
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                value={profileData.experience[key as keyof typeof profileData.experience]?.interest || ''}
-                onChange={(e) => updateProfileData(`experience.${key}.interest`, Number(e.target.value))}
-                required
-              >
-                <option value="-1" disabled>{t('interest-options.select')}</option>
-                {[1, 2, 3, 4, 5, 6, 7].map(v => (
-                  <option key={v} value={String(v)}>{t(`interest-options.${v}`)}</option>
-                ))}
-              </select>
+              <div className="my-5">
+                <div className="flex items-center mb-2">
+                  <Checkbox
+                    id={`job-checkbox-${key}`}
+                    checked={!!isJob[key]}
+                    onCheckedChange={(checked) => {
+                      setIsJob(prev => ({ ...prev, [key]: !!checked }))
+                      if (checked) {
+                        updateProfileData({ [`experience.${key}.job`]: true });
+                      } else {
+                        updateProfileData({ [`experience.${key}.job`]: false });
+                      }
+                    }}
+                    className="mr-2 w-6 h-6 border-2 border-gray-300 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
+                  />
+                  <Label htmlFor={`job-${key}`}>{t(`labels.job-experience.${key}`) + t(`labels.job-experience.last`)}</Label>
+                </div>
+              </div>
+              <div>
+                <Label className='mb-2' htmlFor={`interest-${key}`}>{t(`labels.interest.${key}`) + t(`labels.interest.last`)}</Label>
+                <select
+                  id={`interest-${key}`}
+                  name={`interest-${key}`}
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                  value={profileData.experience[key as keyof typeof profileData.experience]?.interest || ''}
+                  onChange={(e) => updateProfileData({ [`experience.${key}.interest`]: Number(e.target.value) })}
+                  required
+                >
+                  <option value="-1" disabled>{t('interest-options.select')}</option>
+                  {[1, 2, 3, 4, 5, 6, 7].map(v => (
+                    <option key={v} value={String(v)}>{t(`interest-options.${v}`)}</option>
+                  ))}
+                </select>
+              </div>
+              <hr className="border-t border-gray-300" />
             </div>
           </div>
         ))}

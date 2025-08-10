@@ -76,13 +76,45 @@ function GetStartedPageContent() {
 
 
 
-  const updateProfileData = (field: string, value: string | number | boolean | Record<string, unknown>) => {
+  const updateProfileData = (updates: Partial<ProfileData> | Record<string, unknown>) => {
     setProfileData((prev) => {
       if (!prev) return null
-      return {
-        ...prev,
-        [field]: value,
+
+      if (typeof updates === 'object' && !Array.isArray(updates)) {
+        const hasNestedPath = Object.keys(updates).some(key => key.includes('.'))
+
+        if (hasNestedPath) {
+          const newData = JSON.parse(JSON.stringify(prev)) as ProfileData
+
+          Object.entries(updates).forEach(([path, value]) => {
+            if (path.includes('.')) {
+              const keys = path.split('.')
+              let current = newData as unknown as Record<string, unknown>
+
+              for (let i = 0; i < keys.length - 1; i++) {
+                const key = keys[i]
+                if (!(key in current) || typeof current[key] !== 'object') {
+                  current[key] = {}
+                }
+                current = current[key] as Record<string, unknown>
+              }
+
+              current[keys[keys.length - 1]] = value
+            } else {
+              (newData as unknown as Record<string, unknown>)[path] = value
+            }
+          })
+
+          return newData
+        } else {
+          return {
+            ...prev,
+            ...updates as Partial<ProfileData>,
+          }
+        }
       }
+
+      return prev
     })
   }
 

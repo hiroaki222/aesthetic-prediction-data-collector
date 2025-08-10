@@ -20,7 +20,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 
 type ProfileSetupContentProps = {
   handleStepComplete: React.FormEventHandler<HTMLFormElement>
-  updateProfileData: (field: string, value: string | number | Record<string, unknown>) => void
+  updateProfileData: (updates: Partial<ProfileData> | Record<string, unknown>) => void
   profileData: ProfileData | null
 }
 
@@ -55,7 +55,7 @@ export function ProfileSetupContent({ handleStepComplete, updateProfileData, pro
               value={profileData?.name || ''}
               onChange={(e) => {
                 const normalizedValue = e.target.value.replace(/　/g, ' ');
-                updateProfileData('name', normalizedValue);
+                updateProfileData({ name: normalizedValue });
               }}
               required
             />
@@ -70,7 +70,7 @@ export function ProfileSetupContent({ handleStepComplete, updateProfileData, pro
             min={1}
             placeholder={t('placeholders.age')}
             value={profileData?.age || ''}
-            onChange={(e) => updateProfileData('age', parseInt(e.target.value, 10) || 0)}
+            onChange={(e) => updateProfileData({ age: parseInt(e.target.value, 10) || 0 })}
             required
           />
         </div>
@@ -84,7 +84,7 @@ export function ProfileSetupContent({ handleStepComplete, updateProfileData, pro
             onChange={(e) => {
               const val = e.target.value;
               setGenderSelect(val);
-              updateProfileData('gender', val);
+              updateProfileData({ gender: val });
             }}
             required
           >
@@ -106,7 +106,7 @@ export function ProfileSetupContent({ handleStepComplete, updateProfileData, pro
               onChange={(e) => {
                 const val = e.target.value;
                 setCustomGender(val);
-                updateProfileData('gender', val);
+                updateProfileData({ gender: val });
               }}
               required
             />
@@ -122,7 +122,7 @@ export function ProfileSetupContent({ handleStepComplete, updateProfileData, pro
             onChange={(e) => {
               const val = e.target.value;
               setEduSelect(val);
-              updateProfileData('edu', val);
+              updateProfileData({ edu: val });
             }}
             required
           >
@@ -149,7 +149,7 @@ export function ProfileSetupContent({ handleStepComplete, updateProfileData, pro
               onChange={(e) => {
                 const val = e.target.value;
                 setCustomEdu(val);
-                updateProfileData('edu', val);
+                updateProfileData({ edu: val });
               }}
               required
             />
@@ -178,6 +178,11 @@ export function ExperienceSetupContent({ handleStepComplete, updateProfileData, 
                   checked={!!isLearned[key]}
                   onCheckedChange={(checked) => {
                     setIsLearned(prev => ({ ...prev, [key]: !!checked }))
+                    if (checked) {
+                      updateProfileData({ [`experience.${key}.learn`]: { learnedAt: '', year: 0 } });
+                    } else {
+                      updateProfileData({ [`experience.${key}.learn`]: -1 });
+                    }
                   }}
                   className="mr-2 w-6 h-6 border-2 border-gray-300 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
                 />
@@ -191,7 +196,7 @@ export function ExperienceSetupContent({ handleStepComplete, updateProfileData, 
                     value={profileData.experience[key as keyof typeof profileData.experience]?.learn?.learnedAt || ''}
                     onChange={(e) => {
                       const val = e.target.value;
-                      updateProfileData(`experience.${key}.learn.learnedAt`, val);
+                      updateProfileData({ [`experience.${key}.learn.learnedAt`]: val });
                     }}
                   />
                   <a>{t(`labels.learned-at.conjunction`)}</a>
@@ -207,7 +212,7 @@ export function ExperienceSetupContent({ handleStepComplete, updateProfileData, 
                     onChange={(e) => {
                       const val = parseInt(e.target.value, 10);
                       if (!isNaN(val)) {
-                        updateProfileData(`experience.${key}.learn.year`, val);
+                        updateProfileData({ [`experience.${key}.learn.year`]: val });
                       }
                     }}
                   />

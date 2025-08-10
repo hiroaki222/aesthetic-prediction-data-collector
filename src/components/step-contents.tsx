@@ -66,11 +66,14 @@ export function ProfileSetupContent({ handleStepComplete, updateProfileData, pro
           <Input
             id="age"
             name="age"
-            type="number"
+            type="text"
             min={1}
             placeholder={t('placeholders.age')}
             value={profileData?.age || ''}
-            onChange={(e) => updateProfileData({ age: parseInt(e.target.value, 10) || 0 })}
+            onChange={(e) => {
+              const convertedValue = e.target.value.normalize('NFKC');
+              updateProfileData({ age: parseInt(convertedValue, 10) || 0 });
+            }}
             required
           />
         </div>

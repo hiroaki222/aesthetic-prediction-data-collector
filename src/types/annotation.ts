@@ -17,7 +17,7 @@ export interface AnnotationTask {
   title: string;
   description: string;
   tag: string;
-  genre: "アート作品" | "ファッション" | "映像";
+  genre: "アート作品" | "ファッション" | "映像" | "unknown";
   urls: string[];
   result: number[][];
 }

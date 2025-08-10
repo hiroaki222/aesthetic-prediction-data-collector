@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input"
 export default function AnnotationInput({ annotationResult, setAnnotationResult, step, genre }: { annotationResult?: number[][], setAnnotationResult: (result: number[][]) => void, step: number, genre: string }) {
   const t = useTranslations('annotation')
   const range = [1, 2, 3, 4, 5];
+  const overallRange = [1, 2, 3, 4, 5, 6, 7];
 
   const handleSliderChange = (index: number, value: number[]) => {
     if (!annotationResult) return;
@@ -85,11 +86,11 @@ export default function AnnotationInput({ annotationResult, setAnnotationResult,
             <Slider
               value={[(annotationResult[step - 1][7] ?? 1) - 1]}
               onValueChange={(value) => handleSliderChange(7, value)}
-              max={range.length - 1}
+              max={overallRange.length - 1}
               step={1}
             />
             <div className="mt-2 -mx-1.5 flex items-center justify-between text-muted-foreground text-xs">
-              {range.map((expansion) => (
+              {overallRange.map((expansion) => (
                 <span key={expansion}>{expansion}</span>
               ))}
             </div>

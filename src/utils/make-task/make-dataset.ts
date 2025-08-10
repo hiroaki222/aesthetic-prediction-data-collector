@@ -89,6 +89,31 @@ const makeTask = async () => {
       break;
   }
 
+  const genreInput = await inquirer.prompt([
+    {
+      type: "list",
+      name: "selection",
+      message: "ジャンルを選択",
+      choices: ["アート作品", "ファッション", "映像"],
+    },
+  ]);
+
+  let genre: AnnotationTask["genre"];
+  switch (genreInput.selection) {
+    case "アート作品":
+      genre = "アート作品";
+      break;
+    case "ファッション":
+      genre = "ファッション";
+      break;
+    case "映像":
+      genre = "映像";
+      break;
+    default:
+      genre = "unknown";
+      break;
+  }
+
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
@@ -107,11 +132,19 @@ const makeTask = async () => {
   const taskId = randomUUID();
   const urls: string[] = await uploadFile(await listFiles(), taskId);
 
+  const result: AnnotationTask["result"] = [];
+  for (let i = 0; i < urls.length; i++) {
+    const tmp: number[] = Array(7).fill(3);
+    tmp.push(4);
+    result.push(tmp);
+  }
+
   insertTask(taskId, {
     title: title,
     description: description,
     tag: tag,
     urls: urls,
+    genre: genre,
     result: urls.map(() => Array(8).fill(3)),
   });
 

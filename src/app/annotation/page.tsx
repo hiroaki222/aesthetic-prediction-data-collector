@@ -111,6 +111,7 @@ function AnnotationContent() {
                 annotationResult={annotationResult}
                 setAnnotationResult={setAnnotationResult}
                 step={step}
+                genre={annotationTargets?.data.genre}
               />
             </Card>
             <AnnotationControl

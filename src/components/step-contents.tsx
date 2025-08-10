@@ -292,7 +292,7 @@ export function TIPIJSetupContent1({ handleStepComplete, updateProfileData, prof
       ...currentTitpj,
       [row]: value
     }
-    updateProfileData('titpj', updatedTitpj)
+    updateProfileData({ titpj: updatedTitpj })
   }
 
   const scaleOptions = [
@@ -332,9 +332,14 @@ export function TIPIJSetupContent1({ handleStepComplete, updateProfileData, prof
 
 
   return (
-    <form onSubmit={handleStepComplete} className="space-y-6">
+    <form onSubmit={handleStepComplete} className="space-y-6 flex-col items-center justify-center">
+      <div className="flex flex-col font-bold">
+        <a>{t("instruction1")}</a>
+        <a>{t("instruction2")}</a>
+      </div>
       <div className="space-y-4 flex flex-col items-center">
         <div className="w-full max-w-4xl overflow-hidden">
+          <CardDescription className="block md:hidden text-center">{t('description')}</CardDescription>
           <Table className="w-full">
             <TableHeader>
               <TableRow>
@@ -347,7 +352,6 @@ export function TIPIJSetupContent1({ handleStepComplete, updateProfileData, prof
             </TableBody>
           </Table>
         </div>
-        <CardDescription className="block md:hidden">{t('description')}</CardDescription>
       </div>
     </form>
   )

@@ -28,6 +28,10 @@
 
 ```bash
 $ bun run src/utils/make-task/make-dataset
+? データセットの種類 (Use arrow keys)
+❯ 画像
+  動画
+  音声
 データセットを置くディレクトリ: public/tasks/images
 データセットのタイトル: title
 説明: description

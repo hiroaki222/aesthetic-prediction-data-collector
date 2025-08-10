@@ -2,38 +2,54 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { FinishConfirmationDialog } from "./finish-confirmation-dialog";
 import { useTranslations } from "next-intl";
+import { UserTasks } from "@/types/annotation";
+import { saveAnnotation } from "@/utils/annotation";
 
 export default function AnnotationControl({
   step,
   setStep,
   range,
-  onFinish
+  onFinish,
+  uuid,
+  annotationTargets,
+  annotationResult
 }: {
   step: number;
   setStep: React.Dispatch<React.SetStateAction<number>>;
   range: number;
   onFinish?: () => void;
+  uuid: string | null;
+  annotationTargets: UserTasks | null;
+  annotationResult?: number[][];
 }) {
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
   const t = useTranslations('annotation-control');
 
   const onClickPrev = () => {
     if (step > 1) {
+      if (!annotationTargets || !annotationResult || !uuid) return;
+      saveAnnotation(annotationTargets.task_id, annotationResult, annotationTargets, step, uuid);
       setStep(step - 1)
     }
   }
   const onClickNext = () => {
     if (step < range) {
+      if (!annotationTargets || !annotationResult || !uuid) return;
+      saveAnnotation(annotationTargets.task_id, annotationResult, annotationTargets, step, uuid);
       setStep(step + 1)
     }
   }
 
   const onClickFinish = () => {
+    if (!annotationTargets || !annotationResult || !uuid) return;
+    saveAnnotation(annotationTargets.task_id, annotationResult, annotationTargets, step, uuid);
     setIsConfirmDialogOpen(true);
   }
 
   const handleConfirmFinish = () => {
     if (onFinish) {
+      if (!annotationTargets || !annotationResult || !uuid) return;
+      saveAnnotation(annotationTargets.task_id, annotationResult, annotationTargets, step, uuid);
       onFinish()
     }
   }

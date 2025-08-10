@@ -40,6 +40,5 @@ export async function saveAnnotation(
   if (error) {
     console.error(error);
   }
-  console.log("saved");
   return;
 }

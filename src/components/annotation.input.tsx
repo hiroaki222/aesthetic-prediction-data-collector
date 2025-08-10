@@ -3,7 +3,7 @@ import { CardTitle } from "./ui/card";
 import { useTranslations } from "use-intl";
 import { Input } from "@/components/ui/input"
 
-export default function AnnotationInput({ annotationResult, setAnnotationResult, step }: { annotationResult?: number[][], setAnnotationResult: (result: number[][]) => void, step: number }) {
+export default function AnnotationInput({ annotationResult, setAnnotationResult, step, genre }: { annotationResult?: number[][], setAnnotationResult: (result: number[][]) => void, step: number, genre: string }) {
   const t = useTranslations('annotation')
   const range = [1, 2, 3, 4, 5];
 
@@ -33,8 +33,13 @@ export default function AnnotationInput({ annotationResult, setAnnotationResult,
 
   return (
     <div className="w-full md:w-1/2 flex flex-col items-center justify-center mt-5 md:mt-0">
-      {Array.from({ length: title.length }, (_, index) => (
-        <div key={index} className="w-full max-w-sm m-5">
+      <div className="w-full flex flex-col">
+        <a className="font-bold">{t('instructions.first')}</a>
+        <a className="font-bold">{t('instructions.second', { genre })}</a>
+        <a className="font-bold">{t('instructions.third', { genre })}</a>
+      </div>
+      {Array.from({ length: title.length - 1 }, (_, index) => (
+        <div key={index} className="w-full m-5">
           <div className="flex">
             <div className="flex-1">
               <CardTitle className="text-center pb-2">{title[index]}</CardTitle>
@@ -69,6 +74,44 @@ export default function AnnotationInput({ annotationResult, setAnnotationResult,
           </div>
         </div>
       ))}
+      <hr className="border-t border-gray-300 w-full" />
+      <div className="w-full flex flex-col m-5">
+        <a className="font-bold">{t('instructions.overall', { genre })}</a>
+      </div>
+      <div className="w-full m-5">
+        <div className="flex">
+          <div className="flex-1">
+            <CardTitle className="text-center pb-2">{title[7]}</CardTitle>
+            <Slider
+              value={[(annotationResult[step - 1][7] ?? 1) - 1]}
+              onValueChange={(value) => handleSliderChange(7, value)}
+              max={range.length - 1}
+              step={1}
+            />
+            <div className="mt-2 -mx-1.5 flex items-center justify-between text-muted-foreground text-xs">
+              {range.map((expansion) => (
+                <span key={expansion}>{expansion}</span>
+              ))}
+            </div>
+          </div>
+          <Input
+            className="mx-5 w-16"
+            id={`annotation-input-${7}`}
+            name={`annotation-input-${7}`}
+            type="text"
+            value={annotationResult?.[step - 1]?.[7] ?? 0}
+            onChange={(e) => {
+              const normalizedValue = e.target.value.normalize('NFKC');
+              const parsedValue = parseInt(normalizedValue, 10);
+              if (!isNaN(parsedValue) && annotationResult) {
+                const newValues = [...annotationResult];
+                newValues[step - 1][7] = parsedValue;
+                setAnnotationResult(newValues);
+              }
+            }}
+          ></Input>
+        </div>
+      </div>
     </div>
   )
 }

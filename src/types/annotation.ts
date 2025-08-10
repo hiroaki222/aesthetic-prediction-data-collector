@@ -3,27 +3,21 @@ export interface UserTasks {
   create_at: string;
   uuid: string;
   task_id: string;
-  data: {
-    title: string;
-    description: string;
-    tag: "Img" | "video" | "audio" | "unknown";
-    genre: "アート作品" | "ファッション" | "映像";
-    urls: string[];
-    result: number[][];
-  };
+  data: AnnotationTask;
   step: number;
 }
 
 export interface AnnotationTasks {
   id: number;
   task_id: string;
-  data: object;
+  data: AnnotationTask;
 }
 
 export interface AnnotationTask {
   title: string;
   description: string;
   tag: string;
+  genre: "アート作品" | "ファッション" | "映像";
   urls: string[];
   result: number[][];
 }

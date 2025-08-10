@@ -365,6 +365,12 @@
     "step-counter": "{currentStep} / {totalSteps}"
   },
   "annotation": {
+    "instructions": {
+      "first": "次の感情をどれくらい強く感じましたか？",
+      "second": "この{genre}が表現していた感情ではなく，",
+      "third": "この{genre}を見た際にあなた自身が感じた感情に基づいて答えてください",
+      "overall": "総合的に，この{genre}をどの程度美的だと感じましたか？"
+    },
     "labels": {
       "distasteful": "不快に感じた",
       "overwhelmed": "圧倒された",

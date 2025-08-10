@@ -191,35 +191,38 @@ export function ExperienceSetupContent({ handleStepComplete, updateProfileData, 
                   <Label htmlFor={`learned-checkbox-${key}`}>{t(`labels.learned-at.first`) + t(`labels.learned-at.${key}`) + t(`labels.learned-at.last`)}</Label>
                 </div>
                 {isLearned[key] && (
-                  <div className="flex items-end gap-2">
-                    <Input
-                      id={`learned-at-${key}`}
-                      name={`learned-at-${key}`}
-                      value={profileData.experience[key as keyof typeof profileData.experience]?.learn?.learnedAt || ''}
-                      onChange={(e) => {
-                        const val = e.target.value;
-                        updateProfileData({ [`experience.${key}.learn.learnedAt`]: val });
-                      }}
-                      placeholder={t(`labels.learned-at.placeholder`)}
-                    />
-                    <a>{t(`labels.learned-at.conjunction`)}</a>
-                    <Input
-                      id={`learned-year-${key}`}
-                      name={`learned-year-${key}`}
-                      type="number"
-                      min="0"
-                      max="100"
-                      step="1"
-                      className=" w-20"
-                      value={profileData.experience[key as keyof typeof profileData.experience]?.learn?.year || ''}
-                      onChange={(e) => {
-                        const val = parseInt(e.target.value, 10);
-                        if (!isNaN(val)) {
-                          updateProfileData({ [`experience.${key}.learn.year`]: val });
-                        }
-                      }}
-                    />
-                    <a>{t(`labels.learned-at.year`)}</a>
+                  <div className="">
+                    <a className="text-sm">{t(`labels.learned-at.description`)}</a>
+                    <div className="flex items-end gap-2">
+                      <Input
+                        id={`learned-at-${key}`}
+                        name={`learned-at-${key}`}
+                        value={profileData.experience[key as keyof typeof profileData.experience]?.learn?.learnedAt || ''}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          updateProfileData({ [`experience.${key}.learn.learnedAt`]: val });
+                        }}
+                        placeholder={t(`labels.learned-at.placeholder`)}
+                      />
+                      <a>{t(`labels.learned-at.conjunction`)}</a>
+                      <Input
+                        id={`learned-year-${key}`}
+                        name={`learned-year-${key}`}
+                        type="number"
+                        min="0"
+                        max="100"
+                        step="1"
+                        className=" w-20"
+                        value={profileData.experience[key as keyof typeof profileData.experience]?.learn?.year || ''}
+                        onChange={(e) => {
+                          const val = parseInt(e.target.value, 10);
+                          if (!isNaN(val)) {
+                            updateProfileData({ [`experience.${key}.learn.year`]: val });
+                          }
+                        }}
+                      />
+                      <a>{t(`labels.learned-at.year`)}</a>
+                    </div>
                   </div>
                 )}
               </div>
@@ -257,7 +260,6 @@ export function ExperienceSetupContent({ handleStepComplete, updateProfileData, 
                   ))}
                 </select>
               </div>
-              <hr className="border-t border-gray-300" />
             </div>
           </div>
         ))}

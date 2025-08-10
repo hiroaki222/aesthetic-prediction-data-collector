@@ -200,13 +200,14 @@
       "labels": {
         "learned-at": {
           "first": "大学などの教育機関で",
-          "last": "体系的に学んだ経験がある．",
+          "last": "を体系的に学んだ経験がある．",
           "art": "アート作品",
           "fashion": "ファッション",
           "photoVideo": "観光",
           "conjunction": "で",
           "year": "年",
-          "placeholder": "例 : 専門学校"
+          "placeholder": "例 : 専門学校",
+          "description": "学校カテゴリと通った年数を記述してください．"
         },
         "job-experience": {
           "art": "アート",

@@ -211,7 +211,7 @@ export function ExperienceSetupContent({ handleStepComplete, updateProfileData, 
                       <Input
                         id={`learned-year-${key}`}
                         name={`learned-year-${key}`}
-                        type="number"
+                        type="text"
                         min="0"
                         max="100"
                         step="1"
@@ -219,7 +219,8 @@ export function ExperienceSetupContent({ handleStepComplete, updateProfileData, 
                         placeholder="2"
                         value={profileData.experience[key as keyof typeof profileData.experience]?.learn?.year || ''}
                         onChange={(e) => {
-                          const val = e.target.value === '' ? null : parseInt(e.target.value, 10);
+                          const normalizedValue = e.target.value.normalize('NFKC');
+                          const val = normalizedValue === '' ? null : parseInt(normalizedValue, 10);
                           updateProfileData({ [`experience.${key}.learn.year`]: val });
                         }}
                       />

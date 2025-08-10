@@ -216,10 +216,8 @@ export function ExperienceSetupContent({ handleStepComplete, updateProfileData, 
                         placeholder="2"
                         value={profileData.experience[key as keyof typeof profileData.experience]?.learn?.year || ''}
                         onChange={(e) => {
-                          const val = parseInt(e.target.value, 10);
-                          if (!isNaN(val)) {
-                            updateProfileData({ [`experience.${key}.learn.year`]: val });
-                          }
+                          const val = e.target.value === '' ? null : parseInt(e.target.value, 10);
+                          updateProfileData({ [`experience.${key}.learn.year`]: val });
                         }}
                       />
                       <a>{t(`labels.learned-at.year`)}</a>

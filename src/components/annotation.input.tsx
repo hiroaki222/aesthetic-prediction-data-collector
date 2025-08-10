@@ -10,7 +10,7 @@ export default function AnnotationInput({ annotationResult, setAnnotationResult,
   const handleSliderChange = (index: number, value: number[]) => {
     if (!annotationResult) return;
     const newValues = [...annotationResult];
-    newValues[step - 1][index] = value[0];
+    newValues[step - 1][index] = value[0] + 1;
     setAnnotationResult(newValues);
   };
 
@@ -30,16 +30,16 @@ export default function AnnotationInput({ annotationResult, setAnnotationResult,
       <></>
     );
   }
-  console.log(annotationResult)
+
   return (
     <div className="w-full md:w-1/2 flex flex-col items-center justify-center mt-5 md:mt-0">
       {Array.from({ length: title.length }, (_, index) => (
         <div key={index} className="w-full max-w-sm m-5">
-          <CardTitle className="text-center pb-2">{title[index]}</CardTitle>
           <div className="flex">
             <div className="flex-1">
+              <CardTitle className="text-center pb-2">{title[index]}</CardTitle>
               <Slider
-                value={[annotationResult?.[step - 1]?.[index] ?? 0]}
+                value={[(annotationResult[step - 1][index] ?? 1) - 1]}
                 onValueChange={(value) => handleSliderChange(index, value)}
                 max={range.length - 1}
                 step={1}
@@ -54,14 +54,15 @@ export default function AnnotationInput({ annotationResult, setAnnotationResult,
               className="mx-5 w-16"
               id={`annotation-input-${index}`}
               name={`annotation-input-${index}`}
-              type="number"
+              type="text"
               value={annotationResult?.[step - 1]?.[index] ?? 0}
-              min={1}
-              max={5}
               onChange={(e) => {
-                const value = parseInt(e.target.value);
-                if (!isNaN(value)) {
-                  handleSliderChange(index, [value]);
+                const normalizedValue = e.target.value.normalize('NFKC');
+                const parsedValue = parseInt(normalizedValue, 10);
+                if (!isNaN(parsedValue) && annotationResult) {
+                  const newValues = [...annotationResult];
+                  newValues[step - 1][index] = parsedValue;
+                  setAnnotationResult(newValues);
                 }
               }}
             ></Input>

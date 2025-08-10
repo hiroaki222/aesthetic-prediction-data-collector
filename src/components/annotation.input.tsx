@@ -8,7 +8,6 @@ export default function AnnotationInput({ annotationResult, setAnnotationResult,
   const t = useTranslations('annotation')
   const range = [1, 2, 3, 4, 5];
   const overallRange = [1, 2, 3, 4, 5, 6, 7];
-  // 入力中のテキストを管理（空文字も保持）
   const [inputTexts, setInputTexts] = useState<{ [key: number]: string }>({});
 
   const handleSliderChange = (index: number, value: number[]) => {
@@ -44,8 +43,8 @@ export default function AnnotationInput({ annotationResult, setAnnotationResult,
         <a className="font-bold">{t('instructions.first')}</a>
         <a className="font-bold">{t('instructions.second', { genre })}</a>
         <a className="font-bold">{t('instructions.third', { genre })}</a>
-        <a className="font-bold text-xs mt-5">{t('instructions.expansion', { genre })}</a>
       </div>
+      <a className="font-bold mt-5">{t('instructions.expansion', { genre })}</a>
       {Array.from({ length: title.length - 1 }, (_, index) => (
         <div key={index} className="w-full m-5">
           <div className="flex">
@@ -104,8 +103,8 @@ export default function AnnotationInput({ annotationResult, setAnnotationResult,
       <hr className="border-t border-gray-300 w-full" />
       <div className="w-full flex flex-col m-5">
         <a className="font-bold">{t('instructions.overall', { genre })}</a>
-        <a className="font-bold text-xs mt-5">{t('instructions.overall-expansion', { genre })}</a>
       </div>
+      <a className="font-bold text-sm ">{t('instructions.overall-expansion', { genre })}</a>
       <div className="w-full m-5">
         <div className="flex">
           <div className="flex-1">

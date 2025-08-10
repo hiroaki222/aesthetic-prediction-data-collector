@@ -32,6 +32,10 @@ $ bun run src/utils/make-task/make-dataset
 ❯ 画像
   動画
   音声
+? ジャンルを選択 (Use arrow keys)
+❯ アート作品
+  ファッション
+  映像
 データセットを置くディレクトリ: public/tasks/images
 データセットのタイトル: title
 説明: description

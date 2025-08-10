@@ -217,7 +217,7 @@ export async function fetchRole(uuid: string | undefined) {
     return false;
   }
 
-  return data;
+  return data.role;
 }
 
 export async function fetchUserTasks(uuid: string) {

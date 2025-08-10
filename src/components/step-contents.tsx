@@ -191,7 +191,7 @@ export function ExperienceSetupContent({ handleStepComplete, updateProfileData, 
                   <Label htmlFor={`learned-checkbox-${key}`}>{t(`labels.learned-at.first`) + t(`labels.learned-at.${key}`) + t(`labels.learned-at.last`)}</Label>
                 </div>
                 {isLearned[key] && (
-                  <div className="">
+                  <div className="md:w-1/3">
                     <a className="text-sm">{t(`labels.learned-at.description`)}</a>
                     <div className="flex items-end gap-2">
                       <Input
@@ -212,7 +212,8 @@ export function ExperienceSetupContent({ handleStepComplete, updateProfileData, 
                         min="0"
                         max="100"
                         step="1"
-                        className=" w-20"
+                        className=" w-25"
+                        placeholder="2"
                         value={profileData.experience[key as keyof typeof profileData.experience]?.learn?.year || ''}
                         onChange={(e) => {
                           const val = parseInt(e.target.value, 10);

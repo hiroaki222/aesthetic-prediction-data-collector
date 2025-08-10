@@ -2,11 +2,14 @@ import { Slider } from "@/components/ui/slider";
 import { CardTitle } from "./ui/card";
 import { useTranslations } from "use-intl";
 import { Input } from "@/components/ui/input"
+import { useState } from 'react';
 
 export default function AnnotationInput({ annotationResult, setAnnotationResult, step, genre }: { annotationResult?: number[][], setAnnotationResult: (result: number[][]) => void, step: number, genre: string }) {
   const t = useTranslations('annotation')
   const range = [1, 2, 3, 4, 5];
   const overallRange = [1, 2, 3, 4, 5, 6, 7];
+  // 入力中のテキストを管理（空文字も保持）
+  const [inputTexts, setInputTexts] = useState<{ [key: number]: string }>({});
 
   const handleSliderChange = (index: number, value: number[]) => {
     if (!annotationResult) return;
@@ -64,24 +67,36 @@ export default function AnnotationInput({ annotationResult, setAnnotationResult,
               id={`annotation-input-${index}`}
               name={`annotation-input-${index}`}
               type="text"
-              value={annotationResult?.[step - 1]?.[index] ?? 0}
+              value={
+                inputTexts[index] !== undefined
+                  ? inputTexts[index]
+                  : (annotationResult[step - 1][index] ?? '').toString()
+              }
               onChange={(e) => {
                 const normalizedValue = e.target.value.normalize('NFKC');
+                setInputTexts((prev) => ({ ...prev, [index]: normalizedValue }));
                 const parsedValue = parseInt(normalizedValue, 10);
-                // 入力が空になったら中間値をセット
-                if (normalizedValue === "") {
-                  const mid = range[Math.floor(range.length / 2)];
-                  const newValues = [...annotationResult!];
-                  newValues[step - 1][index] = mid;
-                  setAnnotationResult(newValues);
-                  // 範囲内の数値のみセット
-                } else if (!isNaN(parsedValue) && parsedValue >= range[0] && parsedValue <= range[range.length - 1]) {
+                if (!isNaN(parsedValue) && parsedValue >= range[0] && parsedValue <= range[range.length - 1]) {
                   const newValues = [...annotationResult!];
                   newValues[step - 1][index] = parsedValue;
                   setAnnotationResult(newValues);
                 }
               }}
-            ></Input>
+              onBlur={() => {
+                const text = inputTexts[index] ?? '';
+                if (text === '') {
+                  const mid = range[Math.floor(range.length / 2)];
+                  const newValues = [...annotationResult!];
+                  newValues[step - 1][index] = mid;
+                  setAnnotationResult(newValues);
+                }
+                setInputTexts((prev) => {
+                  const copy = { ...prev };
+                  delete copy[index];
+                  return copy;
+                });
+              }}
+            />
           </div>
         </div>
       ))}
@@ -107,27 +122,39 @@ export default function AnnotationInput({ annotationResult, setAnnotationResult,
           </div>
           <Input
             className="mx-5 w-16"
-            id={`annotation-input-${7}`}
-            name={`annotation-input-${7}`}
+            id={`annotation-input-7`}
+            name={`annotation-input-7`}
             type="text"
-            value={annotationResult?.[step - 1]?.[7] ?? 0}
+            value={
+              inputTexts[7] !== undefined
+                ? inputTexts[7]
+                : (annotationResult[step - 1][7] ?? '').toString()
+            }
             onChange={(e) => {
               const normalizedValue = e.target.value.normalize('NFKC');
+              setInputTexts((prev) => ({ ...prev, 7: normalizedValue }));
               const parsedValue = parseInt(normalizedValue, 10);
-              // 入力が空になったら中間値をセット
-              if (normalizedValue === "") {
-                const mid = overallRange[Math.floor(overallRange.length / 2)];
-                const newValues = [...annotationResult!];
-                newValues[step - 1][7] = mid;
-                setAnnotationResult(newValues);
-                // 範囲内の数値のみセット
-              } else if (!isNaN(parsedValue) && parsedValue >= overallRange[0] && parsedValue <= overallRange[overallRange.length - 1]) {
+              if (!isNaN(parsedValue) && parsedValue >= overallRange[0] && parsedValue <= overallRange[overallRange.length - 1]) {
                 const newValues = [...annotationResult!];
                 newValues[step - 1][7] = parsedValue;
                 setAnnotationResult(newValues);
               }
             }}
-          ></Input>
+            onBlur={() => {
+              const text = inputTexts[7] ?? '';
+              if (text === '') {
+                const mid = overallRange[Math.floor(overallRange.length / 2)];
+                const newValues = [...annotationResult!];
+                newValues[step - 1][7] = mid;
+                setAnnotationResult(newValues);
+              }
+              setInputTexts((prev) => {
+                const copy = { ...prev };
+                delete copy[7];
+                return copy;
+              });
+            }}
+          />
         </div>
       </div>
     </div>

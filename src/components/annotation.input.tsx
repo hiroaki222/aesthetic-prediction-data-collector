@@ -44,6 +44,7 @@ export default function AnnotationInput({ annotationResult, setAnnotationResult,
         <a className="font-bold">{t('instructions.first')}</a>
         <a className="font-bold">{t('instructions.second', { genre })}</a>
         <a className="font-bold">{t('instructions.third', { genre })}</a>
+        <a className="font-bold text-xs mt-5">{t('instructions.expansion', { genre })}</a>
       </div>
       {Array.from({ length: title.length - 1 }, (_, index) => (
         <div key={index} className="w-full m-5">
@@ -103,6 +104,7 @@ export default function AnnotationInput({ annotationResult, setAnnotationResult,
       <hr className="border-t border-gray-300 w-full" />
       <div className="w-full flex flex-col m-5">
         <a className="font-bold">{t('instructions.overall', { genre })}</a>
+        <a className="font-bold text-xs mt-5">{t('instructions.overall-expansion', { genre })}</a>
       </div>
       <div className="w-full m-5">
         <div className="flex">

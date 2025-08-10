@@ -10,8 +10,11 @@ export default function AnnotationInput({ annotationResult, setAnnotationResult,
 
   const handleSliderChange = (index: number, value: number[]) => {
     if (!annotationResult) return;
+    const allowedRange = index === 7 ? overallRange : range;
+    const newValue = value[0] + 1;
+    if (newValue < allowedRange[0] || newValue > allowedRange[allowedRange.length - 1]) return;
     const newValues = [...annotationResult];
-    newValues[step - 1][index] = value[0] + 1;
+    newValues[step - 1][index] = newValue;
     setAnnotationResult(newValues);
   };
 
@@ -65,8 +68,15 @@ export default function AnnotationInput({ annotationResult, setAnnotationResult,
               onChange={(e) => {
                 const normalizedValue = e.target.value.normalize('NFKC');
                 const parsedValue = parseInt(normalizedValue, 10);
-                if (!isNaN(parsedValue) && annotationResult) {
-                  const newValues = [...annotationResult];
+                // 入力が空になったら中間値をセット
+                if (normalizedValue === "") {
+                  const mid = range[Math.floor(range.length / 2)];
+                  const newValues = [...annotationResult!];
+                  newValues[step - 1][index] = mid;
+                  setAnnotationResult(newValues);
+                  // 範囲内の数値のみセット
+                } else if (!isNaN(parsedValue) && parsedValue >= range[0] && parsedValue <= range[range.length - 1]) {
+                  const newValues = [...annotationResult!];
                   newValues[step - 1][index] = parsedValue;
                   setAnnotationResult(newValues);
                 }
@@ -104,8 +114,15 @@ export default function AnnotationInput({ annotationResult, setAnnotationResult,
             onChange={(e) => {
               const normalizedValue = e.target.value.normalize('NFKC');
               const parsedValue = parseInt(normalizedValue, 10);
-              if (!isNaN(parsedValue) && annotationResult) {
-                const newValues = [...annotationResult];
+              // 入力が空になったら中間値をセット
+              if (normalizedValue === "") {
+                const mid = overallRange[Math.floor(overallRange.length / 2)];
+                const newValues = [...annotationResult!];
+                newValues[step - 1][7] = mid;
+                setAnnotationResult(newValues);
+                // 範囲内の数値のみセット
+              } else if (!isNaN(parsedValue) && parsedValue >= overallRange[0] && parsedValue <= overallRange[overallRange.length - 1]) {
+                const newValues = [...annotationResult!];
                 newValues[step - 1][7] = parsedValue;
                 setAnnotationResult(newValues);
               }

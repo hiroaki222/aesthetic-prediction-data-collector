@@ -13,15 +13,34 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
-async function insertTask(id: string, task: AnnotationTask) {
-  const { error } = await supabase
+async function insertTask(id: string, task: AnnotationTask, index: number) {
+  let genre: number;
+  switch (task.genre) {
+    case "アート作品":
+      genre = 0;
+      break;
+    case "ファッション":
+      genre = 1;
+      break;
+    case "映像":
+      genre = 2;
+      break;
+    default:
+      genre = -1;
+  }
+
+  const identifier = String(genre) + "-" + index;
+
+  /* const { error } = await supabase
     .from("annotation-tasks")
-    .insert([{ task_id: id, data: task }])
+    .insert([{ task_id: id, data: task, identifier: identifier }])
     .select();
 
   if (error) {
     console.error("Error inserting task:", error);
-  }
+  } */
+  console.log({ task_id: id, data: task, identifier: identifier });
+  console.log(task.urls.length);
 }
 
 async function listFiles(): Promise<string[]> {
@@ -62,6 +81,48 @@ async function deleteFiles(filePaths: string[]): Promise<void> {
     }
   }
 }
+
+const divideTask = async (task: AnnotationTask): Promise<AnnotationTask[]> => {
+  let divideInto = 0;
+  switch (task.genre) {
+    case "アート作品":
+      divideInto = 210;
+      break;
+    case "ファッション":
+      divideInto = 210;
+      break;
+    case "映像":
+      divideInto = 235;
+      break;
+    default:
+      divideInto = 0;
+  }
+  if (divideInto <= 0) {
+    return [task];
+  }
+
+  const dividedTasks: AnnotationTask[] = [];
+  const totalItems = task.urls.length;
+
+  for (let i = 0; i < totalItems; i += divideInto) {
+    const endIndex = Math.min(i + divideInto, totalItems);
+    const urlsChunk = task.urls.slice(i, endIndex);
+    const resultChunk = task.result.slice(i, endIndex);
+
+    const dividedTask: AnnotationTask = {
+      title: task.title,
+      description: task.description,
+      tag: task.tag,
+      urls: urlsChunk,
+      genre: task.genre,
+      result: resultChunk,
+    };
+
+    dividedTasks.push(dividedTask);
+  }
+
+  return dividedTasks;
+};
 
 const makeTask = async () => {
   const dataType = await inquirer.prompt([
@@ -139,17 +200,23 @@ const makeTask = async () => {
     result.push(tmp);
   }
 
-  insertTask(taskId, {
+  const originalTask: AnnotationTask = {
     title: title,
     description: description,
     tag: tag,
     urls: urls,
     genre: genre,
     result: result,
-  });
+  };
+
+  const dividedTasks = await divideTask(originalTask);
+
+  for (let i = 0; i < dividedTasks.length; i++) {
+    const taskId = randomUUID();
+    await insertTask(taskId, dividedTasks[i], i);
+  }
 
   await deleteFiles(await listFiles());
-
   return;
 };
 

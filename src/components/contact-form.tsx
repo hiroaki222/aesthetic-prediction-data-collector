@@ -142,8 +142,7 @@ export function ContactForm() {
             )}
           </div>
 
-          {/* <Button type="submit" disabled={submitting} className="w-full"> */}
-          <Button type="submit" disabled={true} className="w-full">
+          <Button type="submit" disabled={submitting} className="w-full">
             {submitting ? t('form.buttons.sending') : t('form.buttons.send')}
           </Button>
         </form>

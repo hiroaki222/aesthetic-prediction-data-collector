@@ -14,33 +14,16 @@ const supabase = createClient(
 );
 
 async function insertTask(id: string, task: AnnotationTask, index: number) {
-  let genre: number;
-  switch (task.genre) {
-    case "アート作品":
-      genre = 0;
-      break;
-    case "ファッション":
-      genre = 1;
-      break;
-    case "映像":
-      genre = 2;
-      break;
-    default:
-      genre = -1;
-  }
+  const identifier = String(index);
 
-  const identifier = String(genre) + "-" + index;
-
-  /* const { error } = await supabase
+  const { error } = await supabase
     .from("annotation-tasks")
     .insert([{ task_id: id, data: task, identifier: identifier }])
     .select();
 
   if (error) {
     console.error("Error inserting task:", error);
-  } */
-  console.log({ task_id: id, data: task, identifier: identifier });
-  console.log(task.urls.length);
+  }
 }
 
 async function listFiles(): Promise<string[]> {
@@ -109,13 +92,41 @@ const divideTask = async (task: AnnotationTask): Promise<AnnotationTask[]> => {
     const urlsChunk = task.urls.slice(i, endIndex);
     const resultChunk = task.result.slice(i, endIndex);
 
+    // 再検査用の12サンプルを非復元抽出でランダムに選択
+    const chunkSize = urlsChunk.length;
+    const sampleCount = Math.min(12, chunkSize); // チャンクサイズが12未満の場合は全て選択
+
+    // ランダムなインデックスを非復元抽出で選択
+    const availableIndices = Array.from({ length: chunkSize }, (_, idx) => idx);
+    const selectedIndices: number[] = [];
+
+    for (let j = 0; j < sampleCount; j++) {
+      const randomIndex = Math.floor(Math.random() * availableIndices.length);
+      selectedIndices.push(availableIndices[randomIndex]);
+      availableIndices.splice(randomIndex, 1);
+    }
+
+    // 選択されたサンプルを複製
+    const duplicateUrls = selectedIndices.map((idx) => urlsChunk[idx]);
+    const duplicateResults = selectedIndices.map((idx) => resultChunk[idx]);
+
+    // 複製したサンプルをランダムな位置に挿入
+    const finalUrls = [...urlsChunk];
+    const finalResults = [...resultChunk];
+
+    for (let j = 0; j < duplicateUrls.length; j++) {
+      const randomPosition = Math.floor(Math.random() * (finalUrls.length + 1));
+      finalUrls.splice(randomPosition, 0, duplicateUrls[j]);
+      finalResults.splice(randomPosition, 0, duplicateResults[j]);
+    }
+
     const dividedTask: AnnotationTask = {
       title: task.title,
       description: task.description,
       tag: task.tag,
-      urls: urlsChunk,
+      urls: finalUrls,
       genre: task.genre,
-      result: resultChunk,
+      result: finalResults,
     };
 
     dividedTasks.push(dividedTask);
@@ -123,7 +134,6 @@ const divideTask = async (task: AnnotationTask): Promise<AnnotationTask[]> => {
 
   return dividedTasks;
 };
-
 const makeTask = async () => {
   const dataType = await inquirer.prompt([
     {

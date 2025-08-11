@@ -5,6 +5,7 @@ export interface UserTasks {
   task_id: string;
   data: AnnotationTask;
   step: number;
+  identifier: number;
 }
 
 export interface AnnotationTasks {

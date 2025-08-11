@@ -206,6 +206,7 @@
           "photoVideo": "写真または動画撮影",
           "conjunction": "で",
           "year": "年",
+          "month": "ヶ月",
           "placeholder": "例: 専門学校",
           "description": "学校カテゴリと通った年数を記述してください．"
         },

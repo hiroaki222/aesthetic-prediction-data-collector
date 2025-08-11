@@ -225,6 +225,23 @@ export function ExperienceSetupContent({ handleStepComplete, updateProfileData, 
                         }}
                       />
                       <a>{t(`labels.learned-at.year`)}</a>
+                      <Input
+                        id={`learned-month-${key}`}
+                        name={`learned-month-${key}`}
+                        type="text"
+                        min="0"
+                        max="100"
+                        step="1"
+                        className=" w-25"
+                        placeholder="6"
+                        value={profileData.experience[key as keyof typeof profileData.experience]?.learn?.month || ''}
+                        onChange={(e) => {
+                          const normalizedValue = e.target.value.normalize('NFKC');
+                          const val = normalizedValue === '' ? null : parseInt(normalizedValue, 10);
+                          updateProfileData({ [`experience.${key}.learn.month`]: val });
+                        }}
+                      />
+                      <a className="w-20">{t(`labels.learned-at.month`)}</a>
                     </div>
                   </div>
                 )}

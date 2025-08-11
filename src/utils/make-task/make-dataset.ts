@@ -134,7 +134,7 @@ const makeTask = async () => {
 
   const result: AnnotationTask["result"] = [];
   for (let i = 0; i < urls.length; i++) {
-    const tmp: number[] = Array(7).fill(3);
+    const tmp: number[] = Array(9).fill(3);
     tmp.push(4);
     result.push(tmp);
   }
@@ -145,7 +145,7 @@ const makeTask = async () => {
     tag: tag,
     urls: urls,
     genre: genre,
-    result: urls.map(() => Array(8).fill(3)),
+    result: result,
   });
 
   await deleteFiles(await listFiles());

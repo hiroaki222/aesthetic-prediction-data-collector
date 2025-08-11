@@ -23,4 +23,5 @@ export interface DetailData {
 export interface LearnData {
   learnedAt: string;
   year: number;
+  month: number;
 }

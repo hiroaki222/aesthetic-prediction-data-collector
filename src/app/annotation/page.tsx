@@ -20,6 +20,7 @@ function AnnotationContent() {
   const [step, setStep] = useState(1)
   const [isExpanded, setIsExpanded] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
+  const [uuid, setUuid] = useState<string | null>(null);
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -72,14 +73,13 @@ function AnnotationContent() {
   useEffect(() => {
     if (!annotationTargets) return;
     (async () => {
-      const userData = await fetchUser();
-      const uuid = userData?.id;
-      if (!uuid) {
+      const uuidValue = await fetchUser('id');
+      setUuid(uuidValue);
+      if (!uuidValue) {
         router.replace('/error/400');
         return;
       }
       if (!annotationResult) return;
-      saveAnnotation(annotationTargets.task_id, annotationResult, annotationTargets, step, uuid);
     })();
   }, [annotationTargets, annotationResult, router, step]);
 
@@ -88,6 +88,8 @@ function AnnotationContent() {
   }, [annotationTargets, annotationResult])
 
   const handleFinish = () => {
+    if (!annotationTargets || !annotationResult || !uuid) return;
+    saveAnnotation(annotationTargets.task_id, annotationResult, annotationTargets, step, uuid);
     router.push('/dashboard');
   };
 
@@ -112,6 +114,7 @@ function AnnotationContent() {
                 annotationResult={annotationResult}
                 setAnnotationResult={setAnnotationResult}
                 step={step}
+                genre={annotationTargets?.data.genre}
               />
             </Card>
             <AnnotationControl
@@ -119,6 +122,9 @@ function AnnotationContent() {
               setStep={setStep}
               range={Object.keys(annotationTargets.data.urls).length}
               onFinish={handleFinish}
+              uuid={uuid}
+              annotationTargets={annotationTargets}
+              annotationResult={annotationResult}
             />
             {isExpanded && !isMobile && (
               <div

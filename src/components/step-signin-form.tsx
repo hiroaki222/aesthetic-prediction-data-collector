@@ -66,6 +66,7 @@ export function StepSigninForm({
           <div className="absolute inset-0 z-50 flex items-center justify-center bg-white">
             <div className="text-center">
               <div className="text-2xl font-bold text-green-600 mb-4">{t('success')}</div>
+              <div className="text-xl font-bold text-green-600 mb-4">{t('next-step')}</div>
               <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto">
                 <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path>

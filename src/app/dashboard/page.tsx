@@ -26,8 +26,7 @@ export default function Dashboard() {
   const router = useRouter();
 
   const fetchTasks = async () => {
-    const userData = await fetchUser();
-    const uuid = userData?.id
+    const uuid = await fetchUser('id');
     if (!uuid) {
       redirect(`/error/401`);
     }
@@ -40,7 +39,7 @@ export default function Dashboard() {
       description: task.data.description,
       image: task.data.urls[0],
       tag: task.data.tag,
-      progress: task.step / task.data.urls.length * 100,
+      progress: (task.step / task.data.urls.length) * 100,
     }))
   }
 

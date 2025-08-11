@@ -25,14 +25,16 @@ function GetStartedPageContent() {
   const searchParams = useSearchParams()
 
   const defaultProfileData: ProfileData = useMemo(() => ({
+    name: '',
     uuid: '',
     age: 0,
     gender: '',
     edu: '',
-    art: '',
-    pho: '',
-    fas: '',
-    mus: '',
+    experience: {
+      art: { learn: { learnedAt: '', year: -1, month: -1 }, job: undefined, interest: -1 },
+      fashion: { learn: { learnedAt: '', year: -1, month: -1 }, job: undefined, interest: -1 },
+      photoVideo: { learn: { learnedAt: '', year: -1, month: -1 }, job: undefined, interest: -1 },
+    },
     titpj: {},
   }), [])
 
@@ -44,14 +46,16 @@ function GetStartedPageContent() {
     }
 
     setProfileData({
+      name: '',
       uuid: '',
       age: 0,
       gender: '',
       edu: '',
-      art: '',
-      pho: '',
-      fas: '',
-      mus: '',
+      experience: {
+        art: { learn: { learnedAt: '', year: -1, month: -1 }, job: undefined, interest: -1 },
+        fashion: { learn: { learnedAt: '', year: -1, month: -1 }, job: undefined, interest: -1 },
+        photoVideo: { learn: { learnedAt: '', year: -1, month: -1 }, job: undefined, interest: -1 },
+      },
       titpj: {},
     });
 
@@ -72,13 +76,45 @@ function GetStartedPageContent() {
 
 
 
-  const updateProfileData = (field: string, value: string | number | Record<string, unknown>) => {
+  const updateProfileData = (updates: Partial<ProfileData> | Record<string, unknown>) => {
     setProfileData((prev) => {
       if (!prev) return null
-      return {
-        ...prev,
-        [field]: value,
+
+      if (typeof updates === 'object' && !Array.isArray(updates)) {
+        const hasNestedPath = Object.keys(updates).some(key => key.includes('.'))
+
+        if (hasNestedPath) {
+          const newData = JSON.parse(JSON.stringify(prev)) as ProfileData
+
+          Object.entries(updates).forEach(([path, value]) => {
+            if (path.includes('.')) {
+              const keys = path.split('.')
+              let current = newData as unknown as Record<string, unknown>
+
+              for (let i = 0; i < keys.length - 1; i++) {
+                const key = keys[i]
+                if (!(key in current) || typeof current[key] !== 'object') {
+                  current[key] = {}
+                }
+                current = current[key] as Record<string, unknown>
+              }
+
+              current[keys[keys.length - 1]] = value
+            } else {
+              (newData as unknown as Record<string, unknown>)[path] = value
+            }
+          })
+
+          return newData
+        } else {
+          return {
+            ...prev,
+            ...updates as Partial<ProfileData>,
+          }
+        }
       }
+
+      return prev
     })
   }
 
@@ -157,14 +193,13 @@ function GetStartedPageContent() {
         router.push("/error/400?message=Profile data is missing&description=Please ensure your profile data is set before completing the setup.")
         return
       }
-      const userData = await fetchUser();
-      const uuidValue = userData?.id
-      if (!uuidValue) {
+      const uuid = await fetchUser('id');
+      if (!uuid) {
         router.push("/error/400?message=User UUID is missing&description=Please ensure you are logged in before completing the setup.")
         return
       }
 
-      const profileDataWithUuid = { ...profileData, uuid: uuidValue }
+      const profileDataWithUuid = { ...profileData, uuid: uuid }
       await saveUserProfile(profileDataWithUuid)
       router.push("/dashboard")
     } catch (error) {

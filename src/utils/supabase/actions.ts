@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "./server";
 import { ProfileData } from "@/types/profile";
 import { AnnotationTasks, UserTasks } from "@/types/annotation";
+import { AuthUser } from "@/types/auth";
 
 export async function login(formData: FormData) {
   const supabase = await createClient();
@@ -166,7 +167,7 @@ export async function saveUserProfile(ProfileData: ProfileData) {
   }
 }
 
-export async function fetchUser() {
+export async function fetchUser(key?: keyof AuthUser): Promise<string> {
   const supabase = await createClient();
 
   const {
@@ -179,9 +180,23 @@ export async function fetchUser() {
     const message = encodeURIComponent("User not authenticated");
     const description = encodeURIComponent(error.message.replace(/_/g, " "));
     redirect(`/error/${code}?message=${message}&description=${description}`);
+    return "error: User not authenticated";
   }
 
-  return user;
+  if (!user) {
+    return "error: userdata is null";
+  }
+
+  if (!key) {
+    return "error: key is required";
+  }
+
+  const value = user[key];
+  if (value === undefined || value === null) {
+    return "error: value is undefined or null";
+  }
+
+  return String(value);
 }
 
 export async function fetchRole(uuid: string | undefined) {
@@ -202,7 +217,7 @@ export async function fetchRole(uuid: string | undefined) {
     return false;
   }
 
-  return data;
+  return data.role;
 }
 
 export async function fetchUserTasks(uuid: string) {

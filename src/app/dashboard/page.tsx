@@ -3,12 +3,13 @@ import { Header } from "@/components/header";
 import { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { TaskCard } from "@/components/task-card"
-import { fetchUserTasks, fetchUser } from "@/utils/supabase/actions";
+import { fetchUser } from "@/utils/supabase/actions";
 import { Footer } from "@/components/footer";
 import { useTranslations } from "next-intl";
 import { redirect, useRouter } from "next/navigation";
 import { UserTasks } from "@/types/annotation";
 import { LoaderCircle } from 'lucide-react';
+import { fetchUserTasks } from "@/utils/annotation";
 
 interface Task {
   id: string;

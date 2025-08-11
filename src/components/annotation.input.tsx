@@ -12,7 +12,7 @@ export default function AnnotationInput({ annotationResult, setAnnotationResult,
 
   const handleSliderChange = (index: number, value: number[]) => {
     if (!annotationResult) return;
-    const allowedRange = index === 7 ? overallRange : range;
+    const allowedRange = index === 9 ? overallRange : range;
     const newValue = value[0] + 1;
     if (newValue < allowedRange[0] || newValue > allowedRange[allowedRange.length - 1]) return;
     const newValues = [...annotationResult];
@@ -21,9 +21,11 @@ export default function AnnotationInput({ annotationResult, setAnnotationResult,
   };
 
   const title = [
+    t('labels.pleasant'),
+    t('labels.beautiful'),
     t('labels.distasteful'),
-    t('labels.overwhelmed'),
-    t('labels.intellectually-challenged'),
+    t('labels.impressed'),
+    t('labels.intellectually-stimulated'),
     t('labels.motivated-to-act'),
     t('labels.nostalgic'),
     t('labels.sad'),
@@ -108,10 +110,10 @@ export default function AnnotationInput({ annotationResult, setAnnotationResult,
       <div className="w-full m-5">
         <div className="flex">
           <div className="flex-1">
-            <CardTitle className="text-center pb-2">{title[7]}</CardTitle>
+            <CardTitle className="text-center pb-2">{title[9]}</CardTitle>
             <Slider
-              value={[(annotationResult[step - 1][7] ?? 1) - 1]}
-              onValueChange={(value) => handleSliderChange(7, value)}
+              value={[(annotationResult[step - 1][9] ?? 1) - 1]}
+              onValueChange={(value) => handleSliderChange(9, value)}
               max={overallRange.length - 1}
               step={1}
             />
@@ -127,31 +129,31 @@ export default function AnnotationInput({ annotationResult, setAnnotationResult,
             name={`annotation-input-7`}
             type="text"
             value={
-              inputTexts[7] !== undefined
-                ? inputTexts[7]
-                : (annotationResult[step - 1][7] ?? '').toString()
+              inputTexts[9] !== undefined
+                ? inputTexts[9]
+                : (annotationResult[step - 1][9] ?? '').toString()
             }
             onChange={(e) => {
               const normalizedValue = e.target.value.normalize('NFKC');
-              setInputTexts((prev) => ({ ...prev, 7: normalizedValue }));
+              setInputTexts((prev) => ({ ...prev, 9: normalizedValue }));
               const parsedValue = parseInt(normalizedValue, 10);
               if (!isNaN(parsedValue) && parsedValue >= overallRange[0] && parsedValue <= overallRange[overallRange.length - 1]) {
                 const newValues = [...annotationResult!];
-                newValues[step - 1][7] = parsedValue;
+                newValues[step - 1][9] = parsedValue;
                 setAnnotationResult(newValues);
               }
             }}
             onBlur={() => {
-              const text = inputTexts[7] ?? '';
+              const text = inputTexts[9] ?? '';
               if (text === '') {
                 const mid = overallRange[Math.floor(overallRange.length / 2)];
                 const newValues = [...annotationResult!];
-                newValues[step - 1][7] = mid;
+                newValues[step - 1][9] = mid;
                 setAnnotationResult(newValues);
               }
               setInputTexts((prev) => {
                 const copy = { ...prev };
-                delete copy[7];
+                delete copy[9];
                 return copy;
               });
             }}

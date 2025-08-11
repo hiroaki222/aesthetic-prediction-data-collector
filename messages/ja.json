@@ -370,19 +370,21 @@
       "first": "次の感情をどれくらい強く感じましたか？",
       "second": "この{genre}が表現していた感情ではなく，",
       "third": "この{genre}を見た際にあなた自身が感じた感情に基づいて答えてください",
-      "expansion": "1点: 全く感じない, 2点: あまり感じない, 3点: どちらとも言えない, 4点: やや感じる, 5点: とても感じる",
-      "overall": "総合的に，この{genre}をどの程度美的だと感じましたか？",
+      "expansion": "1点: 全く感じない, 2点: あまり感じない, 3点: どちらともいえない, 4点: やや感じる, 5点: とても感じる",
+      "overall": "総合的に，この{genre}をどれくらい美的だと感じましたか?",
       "overall-expansion": "1点: 全く美的でない, 2点: 美的でない, 3点: あまり美的でない, 4点: どちらともいえない, 5点: やや美的, 6点: 美的, 7点: とても美的"
     },
     "labels": {
-      "distasteful": "不快に感じた",
-      "overwhelmed": "圧倒された",
-      "intellectually-challenged": "知的に刺激を受けた",
-      "motivated-to-act": "モチベーションが上がった",
-      "nostalgic": "懐かしさを感じた",
-      "sad": "悲しくなった",
+      "pleasant": "好ましいと感じた",
+      "beautiful": "美しいと感じた",
+      "distasteful": "不快だと感じた",
+      "impressed": "感銘を受けた",
+      "intellectually-stimulated": "知的に刺激された",
+      "motivated-to-act": "行動を起こす意欲が湧いた",
+      "nostalgic": "懐かしい気持ちになった",
+      "sad": "悲しい気持ちになった",
       "amused": "楽しませてくれた",
-      "overall-aesthetic": "全体的な美的評価"
+      "overall-aesthetic": "総合的な美的評価"
     }
   },
   "finish-confirmation-dialog": {

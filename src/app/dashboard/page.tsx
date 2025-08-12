@@ -19,6 +19,8 @@ interface Task {
   image: string;
   progress: number;
   order: number;
+  tag?: "Img" | "audio" | "video";
+  genre: "アート作品" | "ファッション" | "映像" | "unknown";
 }
 
 export default function Dashboard() {
@@ -42,7 +44,8 @@ export default function Dashboard() {
       title: task.data.title,
       description: task.data.description,
       image: task.data.urls[0],
-      tag: task.data.tag,
+      tag: task.data.tag as "Img" | "audio" | "video",
+      genre: task.data.genre,
       progress: Math.floor((task.step / task.data.urls.length) * 100),
       order: task.order
     }))
@@ -59,12 +62,12 @@ export default function Dashboard() {
   }, [])
 
   useEffect(() => {
-    const completedTaskCount = tasks.filter(task => task.progress === 100).length
+    // const completedTaskCount = tasks.filter(task => task.progress === 100).length
 
     setTabIcons(new Array(5).fill(0))
 
     for (let i = 0; i < tasks.length; i++) {
-      const status = getStatusFromProgress(tasks[i], completedTaskCount)
+      const status = getStatusFromProgress(tasks[i], tasks)
       switch (status) {
         case "locked":
           setTabIcons((prev) => {
@@ -107,26 +110,29 @@ export default function Dashboard() {
     router.push(`/annotation/?taskId=${taskId}`);
   }
 
-  const getStatusFromProgress = (task: Task, completedTaskCount: number) => {
+  const getStatusFromProgress = (task: Task, allTasks: Task[]) => {
     if (task.progress === 100) {
       return "completed"
     }
-    if (task.progress > 0) return "in-progress"
-
-    if (task.order > completedTaskCount) {
-      return "locked"
+    if (task.progress > 0) {
+      return "in-progress"
     }
-    return "not-started"
+    if (task.order === 0) {
+      return "not-started"
+    }
+    const prevTask = allTasks.find(t => t.genre === task.genre && t.order === task.order - 1)
+    if (prevTask && prevTask.progress === 100) {
+      return "not-started"
+    }
+    return "locked"
   }
 
   const filterTasks = (status?: string) => {
-    const sortedTasks = [...tasks].sort((a, b) => a.order - b.order); // 元のタスクリストをソート
+    const sortedTasks = [...tasks].sort((a, b) => a.order - b.order);
 
     if (!status || status === "all") return sortedTasks
 
-    const completedTaskCount = tasks.filter(task => task.progress === 100).length
-
-    return sortedTasks.filter((task) => getStatusFromProgress(task, completedTaskCount) === status)
+    return sortedTasks.filter((task) => getStatusFromProgress(task, sortedTasks) === status)
   }
 
   const filteredTasks = filterTasks(activeTab)
@@ -206,18 +212,22 @@ export default function Dashboard() {
                   ) : (
                     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                       {filteredTasks.map((task, index) => {
-                        const completedTaskCount = tasks.filter(t => t.progress === 100).length;
-                        const taskStatus = getStatusFromProgress(task, completedTaskCount);
-
+                        const taskStatus = getStatusFromProgress(task, tasks);
                         return (
                           <TaskCard
                             key={task.id}
-                            {...task}
+                            id={task.id}
+                            title={task.title}
+                            description={task.description}
+                            image={task.image}
+                            progress={task.progress}
+                            order={task.order}
+                            tag={task.tag}
                             onStart={handleStartTask}
                             priority={index < 3}
                             isLocked={taskStatus === "locked"}
                           />
-                        );
+                        )
                       })}
                     </div>
                   )}

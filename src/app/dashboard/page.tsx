@@ -199,7 +199,7 @@ export default function Dashboard() {
                   {filteredTasks.length === 0 ? (
                     <div className="text-center py-12">
                       <p className="text-muted-foreground mb-4">
-                        {t('empty-state.message')}
+                        {tabIcons[1] === 0 ? t('empty-state.reload-plz') : t('empty-state.message')}
                       </p>
                     </div>
                   ) : (

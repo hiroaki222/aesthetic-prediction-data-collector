@@ -59,8 +59,10 @@ export default function Dashboard() {
   }, [])
 
   useEffect(() => {
+    const completedTaskCount = tasks.filter(task => task.progress === 100).length
+
     for (let i = 0; i < tasks.length; i++) {
-      const status = getStatusFromProgress(tasks[i])
+      const status = getStatusFromProgress(tasks[i], completedTaskCount)
       console.log(`i: ${i}, status: ${status}`)
       switch (status) {
         case "locked":
@@ -104,15 +106,13 @@ export default function Dashboard() {
     router.push(`/annotation/?taskId=${taskId}`);
   }
 
-  let finishedTask: number = 0
-  const getStatusFromProgress = (task: Task) => {
+  const getStatusFromProgress = (task: Task, completedTaskCount: number) => {
     if (task.progress === 100) {
-      finishedTask += 1
       return "completed"
     }
     if (task.progress > 0) return "in-progress"
 
-    if (task.order > finishedTask) {
+    if (task.order > completedTaskCount) {
       return "locked"
     }
     return "not-started"
@@ -120,7 +120,10 @@ export default function Dashboard() {
 
   const filterTasks = (status?: string) => {
     if (!status || status === "all") return tasks
-    return tasks.filter((task) => getStatusFromProgress(task) === status)
+
+    const completedTaskCount = tasks.filter(task => task.progress === 100).length
+
+    return tasks.filter((task) => getStatusFromProgress(task, completedTaskCount) === status)
   }
 
   const filteredTasks = filterTasks(activeTab)

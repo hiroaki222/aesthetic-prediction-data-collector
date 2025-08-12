@@ -83,6 +83,22 @@ export async function fetchTasks(setNum: number): Promise<AnnotationTasks[]> {
     console.error("Error fetching tasks:", error);
     return [];
   }
+
+  let newSetNum = setNum + 1;
+  if (newSetNum >= 6) {
+    newSetNum = 0;
+  }
+
+  const { error: updateError } = await supabase
+    .from("set")
+    .update({ all: newSetNum })
+    .eq("id", 1)
+    .select();
+
+  if (updateError) {
+    console.error("Error updating set:", updateError);
+    return [];
+  }
   return data;
 }
 

@@ -244,8 +244,9 @@ const makeTask = async () => {
 
   const result: AnnotationTask["result"] = [];
   for (let i = 0; i < urls.length; i++) {
-    const tmp: number[] = Array(10).fill(3);
+    const tmp: number[] = Array(9).fill(3);
     tmp.push(4);
+    tmp.push(0);
     result.push(tmp);
   }
 

@@ -21,6 +21,7 @@ function AnnotationContent() {
   const [isExpanded, setIsExpanded] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
   const [uuid, setUuid] = useState<string | null>(null);
+  const [startTime, setStartTime] = useState<number>(performance.now() / 1000);
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -97,12 +98,21 @@ function AnnotationContent() {
     setIsExpanded(isMobile ? false : true);
   }, [annotationTargets, step, isMobile]);
 
+  useEffect(() => {
+    const duration = performance.now() / 1000 - startTime;
+    if (annotationResult && annotationResult[step - 1]) {
+      annotationResult[step - 2][10] += duration;
+      setAnnotationResult([...annotationResult]);
+    }
+    setStartTime(performance.now() / 1000);
+  }, [step])
+
   return (
     <>
       {
         annotationTargets ? (
           <div className="min-h-screen bg-background flex flex-col">
-            <AnnotationHeader currentStep={step} totalSteps={Object.keys(annotationTargets.data.urls).length} taskName={annotationTargets.data.title} />
+            <AnnotationHeader currentStep={step} totalSteps={Object.keys(annotationTargets.data.urls).length} taskName={annotationTargets.data.title} handleFinish={handleFinish} />
             <Card className="flex-1 mx-5 mt-5 flex flex-col md:flex-row items-start justify-center p-5">
               <AnnotationTarget
                 url={url}

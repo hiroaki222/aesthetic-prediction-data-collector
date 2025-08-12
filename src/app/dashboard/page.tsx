@@ -26,6 +26,7 @@ export default function Dashboard() {
   const [tasks, setTasks] = useState<Task[]>([])
   const [activeTab, setActiveTab] = useState("not-started")
   const [isLoading, setIsLoading] = useState(true)
+  const [tabIcons, setTabIcons] = useState<number[]>(new Array(5).fill(0))
   const router = useRouter();
 
   const fetchTasks = async () => {
@@ -57,6 +58,48 @@ export default function Dashboard() {
     fetchData();
   }, [])
 
+  useEffect(() => {
+    for (let i = 0; i < tasks.length; i++) {
+      const status = getStatusFromProgress(tasks[i])
+      console.log(`i: ${i}, status: ${status}`)
+      switch (status) {
+        case "locked":
+          setTabIcons((prev) => {
+            const newIcons = [...prev];
+            newIcons[0] += 1;
+            return newIcons;
+          });
+          break;
+        case "not-started":
+          setTabIcons((prev) => {
+            const newIcons = [...prev];
+            newIcons[2] += 1;
+            return newIcons;
+          });
+          break;
+        case "in-progress":
+          setTabIcons((prev) => {
+            const newIcons = [...prev];
+            newIcons[3] += 1;
+            return newIcons;
+          });
+          break;
+        case "completed":
+          setTabIcons((prev) => {
+            const newIcons = [...prev];
+            newIcons[4] += 1;
+            return newIcons;
+          });
+          break;
+      }
+      setTabIcons((prev) => {
+        const newIcons = [...prev];
+        newIcons[1] += 1;
+        return newIcons;
+      });
+    }
+  }, [tasks])
+
   const handleStartTask = (taskId: string) => {
     router.push(`/annotation/?taskId=${taskId}`);
   }
@@ -81,7 +124,6 @@ export default function Dashboard() {
   }
 
   const filteredTasks = filterTasks(activeTab)
-
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Header />
@@ -98,7 +140,7 @@ export default function Dashboard() {
             >
               <Lock />
               <Badge className={`absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 text-xs w-4 h-4 flex items-center justify-center rounded-full ${activeTab === "locked" ? "" : "bg-muted-foreground text-background"}`}>
-                {filterTasks("locked").length}
+                {tabIcons[0]}
               </Badge>
             </TabsTrigger>
             <TabsTrigger
@@ -107,7 +149,7 @@ export default function Dashboard() {
             >
               {t('tabs.all')}
               <Badge className={`absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 text-xs w-4 h-4 flex items-center justify-center rounded-full ${activeTab === "all" ? "" : "bg-muted-foreground text-background"}`}>
-                {filterTasks("all").length}
+                {tabIcons[1]}
               </Badge>
             </TabsTrigger>
             <TabsTrigger
@@ -116,7 +158,7 @@ export default function Dashboard() {
             >
               {t('tabs.not-started')}
               <Badge className={`absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 text-xs w-4 h-4 flex items-center justify-center rounded-full ${activeTab === "not-started" ? "" : "bg-muted-foreground text-background"}`}>
-                {filterTasks("not-started").length}
+                {tabIcons[2]}
               </Badge>
             </TabsTrigger>
             <TabsTrigger
@@ -125,7 +167,7 @@ export default function Dashboard() {
             >
               {t('tabs.in-progress')}
               <Badge className={`absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 text-xs w-4 h-4 flex items-center justify-center rounded-full ${activeTab === "in-progress" ? "" : "bg-muted-foreground text-background"}`}>
-                {filterTasks("in-progress").length}
+                {tabIcons[3]}
               </Badge>
             </TabsTrigger>
             <TabsTrigger
@@ -134,7 +176,7 @@ export default function Dashboard() {
             >
               {t('tabs.completed')}
               <Badge className={`absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 text-xs w-4 h-4 flex items-center justify-center rounded-full ${activeTab === "completed" ? "" : "bg-muted-foreground text-background"}`}>
-                {filterTasks("completed").length}
+                {tabIcons[4]}
               </Badge>
             </TabsTrigger>
           </TabsList>

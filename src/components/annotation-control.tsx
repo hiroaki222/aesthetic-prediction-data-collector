@@ -1,4 +1,5 @@
-import { ChevronLeft, ChevronRight } from "lucide-react";
+//import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { FinishConfirmationDialog } from "./finish-confirmation-dialog";
 import { useTranslations } from "next-intl";
@@ -25,13 +26,13 @@ export default function AnnotationControl({
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
   const t = useTranslations('annotation-control');
 
-  const onClickPrev = () => {
+  /* const onClickPrev = () => {
     if (step > 1) {
       if (!annotationTargets || !annotationResult || !uuid) return;
       saveAnnotation(annotationTargets.task_id, annotationResult, annotationTargets, step, uuid);
       setStep(step - 1)
     }
-  }
+  } */
   const onClickNext = () => {
     if (step < range) {
       if (!annotationTargets || !annotationResult || !uuid) return;

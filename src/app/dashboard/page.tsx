@@ -61,6 +61,8 @@ export default function Dashboard() {
   useEffect(() => {
     const completedTaskCount = tasks.filter(task => task.progress === 100).length
 
+    setTabIcons(new Array(5).fill(0))
+
     for (let i = 0; i < tasks.length; i++) {
       const status = getStatusFromProgress(tasks[i], completedTaskCount)
       console.log(`i: ${i}, status: ${status}`)

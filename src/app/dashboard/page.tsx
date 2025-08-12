@@ -8,7 +8,7 @@ import { Footer } from "@/components/footer";
 import { useTranslations } from "next-intl";
 import { redirect, useRouter } from "next/navigation";
 import { UserTasks } from "@/types/annotation";
-import { LoaderCircle } from 'lucide-react';
+import { LoaderCircle, Lock } from 'lucide-react';
 import { fetchUserTasks } from "@/utils/annotation";
 
 interface Task {
@@ -17,6 +17,7 @@ interface Task {
   description: string;
   image: string;
   progress: number;
+  order: number;
 }
 
 export default function Dashboard() {
@@ -59,15 +60,23 @@ export default function Dashboard() {
     router.push(`/annotation/?taskId=${taskId}`);
   }
 
-  const getStatusFromProgress = (progress: number) => {
-    if (progress === 100) return "completed"
-    if (progress > 0) return "in-progress"
+  let finishedTask: number = 0
+  const getStatusFromProgress = (task: Task) => {
+    if (task.progress === 100) {
+      finishedTask += 1
+      return "completed"
+    }
+    if (task.progress > 0) return "in-progress"
+
+    if (task.order > finishedTask) {
+      return "locked"
+    }
     return "not-started"
   }
 
   const filterTasks = (status?: string) => {
     if (!status || status === "all") return tasks
-    return tasks.filter((task) => getStatusFromProgress(task.progress) === status)
+    return tasks.filter((task) => getStatusFromProgress(task) === status)
   }
 
   const filteredTasks = filterTasks(activeTab)
@@ -81,7 +90,11 @@ export default function Dashboard() {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-8">
-          <TabsList>
+          <TabsList className="flex gap-2">
+            <TabsTrigger
+              value="locked"
+              className={activeTab === "locked" ? "text-black font-bold" : ""}
+            ><Lock /></TabsTrigger>
             <TabsTrigger
               value="all"
               className={activeTab === "all" ? "text-black font-bold" : ""}

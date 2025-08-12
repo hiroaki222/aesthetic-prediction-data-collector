@@ -365,7 +365,12 @@
     "title": "Aesthetic Prediction Data Collector",
     "task": "タスク: {taskName}",
     "step-label": "ステップ",
-    "step-counter": "{currentStep} / {totalSteps}"
+    "step-counter": "{currentStep} / {totalSteps}",
+    "exit-confirmation": {
+      "title": "アノテーションを中断しますか？",
+      "description": "現在のアノテーション作業を中断してダッシュボードに戻ります。入力した内容は保存されています。",
+      "confirm-button": "中断する"
+    }
   },
   "annotation": {
     "instructions": {

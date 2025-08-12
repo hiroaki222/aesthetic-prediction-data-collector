@@ -10,15 +10,17 @@ interface AnnotationHeaderProps {
   currentStep: number
   totalSteps: number
   taskName: string
+  handleFinish: () => void;
 }
 
-export function AnnotationHeader({ currentStep, totalSteps, taskName }: AnnotationHeaderProps) {
+export function AnnotationHeader({ currentStep, totalSteps, taskName, handleFinish }: AnnotationHeaderProps) {
   const t = useTranslations('annotation-header')
   const progress = (currentStep / totalSteps) * 100
   const router = useRouter();
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
 
   const onClickClose = () => {
+    handleFinish()
     setIsConfirmDialogOpen(true);
   }
 
@@ -64,9 +66,9 @@ export function AnnotationHeader({ currentStep, totalSteps, taskName }: Annotati
         isOpen={isConfirmDialogOpen}
         onOpenChange={setIsConfirmDialogOpen}
         onConfirm={handleConfirmFinish}
-        title="アノテーションを中断しますか？"
-        description="現在のアノテーション作業を中断してダッシュボードに戻ります。入力した内容は保存されています。"
-        confirmButtonText="中断する"
+        title={t('exit-confirmation.title')}
+        description={t('exit-confirmation.description')}
+        confirmButtonText={t('exit-confirmation.confirm-button')}
       />
     </>
   )

@@ -42,7 +42,7 @@ export function AnnotationHeader({ currentStep, totalSteps, taskName, handleFini
 
           <div className="flex items-center gap-4 ml-auto">
             <div className="flex items-center gap-2 text-sm">
-              <span className="text-muted-foreground hidden md:inline">{t('step-label')}</span>
+              {/* <span className="text-muted-foreground hidden md:inline">{t('step-label')}</span> */}
               <span className="font-medium">
                 {t('step-counter', { currentStep, totalSteps })}
               </span>

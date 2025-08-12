@@ -41,10 +41,8 @@ async function uploadFile(
 ): Promise<string[]> {
   const uploadedUrls: string[] = [];
 
-  // プロセスバーを初期化
   const progressBar = new cliProgress.SingleBar({
-    format:
-      "ファイルアップロード |{bar}| {percentage}% | {value}/{total} ファイル",
+    format: "File upload |{bar}| {percentage}% | {value}/{total} files",
     barCompleteChar: "\u2588",
     barIncompleteChar: "\u2591",
     hideCursor: true,
@@ -72,7 +70,7 @@ async function uploadFile(
   }
 
   progressBar.stop();
-  console.log("\nファイルアップロード完了！");
+  console.log("\nFiles was uploaded.");
 
   return uploadedUrls;
 }
@@ -82,7 +80,7 @@ async function deleteFiles(filePaths: string[]): Promise<void> {
 
   // プロセスバーを初期化
   const progressBar = new cliProgress.SingleBar({
-    format: "ファイル削除 |{bar}| {percentage}% | {value}/{total} ファイル",
+    format: "Files delete |{bar}| {percentage}% | {value}/{total} files",
     barCompleteChar: "\u2588",
     barIncompleteChar: "\u2591",
     hideCursor: true,
@@ -246,7 +244,7 @@ const makeTask = async () => {
 
   const result: AnnotationTask["result"] = [];
   for (let i = 0; i < urls.length; i++) {
-    const tmp: number[] = Array(9).fill(3);
+    const tmp: number[] = Array(10).fill(3);
     tmp.push(4);
     result.push(tmp);
   }
@@ -281,7 +279,7 @@ const makeTask = async () => {
   }
 
   insertProgressBar.stop();
-  console.log("\nタスク挿入完了！");
+  console.log("\nTasks were inserted successfully.");
 
   await deleteFiles(await listFiles());
   return;

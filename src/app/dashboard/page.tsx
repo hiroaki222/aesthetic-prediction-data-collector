@@ -65,7 +65,6 @@ export default function Dashboard() {
 
     for (let i = 0; i < tasks.length; i++) {
       const status = getStatusFromProgress(tasks[i], completedTaskCount)
-      console.log(`i: ${i}, status: ${status}`)
       switch (status) {
         case "locked":
           setTabIcons((prev) => {

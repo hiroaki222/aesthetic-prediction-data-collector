@@ -103,7 +103,7 @@ function AnnotationContent() {
         annotationTargets ? (
           <div className="min-h-screen bg-background flex flex-col">
             <AnnotationHeader currentStep={step} totalSteps={Object.keys(annotationTargets.data.urls).length} taskName={annotationTargets.data.title} />
-            <Card className="flex-1 mx-5 mt-5 flex flex-col md:flex-row items-center justify-center p-5">
+            <Card className="flex-1 mx-5 mt-5 flex flex-col md:flex-row items-start justify-center p-5">
               <AnnotationTarget
                 url={url}
                 isExpanded={isExpanded}

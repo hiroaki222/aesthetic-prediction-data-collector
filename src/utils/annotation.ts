@@ -117,6 +117,8 @@ export async function makeUserAnnotationTasks(uuid: string): Promise<boolean> {
   const tasks = await fetchTasks(setNum);
 
   for (const task of tasks) {
+    task.data.urls = task.data.urls.sort(() => Math.random() - 0.5);
+
     const divideInto = Math.floor(task.data.urls.length / 6);
     let order: number = 0;
     for (let i = 0; i < task.data.urls.length; i += divideInto) {

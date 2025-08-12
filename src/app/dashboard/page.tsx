@@ -120,11 +120,13 @@ export default function Dashboard() {
   }
 
   const filterTasks = (status?: string) => {
-    if (!status || status === "all") return tasks
+    const sortedTasks = [...tasks].sort((a, b) => a.order - b.order); // 元のタスクリストをソート
+
+    if (!status || status === "all") return sortedTasks
 
     const completedTaskCount = tasks.filter(task => task.progress === 100).length
 
-    return tasks.filter((task) => getStatusFromProgress(task, completedTaskCount) === status)
+    return sortedTasks.filter((task) => getStatusFromProgress(task, completedTaskCount) === status)
   }
 
   const filteredTasks = filterTasks(activeTab)

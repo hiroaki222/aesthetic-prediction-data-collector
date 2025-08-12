@@ -2,7 +2,6 @@ import { useTranslations } from "next-intl"
 import { Progress } from "@/components/ui/progress"
 import { FilePenLine } from "lucide-react"
 import { X } from 'lucide-react';
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FinishConfirmationDialog } from "./finish-confirmation-dialog";
 
@@ -16,16 +15,14 @@ interface AnnotationHeaderProps {
 export function AnnotationHeader({ currentStep, totalSteps, taskName, handleFinish }: AnnotationHeaderProps) {
   const t = useTranslations('annotation-header')
   const progress = (currentStep / totalSteps) * 100
-  const router = useRouter();
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
 
   const onClickClose = () => {
-    handleFinish()
     setIsConfirmDialogOpen(true);
   }
 
   const handleConfirmFinish = () => {
-    router.replace('/dashboard');
+    handleFinish()
   }
 
 

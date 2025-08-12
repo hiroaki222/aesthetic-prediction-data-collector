@@ -7,7 +7,7 @@ import { Card } from "@/components/ui/card";
 import { UserTasks } from "@/types/annotation";
 import { fetchAnnotation, saveAnnotation } from "@/utils/annotation";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { useEffect, useState, Suspense } from "react"
+import React, { useEffect, useState, Suspense, useRef } from "react"
 import AnnotationControl from "@/components/annotation-control";
 import Image from "next/image";
 import { LoaderCircle, X } from "lucide-react";
@@ -22,6 +22,7 @@ function AnnotationContent() {
   const [isMobile, setIsMobile] = useState(false);
   const [uuid, setUuid] = useState<string | null>(null);
   const [startTime, setStartTime] = useState<number>(performance.now() / 1000);
+  const prevStepRef = useRef<number>(1);
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -99,13 +100,22 @@ function AnnotationContent() {
   }, [annotationTargets, step, isMobile]);
 
   useEffect(() => {
-    const duration = performance.now() / 1000 - startTime;
-    if (annotationResult && annotationResult[step - 1]) {
-      annotationResult[step - 2][10] += duration;
-      setAnnotationResult([...annotationResult]);
+    if (prevStepRef.current !== step) {
+      const duration = performance.now() / 1000 - startTime;
+      if (annotationResult && annotationResult[prevStepRef.current - 1]) {
+        setAnnotationResult(prevResult => {
+          if (prevResult && prevResult[prevStepRef.current - 2]) {
+            const updatedResult = [...prevResult];
+            updatedResult[prevStepRef.current - 2][10] += duration;
+            return updatedResult;
+          }
+          return prevResult;
+        });
+      }
+      setStartTime(performance.now() / 1000);
+      prevStepRef.current = step;
     }
-    setStartTime(performance.now() / 1000);
-  }, [step])
+  }, [step, startTime, annotationResult])
 
   return (
     <>

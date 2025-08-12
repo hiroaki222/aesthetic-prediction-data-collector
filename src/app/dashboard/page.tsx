@@ -22,7 +22,7 @@ interface Task {
 export default function Dashboard() {
   const t = useTranslations('dashboard')
   const [tasks, setTasks] = useState<Task[]>([])
-  const [activeTab, setActiveTab] = useState("all")
+  const [activeTab, setActiveTab] = useState("not-started")
   const [isLoading, setIsLoading] = useState(true)
   const router = useRouter();
 
@@ -41,6 +41,7 @@ export default function Dashboard() {
       image: task.data.urls[0],
       tag: task.data.tag,
       progress: Math.floor((task.step / task.data.urls.length) * 100),
+      order: task.order
     }))
   }
 
@@ -81,10 +82,30 @@ export default function Dashboard() {
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-8">
           <TabsList>
-            <TabsTrigger value="all">{t('tabs.all')}</TabsTrigger>
-            <TabsTrigger value="not-started">{t('tabs.not-started')}</TabsTrigger>
-            <TabsTrigger value="in-progress">{t('tabs.in-progress')}</TabsTrigger>
-            <TabsTrigger value="completed">{t('tabs.completed')}</TabsTrigger>
+            <TabsTrigger
+              value="all"
+              className={activeTab === "all" ? "text-black font-bold" : ""}
+            >
+              {t('tabs.all')}
+            </TabsTrigger>
+            <TabsTrigger
+              value="not-started"
+              className={activeTab === "not-started" ? "text-black font-bold" : ""}
+            >
+              {t('tabs.not-started')}
+            </TabsTrigger>
+            <TabsTrigger
+              value="in-progress"
+              className={activeTab === "in-progress" ? "text-black font-bold" : ""}
+            >
+              {t('tabs.in-progress')}
+            </TabsTrigger>
+            <TabsTrigger
+              value="completed"
+              className={activeTab === "completed" ? "text-black font-bold" : ""}
+            >
+              {t('tabs.completed')}
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value={activeTab} className="mt-6">

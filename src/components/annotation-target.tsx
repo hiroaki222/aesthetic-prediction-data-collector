@@ -5,7 +5,7 @@ import { Expand, LoaderCircle } from "lucide-react";
 export default function AnnotationTarget({ url, setIsExpanded, isMobile }: { url: string; isExpanded: boolean; setIsExpanded: (isExpanded: boolean) => void; isMobile: boolean }) {
   return (
     <>
-      <div className="w-full md:w-1/2 flex items-center justify-center">
+      <div className="w-full md:w-1/3 flex items-center justify-center">
         {url ? (
           <Card className="p-0 overflow-hidden w-full flex items-center justify-center relative">
             <Image src={url} alt="Annotation Target" width={1920} height={1080} className="w-full" priority={true} />

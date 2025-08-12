@@ -54,13 +54,13 @@ export default function AnnotationControl({
     }
   }
 
-  const isPrevDisabled = step <= 1
+  /* const isPrevDisabled = step <= 1 */
   const isLastStep = step >= range
 
   return (
     <>
       <div className="flex items-center justify-between w-full py-5">
-        <button
+        {/* <button
           className={`p-2 md:px-40 mx-10 rounded-full transition-colors ${isPrevDisabled
             ? 'bg-gray-100 cursor-not-allowed'
             : 'bg-gray-300 hover:bg-gray-200'
@@ -69,7 +69,7 @@ export default function AnnotationControl({
           disabled={isPrevDisabled}
         >
           <ChevronLeft className={`size-8 ${isPrevDisabled ? 'text-gray-400' : 'text-gray-700'}`} />
-        </button>
+        </button> */}
         <div className="flex-1"></div>
         {isLastStep ? (
           <button

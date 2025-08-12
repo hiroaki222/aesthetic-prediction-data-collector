@@ -13,6 +13,7 @@ interface TaskCardProps {
   description: string
   image: string
   progress?: number
+  order: number
   tag?: "Img" | "audio" | "video"
   onStart?: (id: string) => void
   priority?: boolean
@@ -109,15 +110,15 @@ export function TaskCard({
         </div>
 
         <Button
-          onClick={() => !isLocked && onStart?.(id)}
+          onClick={() => !isLocked && status !== "completed" && onStart?.(id)}
           className="w-full"
           variant={status === "completed" ? "outline" : "default"}
-          disabled={isLocked}
+          disabled={isLocked || status === "completed"}
         >
           {getButtonText()}
           {isLocked ? (
             <Lock className="ml-2 h-4 w-4" />
-          ) : (
+          ) : status === "completed" ? null : (
             <ArrowRight className="ml-2 h-4 w-4" />
           )}
         </Button>

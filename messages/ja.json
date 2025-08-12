@@ -332,7 +332,8 @@
       "completed": "完了"
     },
     "empty-state": {
-      "message": "このカテゴリにはタスクが見つかりません"
+      "message": "このカテゴリはタスクはありません",
+      "reload-plz": "ページを再度読み込んでください"
     },
     "loading": "ロード中..."
   },
@@ -341,7 +342,8 @@
     "buttons": {
       "start": "タスクを開始",
       "continue": "続ける",
-      "review": "レビュー"
+      "review": "おつかれさまでした",
+      "locked": "順番にタスクを進めてください"
     }
   },
   "footer": {
@@ -363,14 +365,19 @@
     "title": "Aesthetic Prediction Data Collector",
     "task": "タスク: {taskName}",
     "step-label": "ステップ",
-    "step-counter": "{currentStep} / {totalSteps}"
+    "step-counter": "{currentStep} / {totalSteps}",
+    "exit-confirmation": {
+      "title": "アノテーションを中断しますか？",
+      "description": "現在のアノテーション作業を中断してダッシュボードに戻ります。入力した内容は保存されています。",
+      "confirm-button": "中断する"
+    }
   },
   "annotation": {
     "instructions": {
       "first": "次の感情をどれくらい強く感じましたか？",
       "second": "この{genre}が表現していた感情ではなく，",
       "third": "この{genre}を見た際にあなた自身が感じた感情に基づいて答えてください",
-      "expansion": "1点: 全く感じない, 2点: あまり感じない, 3点: どちらともいえない, 4点: やや感じる, 5点: とても感じる",
+      "expansion": "1点: 全く感じなかった, 2点: あまり感じなかった, 3点: どちらともいえない, 4点: やや感じた, 5点: とても感じた",
       "overall": "総合的に，この{genre}をどれくらい美的だと感じましたか?",
       "overall-expansion": "1点: 全く美的でない, 2点: 美的でない, 3点: あまり美的でない, 4点: どちらともいえない, 5点: やや美的, 6点: 美的, 7点: とても美的"
     },

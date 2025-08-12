@@ -12,7 +12,7 @@ export function Footer() {
             {t('copyright', { year: currentYear })}
           </p>
           <div className="flex items-center gap-4">
-            <a href="/contact" className="text-xs text-muted-foreground hover:text-foreground">
+            <a href="/contact" target="_blank" className="text-xs text-muted-foreground hover:text-foreground">
               {t('links.contact')}
             </a>
             <a href="https://github.com/hiroaki222/aesthetic-prediction-data-collector/blob/main/LICENSE" className="text-xs text-muted-foreground hover:text-foreground" target="_blank">

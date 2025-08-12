@@ -341,7 +341,8 @@
     "buttons": {
       "start": "タスクを開始",
       "continue": "続ける",
-      "review": "レビュー"
+      "review": "レビュー",
+      "locked": "順番にタスクを進めてください"
     }
   },
   "footer": {

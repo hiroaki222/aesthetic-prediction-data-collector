@@ -202,14 +202,20 @@ export default function Dashboard() {
                     </div>
                   ) : (
                     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                      {filteredTasks.map((task, index) => (
-                        <TaskCard
-                          key={task.id}
-                          {...task}
-                          onStart={handleStartTask}
-                          priority={index < 3}
-                        />
-                      ))}
+                      {filteredTasks.map((task, index) => {
+                        const completedTaskCount = tasks.filter(t => t.progress === 100).length;
+                        const taskStatus = getStatusFromProgress(task, completedTaskCount);
+
+                        return (
+                          <TaskCard
+                            key={task.id}
+                            {...task}
+                            onStart={handleStartTask}
+                            priority={index < 3}
+                            isLocked={taskStatus === "locked"}
+                          />
+                        );
+                      })}
                     </div>
                   )}
                 </div>

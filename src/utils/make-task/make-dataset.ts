@@ -7,6 +7,7 @@ import inquirer from "inquirer";
 import { unlink } from "fs/promises";
 import { AnnotationTask } from "@/types/annotation";
 import { createClient } from "@supabase/supabase-js";
+import * as cliProgress from "cli-progress";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -18,7 +19,9 @@ async function insertTask(id: string, task: AnnotationTask, index: number) {
 
   const { error } = await supabase
     .from("annotation-tasks")
-    .insert([{ task_id: id, data: task, identifier: identifier }])
+    .insert([
+      { task_id: id, data: task, identifier: identifier, genre: task.genre },
+    ])
     .select();
 
   if (error) {
@@ -37,7 +40,20 @@ async function uploadFile(
   taskId: string
 ): Promise<string[]> {
   const uploadedUrls: string[] = [];
-  for (const filePath of filePaths) {
+
+  // プロセスバーを初期化
+  const progressBar = new cliProgress.SingleBar({
+    format:
+      "ファイルアップロード |{bar}| {percentage}% | {value}/{total} ファイル",
+    barCompleteChar: "\u2588",
+    barIncompleteChar: "\u2591",
+    hideCursor: true,
+  });
+
+  progressBar.start(filePaths.length, 0);
+
+  for (let i = 0; i < filePaths.length; i++) {
+    const filePath = filePaths[i];
     const fileBuffer = await fs.readFile(
       path.resolve(__dirname, ".", "tmp", filePath)
     );
@@ -50,19 +66,44 @@ async function uploadFile(
       }
     );
     uploadedUrls.push(blob.url);
+
+    // プロセスバーを更新
+    progressBar.update(i + 1);
   }
+
+  progressBar.stop();
+  console.log("\nファイルアップロード完了！");
+
   return uploadedUrls;
 }
 
 async function deleteFiles(filePaths: string[]): Promise<void> {
-  for (const filePath of filePaths) {
+  if (filePaths.length === 0) return;
+
+  // プロセスバーを初期化
+  const progressBar = new cliProgress.SingleBar({
+    format: "ファイル削除 |{bar}| {percentage}% | {value}/{total} ファイル",
+    barCompleteChar: "\u2588",
+    barIncompleteChar: "\u2591",
+    hideCursor: true,
+  });
+
+  progressBar.start(filePaths.length, 0);
+
+  for (let i = 0; i < filePaths.length; i++) {
+    const filePath = filePaths[i];
     const fullPath = path.resolve(__dirname, ".", "tmp", filePath);
     try {
       await unlink(fullPath);
     } catch (error) {
       console.error(`Error deleting file ${fullPath}:`, error);
     }
+
+    // プロセスバーを更新
+    progressBar.update(i + 1);
   }
+
+  progressBar.stop();
 }
 
 const divideTask = async (task: AnnotationTask): Promise<AnnotationTask[]> => {
@@ -221,10 +262,26 @@ const makeTask = async () => {
 
   const dividedTasks = await divideTask(originalTask);
 
+  // タスク挿入のプロセスバーを初期化
+  const insertProgressBar = new cliProgress.SingleBar({
+    format: "タスク挿入 |{bar}| {percentage}% | {value}/{total} タスク",
+    barCompleteChar: "\u2588",
+    barIncompleteChar: "\u2591",
+    hideCursor: true,
+  });
+
+  insertProgressBar.start(dividedTasks.length, 0);
+
   for (let i = 0; i < dividedTasks.length; i++) {
     const taskId = randomUUID();
     await insertTask(taskId, dividedTasks[i], i);
+
+    // プロセスバーを更新
+    insertProgressBar.update(i + 1);
   }
+
+  insertProgressBar.stop();
+  console.log("\nタスク挿入完了！");
 
   await deleteFiles(await listFiles());
   return;

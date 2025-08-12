@@ -1,6 +1,6 @@
 "use server";
 import { createClient } from "./supabase/server";
-import { AnnotationTasks, UserTasks } from "@/types/annotation";
+import { AnnotationTask, AnnotationTasks, UserTasks } from "@/types/annotation";
 
 export async function fetchAnnotation(taskId: string) {
   const supabase = await createClient();
@@ -56,60 +56,89 @@ export async function fetchUserTasks(uuid: string) {
     return [];
   }
 
-  const reload = await makeUserAnnotationTasks(uuid, data);
+  /*  const reload = await makeUserAnnotationTasks(uuid);
   if (reload) {
     return fetchUserTasks(uuid);
+  } */
+
+  if (data.length === 0) {
+    const reload = await makeUserAnnotationTasks(uuid);
+    if (reload) {
+      return fetchUserTasks(uuid);
+    }
   }
 
   return data;
 }
 
-export async function fetchTasks() {
+export async function fetchTasks(setNum: number): Promise<AnnotationTasks[]> {
   const supabase = await createClient();
 
-  const { data, error } = await supabase.from("annotation-tasks").select("*");
+  const { data, error } = await supabase
+    .from("annotation-tasks")
+    .select("*")
+    .eq("identifier", setNum);
 
   if (error) {
     console.error("Error fetching tasks:", error);
     return [];
   }
-
   return data;
 }
 
-export async function makeUserAnnotationTasks(
-  uuid: string,
-  userTasks: UserTasks[]
-): Promise<boolean> {
-  const annotationTasks: AnnotationTasks[] = await fetchTasks();
+export async function makeUserAnnotationTasks(uuid: string): Promise<boolean> {
+  const fetchSetNum = async () => {
+    const supabase = await createClient();
+    const { data, error } = await supabase.from("set").select("*");
+    if (error) {
+      console.error("Error fetching set:", error);
+      return false;
+    }
+    return data[0]["all"];
+  };
 
-  const userTaskIds = new Set(userTasks.map((task) => task.task_id));
-  const deficiencyAnnotationTasks = annotationTasks.filter(
-    (task) => !userTaskIds.has(task.task_id)
-  );
-  if (deficiencyAnnotationTasks.length === 0) {
-    return false;
+  const setNum = await fetchSetNum();
+  const tasks = await fetchTasks(setNum);
+
+  for (const task of tasks) {
+    const divideInto = Math.floor(task.data.urls.length / 6);
+    let order: number = 0;
+    for (let i = 0; i < task.data.urls.length; i += divideInto) {
+      const endIndex = Math.min(i + divideInto);
+      const urlsChunk = task.data.urls.slice(i, endIndex);
+      const resultChunk = task.data.result.slice(i, endIndex);
+
+      const data: AnnotationTask = {
+        title: task.data.title,
+        description: task.data.description,
+        tag: task.data.tag,
+        genre: task.data.genre,
+        urls: urlsChunk,
+        result: resultChunk,
+      };
+
+      const insertTask = {
+        uuid: uuid,
+        master_task_id: task.task_id,
+        task_id: crypto.randomUUID(),
+        data: data,
+        step: 0,
+        order: order,
+      };
+
+      const supabase = await createClient();
+      const { error } = await supabase
+        .from("user-annotation-data")
+        .insert(insertTask)
+        .select();
+
+      if (error) {
+        console.error("Error inserting user annotation task:", error);
+        return false;
+      }
+      order += 1;
+    }
   }
 
-  const insertTasks = [];
-  for (const task of deficiencyAnnotationTasks) {
-    insertTasks.push({
-      uuid: uuid,
-      task_id: task.task_id,
-      data: task.data,
-      step: 0,
-    });
-  }
-
-  const supabase = await createClient();
-  const { error } = await supabase
-    .from("user-annotation-data")
-    .insert(insertTasks)
-    .select();
-
-  if (error) {
-    console.error("Error inserting user annotation tasks:", error);
-    return false;
-  }
-  return false;
+  return true;
 }

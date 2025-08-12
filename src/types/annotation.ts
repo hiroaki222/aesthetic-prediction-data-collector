@@ -6,6 +6,7 @@ export interface UserTasks {
   data: AnnotationTask;
   step: number;
   identifier: number;
+  order: number;
 }
 
 export interface AnnotationTasks {

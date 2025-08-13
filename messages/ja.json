@@ -392,7 +392,8 @@
       "sad": "悲しい気持ちになった",
       "amused": "楽しませてくれた",
       "overall-aesthetic": "総合的な美的評価"
-    }
+    },
+    "expand-button": "拡大する"
   },
   "finish-confirmation-dialog": {
     "title": "アノテーションを終了しますか？",

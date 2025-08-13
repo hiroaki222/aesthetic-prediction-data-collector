@@ -1,9 +1,11 @@
 import Image from "next/image";
-import { Expand } from "lucide-react";
 import { useEffect, useRef } from "react";
+import { Button } from "./ui/button";
+import { useTranslations } from "next-intl";
 
 export default function AnnotationTargetViewer({ url, setIsExpanded, isMobile, dataType, isFullScreen = false }: { url: string; setIsExpanded: (isExpanded: boolean) => void; isMobile: boolean; dataType: string; isFullScreen?: boolean }) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const t = useTranslations('annotation');
 
   useEffect(() => {
     if (dataType === 'video' && videoRef.current) {
@@ -31,7 +33,7 @@ export default function AnnotationTargetViewer({ url, setIsExpanded, isMobile, d
 
   if (dataType === 'video') isMobile = true;
   return (
-    <div className={`${isFullScreen ? 'p-0 overflow-hidden w-full h-full flex items-center justify-center relative border-0 bg-transparent' : 'p-0 overflow-hidden w-full flex items-center justify-center relative'}`}>
+    <div className={`${isFullScreen ? 'p-0 overflow-hidden w-full h-full flex items-center justify-center relative border-0 bg-transparent' : 'p-0 overflow-hidden w-full flex items-center justify-center flex-col relative'}`}>
       <div className={`relative ${isFullScreen ? 'w-full h-full' : 'w-full'} flex items-center justify-center`}>
         {
           dataType === 'Img' ? (
@@ -61,9 +63,9 @@ export default function AnnotationTargetViewer({ url, setIsExpanded, isMobile, d
         }
       </div>
       {!isMobile ? (
-        <button onClick={() => setIsExpanded(true)} className="absolute top-2 right-2 z-10">
-          <Expand className="text-white hover:text-white transition-colors drop-shadow-md bg-black/20 rounded p-1" />
-        </button>
+        <Button className="m-5 w-1/4 font-bold" onClick={() => setIsExpanded(true)}>
+          <a>{t('expand-button')}</a>
+        </Button>
       ) : null}
     </div>
   )

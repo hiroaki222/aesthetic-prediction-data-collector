@@ -63,7 +63,8 @@ function AnnotationContent() {
       setIsExpanded(false);
       setIsMobile(true)
     }
-    dataType.current = annotationTargets.data.tag;
+    //dataType.current = annotationTargets.data.tag;
+    dataType.current = 'video';
   }, [annotationTargets]);
 
   useEffect(() => {

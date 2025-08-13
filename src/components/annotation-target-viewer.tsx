@@ -2,18 +2,33 @@ import Image from "next/image";
 import { Expand } from "lucide-react";
 
 export default function AnnotationTargetViewer({ url, setIsExpanded, isMobile, dataType, isFullScreen = false }: { url: string; setIsExpanded: (isExpanded: boolean) => void; isMobile: boolean; dataType: string; isFullScreen?: boolean }) {
-  console.log(dataType)
+  const videoUrl = 'https://bvy3dtfuknsslhnc.public.blob.vercel-storage.com/sample.mp4';
+  if (dataType === 'video') isMobile = true;
   return (
     <div className={`${isFullScreen ? 'p-0 overflow-hidden w-full h-full flex items-center justify-center relative border-0 bg-transparent' : 'p-0 overflow-hidden w-full flex items-center justify-center relative'}`}>
       <div className={`relative ${isFullScreen ? 'w-full h-full' : 'w-full'} flex items-center justify-center`}>
-        <Image
-          src={url}
-          alt="Annotation Target"
-          width={1920}
-          height={1080}
-          className={`${isFullScreen ? 'max-w-full max-h-full object-contain' : 'w-full h-auto max-h-[70vh] object-contain'}`}
-          priority={true}
-        />
+        {
+          dataType === 'Img' ? (
+            <Image
+              src={url}
+              alt="Annotation Target"
+              width={1920}
+              height={1080}
+              className={`${isFullScreen ? 'max-w-full max-h-full object-contain' : 'w-full h-auto max-h-[70vh] object-contain'}`}
+              priority={true}
+            />
+          ) : (
+            dataType === 'video' ? (
+              <video
+                src={videoUrl}
+                className={`${isFullScreen ? 'max-w-full max-h-full object-contain' : 'w-full h-auto max-h-[70vh] object-contain'}`}
+                controls
+                autoPlay
+                loop
+              />
+            ) : null
+          )
+        }
       </div>
       {!isMobile ? (
         <button onClick={() => setIsExpanded(true)} className="absolute top-2 right-2 z-10">

@@ -8,7 +8,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     const { data } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log('Auth state changed:', event, session);
+      console.info('Auth state changed:', event, session);
       if (event === 'INITIAL_SESSION') {
         // handle initial session
       } else if (event === 'SIGNED_IN') {

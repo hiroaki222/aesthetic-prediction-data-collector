@@ -9,7 +9,7 @@ import { fetchAnnotation, saveAnnotation } from "@/utils/annotation";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState, Suspense, useRef } from "react"
 import AnnotationControl from "@/components/annotation-control";
-import Image from "next/image";
+import AnnotationTargetViewer from "@/components/annotation-target-viewer";
 import { LoaderCircle, X } from "lucide-react";
 import { fetchUser } from "@/utils/supabase/actions";
 
@@ -166,14 +166,10 @@ function AnnotationContent() {
                     <X size={24} />
                   </button>
                   {url ? (
-                    <Image
-                      src={url}
-                      alt="Annotation Target Expanded"
-                      fill
-                      sizes="100vw"
-                      className="object-contain pointer-events-auto"
-                      onClick={(e) => e.stopPropagation()}
-                      priority={true}
+                    <AnnotationTargetViewer
+                      url={url}
+                      setIsExpanded={setIsExpanded}
+                      isMobile={false}
                     />
                   ) : (
                     <div className="flex items-center justify-center w-full h-full pointer-events-none">

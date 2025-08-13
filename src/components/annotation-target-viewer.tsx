@@ -1,10 +1,9 @@
 import Image from "next/image";
-import { Card } from "./ui/card";
 import { Expand } from "lucide-react";
 
 export default function AnnotationTargetViewer({ url, setIsExpanded, isMobile, isFullScreen = false }: { url: string; setIsExpanded: (isExpanded: boolean) => void; isMobile: boolean; isFullScreen?: boolean }) {
   return (
-    <Card className={`${isFullScreen ? 'p-0 overflow-hidden w-full h-full flex items-center justify-center relative border-0 bg-transparent' : 'p-0 overflow-hidden w-full flex items-center justify-center relative'}`}>
+    <div className={`${isFullScreen ? 'p-0 overflow-hidden w-full h-full flex items-center justify-center relative border-0 bg-transparent' : 'p-0 overflow-hidden w-full flex items-center justify-center relative'}`}>
       <div className={`relative ${isFullScreen ? 'w-full h-full' : 'w-full'} flex items-center justify-center`}>
         <Image
           src={url}
@@ -20,6 +19,6 @@ export default function AnnotationTargetViewer({ url, setIsExpanded, isMobile, i
           <Expand className="text-white hover:text-white transition-colors drop-shadow-md bg-black/20 rounded p-1" />
         </button>
       ) : null}
-    </Card>
+    </div>
   )
 }

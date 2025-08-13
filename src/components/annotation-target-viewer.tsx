@@ -3,7 +3,6 @@ import { Expand } from "lucide-react";
 import { useEffect, useRef } from "react";
 
 export default function AnnotationTargetViewer({ url, setIsExpanded, isMobile, dataType, isFullScreen = false }: { url: string; setIsExpanded: (isExpanded: boolean) => void; isMobile: boolean; dataType: string; isFullScreen?: boolean }) {
-  const videoUrl = 'https://bvy3dtfuknsslhnc.public.blob.vercel-storage.com/__GEoXDwIjI_0089636_0091436.mp4';
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -48,7 +47,7 @@ export default function AnnotationTargetViewer({ url, setIsExpanded, isMobile, d
             dataType === 'video' ? (
               <video
                 ref={videoRef}
-                src={videoUrl}
+                src={url}
                 className={`${isFullScreen ? 'w-full h-full object-contain' : 'w-full h-auto max-h-[70vh] object-contain'}`}
                 controls
                 autoPlay

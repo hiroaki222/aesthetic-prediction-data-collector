@@ -63,8 +63,7 @@ function AnnotationContent() {
       setIsExpanded(false);
       setIsMobile(true)
     }
-    //dataType.current = annotationTargets.data.tag;
-    dataType.current = 'video';
+    dataType.current = annotationTargets.data.tag;
   }, [annotationTargets]);
 
   useEffect(() => {
@@ -154,7 +153,7 @@ function AnnotationContent() {
             {isExpanded && !isMobile && (
               <div
                 className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm pointer-events-auto p-8"
-                onClick={() => setIsExpanded(false)}
+                onClick={() => { if (dataType.current !== 'video') setIsExpanded(false); }}
                 onKeyDown={(e) => {
                   if (e.key === 'Escape') {
                     setIsExpanded(false);
@@ -162,7 +161,9 @@ function AnnotationContent() {
                 }}
                 tabIndex={-1}
               >
-                <div className="relative w-full h-full max-w-[85vw] max-h-[85vh] pointer-events-none">
+                <div className={
+                  `relative w-full h-full max-w-[85vw] max-h-[85vh] ${dataType.current === 'video' ? 'pointer-events-auto' : 'pointer-events-none'}`
+                }>
                   <button
                     onClick={() => setIsExpanded(false)}
                     className="absolute top-4 right-4 z-10 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-colors pointer-events-auto"

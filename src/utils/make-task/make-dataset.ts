@@ -14,13 +14,24 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
-async function insertTask(id: string, task: AnnotationTask, index: number) {
+async function insertTask(
+  id: string,
+  task: AnnotationTask,
+  index: number,
+  taskId: string
+) {
   const identifier = String(index);
 
   const { error } = await supabase
     .from("annotation-tasks")
     .insert([
-      { task_id: id, data: task, identifier: identifier, genre: task.genre },
+      {
+        task_id: id,
+        data: task,
+        identifier: identifier,
+        genre: task.genre,
+        master_task_id: taskId,
+      },
     ])
     .select();
 
@@ -63,9 +74,18 @@ async function uploadFile(
         access: "public",
       }
     );
+
+    const { error } = await supabase
+      .from("url_filename")
+      .insert([{ task_id: taskId, url: blob.url, filename: filePaths[i] }])
+      .select();
+
+    if (error) {
+      console.error("Error inserting URL:", error);
+    }
+
     uploadedUrls.push(blob.url);
 
-    // プロセスバーを更新
     progressBar.update(i + 1);
   }
 
@@ -78,7 +98,6 @@ async function uploadFile(
 async function deleteFiles(filePaths: string[]): Promise<void> {
   if (filePaths.length === 0) return;
 
-  // プロセスバーを初期化
   const progressBar = new cliProgress.SingleBar({
     format: "Files delete |{bar}| {percentage}% | {value}/{total} files",
     barCompleteChar: "\u2588",
@@ -97,7 +116,6 @@ async function deleteFiles(filePaths: string[]): Promise<void> {
       console.error(`Error deleting file ${fullPath}:`, error);
     }
 
-    // プロセスバーを更新
     progressBar.update(i + 1);
   }
 
@@ -173,6 +191,7 @@ const divideTask = async (task: AnnotationTask): Promise<AnnotationTask[]> => {
 
   return dividedTasks;
 };
+
 const makeTask = async () => {
   const dataType = await inquirer.prompt([
     {
@@ -261,9 +280,8 @@ const makeTask = async () => {
 
   const dividedTasks = await divideTask(originalTask);
 
-  // タスク挿入のプロセスバーを初期化
   const insertProgressBar = new cliProgress.SingleBar({
-    format: "タスク挿入 |{bar}| {percentage}% | {value}/{total} タスク",
+    format: "Insert task |{bar}| {percentage}% | {value}/{total} tasks",
     barCompleteChar: "\u2588",
     barIncompleteChar: "\u2591",
     hideCursor: true,
@@ -272,8 +290,7 @@ const makeTask = async () => {
   insertProgressBar.start(dividedTasks.length, 0);
 
   for (let i = 0; i < dividedTasks.length; i++) {
-    const taskId = randomUUID();
-    await insertTask(taskId, dividedTasks[i], i);
+    await insertTask(randomUUID(), dividedTasks[i], i, taskId);
 
     // プロセスバーを更新
     insertProgressBar.update(i + 1);

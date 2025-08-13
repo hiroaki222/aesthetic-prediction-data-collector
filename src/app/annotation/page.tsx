@@ -24,6 +24,8 @@ function AnnotationContent() {
   const [startTime, setStartTime] = useState<number>(performance.now() / 1000);
   const prevStepRef = useRef<number>(1);
 
+  const dataType = useRef<string>('');
+
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -61,6 +63,7 @@ function AnnotationContent() {
       setIsExpanded(false);
       setIsMobile(true)
     }
+    dataType.current = annotationTargets.data.tag;
   }, [annotationTargets]);
 
   useEffect(() => {
@@ -129,6 +132,7 @@ function AnnotationContent() {
                 isExpanded={isExpanded}
                 setIsExpanded={isMobile ? () => { } : setIsExpanded}
                 isMobile={isMobile}
+                dataType={dataType.current}
               />
               <AnnotationInput
                 annotationResult={annotationResult}
@@ -170,6 +174,7 @@ function AnnotationContent() {
                       url={url}
                       setIsExpanded={setIsExpanded}
                       isMobile={true}
+                      dataType={dataType.current}
                       isFullScreen={true}
                     />
                   ) : (

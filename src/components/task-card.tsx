@@ -96,7 +96,7 @@ export function TaskCard({
       </div>
 
       <CardHeader className="pb-3">
-        <CardTitle className="text-lg line-clamp-2">{title + " " + (order + 1)}</CardTitle>
+        <CardTitle className="text-lg line-clamp-2">{title + " " + Math.floor(((order - Math.floor(order)) * 10))}</CardTitle>
         <CardDescription className="line-clamp-3">{description}</CardDescription>
       </CardHeader>
 

@@ -145,7 +145,7 @@ export async function makeUserAnnotationTasks(uuid: string): Promise<boolean> {
         urls: urlsChunk,
         result: resultChunk,
       };
-
+      order = Math.floor(order * 100) / 100;
       const insertTask = {
         uuid: uuid,
         master_task_id: task.task_id,

@@ -82,6 +82,14 @@ export default function Dashboard() {
   }, [])
 
   useEffect(() => {
+    if (tabIcons[2] === 1) {
+      setActiveTab("not-started");
+    } else if (tabIcons[3] === 1) {
+      setActiveTab("in-progress");
+    }
+  }, [tabIcons])
+
+  useEffect(() => {
     setTabIcons(new Array(5).fill(0));
     for (const task of tasks) {
       let status: string;
@@ -111,8 +119,6 @@ export default function Dashboard() {
     router.push(`/annotation/?taskId=${taskId}`);
   }
 
-  // getStatusFromProgressは廃止。globalOrderedTasksとnextTaskIdで一意に判定します。
-
   const filterTasks = (status?: string) => {
     const list = !status || status === "all" ? globalOrderedTasks : globalOrderedTasks.filter(task => {
       if (task.progress === 100) return status === "completed";
@@ -122,6 +128,8 @@ export default function Dashboard() {
     });
     return list;
   }
+
+
 
   const filteredTasks = filterTasks(activeTab)
   return (

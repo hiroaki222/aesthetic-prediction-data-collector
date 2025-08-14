@@ -166,7 +166,6 @@ export async function makeUserAnnotationTasks(uuid: string): Promise<boolean> {
         return false;
       }
 
-      console.log(`${task.data.genre}\t${order}`);
       order += 0.1;
     }
   }

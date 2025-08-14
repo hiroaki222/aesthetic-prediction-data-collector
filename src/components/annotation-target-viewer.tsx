@@ -5,6 +5,8 @@ import { useTranslations } from "next-intl";
 
 export default function AnnotationTargetViewer({ url, setIsExpanded, isMobile, dataType, isFullScreen = false }: { url: string; setIsExpanded: (isExpanded: boolean) => void; isMobile: boolean; dataType: string; isFullScreen?: boolean }) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  /*   url = "https://bvy3dtfuknsslhnc.public.blob.vercel-storage.com/__GEoXDwIjI_0089636_0091436.mp4"
+    dataType = "video"; */
   const t = useTranslations('annotation');
 
   useEffect(() => {
@@ -33,7 +35,10 @@ export default function AnnotationTargetViewer({ url, setIsExpanded, isMobile, d
 
   if (dataType === 'video') isMobile = true;
   return (
-    <div className={`${isFullScreen ? 'p-0 overflow-hidden w-full h-full flex items-center justify-center relative border-0 bg-transparent' : 'p-0 overflow-hidden w-full flex items-center justify-center flex-col relative'}`}>
+    <div
+      className={`${isFullScreen ? 'p-0 overflow-hidden w-full h-full flex items-center justify-center relative border-0 bg-transparent' : 'p-0 overflow-hidden w-full flex items-center justify-center flex-col relative'}`}
+      onClick={(e) => e.stopPropagation()}
+    >
       <div className={`relative ${isFullScreen ? 'w-full h-full' : 'w-full'} flex items-center justify-center`}>
         {
           dataType === 'Img' ? (
@@ -52,10 +57,7 @@ export default function AnnotationTargetViewer({ url, setIsExpanded, isMobile, d
                 src={url}
                 className={`${isFullScreen ? 'w-full h-full object-contain' : 'w-full h-auto max-h-[70vh] object-contain'}`}
                 controls
-                autoPlay
                 loop
-                muted
-                playsInline
                 preload="metadata"
               />
             ) : null

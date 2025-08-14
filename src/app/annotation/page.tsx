@@ -9,7 +9,7 @@ import { fetchAnnotation, saveAnnotation } from "@/utils/annotation";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState, Suspense, useRef } from "react"
 import AnnotationControl from "@/components/annotation-control";
-import Image from "next/image";
+import AnnotationTargetViewer from "@/components/annotation-target-viewer";
 import { LoaderCircle, X } from "lucide-react";
 import { fetchUser } from "@/utils/supabase/actions";
 
@@ -23,6 +23,8 @@ function AnnotationContent() {
   const [uuid, setUuid] = useState<string | null>(null);
   const [startTime, setStartTime] = useState<number>(performance.now() / 1000);
   const prevStepRef = useRef<number>(1);
+
+  const dataType = useRef<string>('');
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -61,6 +63,7 @@ function AnnotationContent() {
       setIsExpanded(false);
       setIsMobile(true)
     }
+    dataType.current = annotationTargets.data.tag;
   }, [annotationTargets]);
 
   useEffect(() => {
@@ -129,6 +132,7 @@ function AnnotationContent() {
                 isExpanded={isExpanded}
                 setIsExpanded={isMobile ? () => { } : setIsExpanded}
                 isMobile={isMobile}
+                dataType={dataType.current}
               />
               <AnnotationInput
                 annotationResult={annotationResult}
@@ -148,8 +152,8 @@ function AnnotationContent() {
             />
             {isExpanded && !isMobile && (
               <div
-                className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm pointer-events-auto"
-                onClick={() => setIsExpanded(false)}
+                className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm pointer-events-auto p-8"
+                onClick={() => { if (dataType.current !== 'video') setIsExpanded(false); }}
                 onKeyDown={(e) => {
                   if (e.key === 'Escape') {
                     setIsExpanded(false);
@@ -157,7 +161,9 @@ function AnnotationContent() {
                 }}
                 tabIndex={-1}
               >
-                <div className="relative w-[90vw] h-[90vh] pointer-events-none">
+                <div className={
+                  `relative w-full h-full max-w-[85vw] max-h-[85vh] ${dataType.current === 'video' ? 'pointer-events-auto' : 'pointer-events-none'}`
+                }>
                   <button
                     onClick={() => setIsExpanded(false)}
                     className="absolute top-4 right-4 z-10 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-colors pointer-events-auto"
@@ -166,14 +172,12 @@ function AnnotationContent() {
                     <X size={24} />
                   </button>
                   {url ? (
-                    <Image
-                      src={url}
-                      alt="Annotation Target Expanded"
-                      fill
-                      sizes="100vw"
-                      className="object-contain pointer-events-auto"
-                      onClick={(e) => e.stopPropagation()}
-                      priority={true}
+                    <AnnotationTargetViewer
+                      url={url}
+                      setIsExpanded={setIsExpanded}
+                      isMobile={true}
+                      dataType={dataType.current}
+                      isFullScreen={true}
                     />
                   ) : (
                     <div className="flex items-center justify-center w-full h-full pointer-events-none">

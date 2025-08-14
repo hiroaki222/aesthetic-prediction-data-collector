@@ -1,6 +1,6 @@
 'use client'
 import { Header } from "@/components/header";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { TaskCard } from "@/components/task-card"
 import { fetchUser } from "@/utils/supabase/actions";
@@ -30,6 +30,26 @@ export default function Dashboard() {
   const [isLoading, setIsLoading] = useState(true)
   const [tabIcons, setTabIcons] = useState<number[]>(new Array(5).fill(0))
   const router = useRouter();
+  const globalOrderedTasks = useMemo(() => {
+    const genreSeq = ["アート作品", "ファッション", "映像"] as const;
+    const grouped = Object.fromEntries(
+      genreSeq.map(g => [g, tasks.filter(t => t.genre === g).sort((a, b) => a.order - b.order)])
+    ) as Record<typeof genreSeq[number], Task[]>;
+    const maxLen = Math.max(...Object.values(grouped).map(arr => arr.length));
+    const ordered: Task[] = [];
+    for (let i = 0; i < maxLen; i++) {
+      genreSeq.forEach(g => { if (grouped[g][i]) ordered.push(grouped[g][i]) });
+    }
+    return ordered;
+  }, [tasks]);
+  const nextTaskId = useMemo(() => {
+    const idx = globalOrderedTasks.findIndex((task, i) => {
+      if (task.progress === 100) return false;
+      if (i === 0) return true;
+      return globalOrderedTasks.slice(0, i).every(prev => prev.progress === 100);
+    });
+    return idx >= 0 ? globalOrderedTasks[idx].id : undefined;
+  }, [globalOrderedTasks]);
 
   const fetchTasks = async () => {
     const uuid = await fetchUser('id');
@@ -62,77 +82,45 @@ export default function Dashboard() {
   }, [])
 
   useEffect(() => {
-    // const completedTaskCount = tasks.filter(task => task.progress === 100).length
-
-    setTabIcons(new Array(5).fill(0))
-
-    for (let i = 0; i < tasks.length; i++) {
-      const status = getStatusFromProgress(tasks[i], tasks)
+    setTabIcons(new Array(5).fill(0));
+    for (const task of tasks) {
+      let status: string;
+      if (task.progress === 100) status = "completed";
+      else if (task.progress > 0) status = "in-progress";
+      else if (task.id === nextTaskId) status = "not-started";
+      else status = "locked";
       switch (status) {
         case "locked":
-          setTabIcons((prev) => {
-            const newIcons = [...prev];
-            newIcons[0] += 1;
-            return newIcons;
-          });
+          setTabIcons(prev => { const arr = [...prev]; arr[0]++; return arr });
           break;
         case "not-started":
-          setTabIcons((prev) => {
-            const newIcons = [...prev];
-            newIcons[2] += 1;
-            return newIcons;
-          });
+          setTabIcons(prev => { const arr = [...prev]; arr[2]++; return arr });
           break;
         case "in-progress":
-          setTabIcons((prev) => {
-            const newIcons = [...prev];
-            newIcons[3] += 1;
-            return newIcons;
-          });
+          setTabIcons(prev => { const arr = [...prev]; arr[3]++; return arr });
           break;
         case "completed":
-          setTabIcons((prev) => {
-            const newIcons = [...prev];
-            newIcons[4] += 1;
-            return newIcons;
-          });
+          setTabIcons(prev => { const arr = [...prev]; arr[4]++; return arr });
           break;
       }
-      setTabIcons((prev) => {
-        const newIcons = [...prev];
-        newIcons[1] += 1;
-        return newIcons;
-      });
+      setTabIcons(prev => { const arr = [...prev]; arr[1]++; return arr });
     }
-  }, [tasks])
+  }, [tasks, nextTaskId]);
 
   const handleStartTask = (taskId: string) => {
     router.push(`/annotation/?taskId=${taskId}`);
   }
 
-  const getStatusFromProgress = (task: Task, allTasks: Task[]) => {
-    if (task.progress === 100) {
-      return "completed"
-    }
-    if (task.progress > 0) {
-      return "in-progress"
-    }
-    if (task.order === 0) {
-      return "not-started"
-    }
-    const prevTask = allTasks.find(t => t.genre === task.genre && t.order === task.order - 1)
-    if (prevTask && prevTask.progress === 100) {
-      return "not-started"
-    }
-    return "locked"
-  }
+  // getStatusFromProgressは廃止。globalOrderedTasksとnextTaskIdで一意に判定します。
 
   const filterTasks = (status?: string) => {
-    const sortedTasks = [...tasks].sort((a, b) => a.order - b.order);
-
-    if (!status || status === "all") return sortedTasks
-
-    return sortedTasks.filter((task) => getStatusFromProgress(task, sortedTasks) === status)
+    const list = !status || status === "all" ? globalOrderedTasks : globalOrderedTasks.filter(task => {
+      if (task.progress === 100) return status === "completed";
+      if (task.progress > 0) return status === "in-progress";
+      if (task.id === nextTaskId) return status === "not-started";
+      return status === "locked";
+    });
+    return list;
   }
 
   const filteredTasks = filterTasks(activeTab)
@@ -212,7 +200,14 @@ export default function Dashboard() {
                   ) : (
                     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                       {filteredTasks.map((task, index) => {
-                        const taskStatus = getStatusFromProgress(task, tasks);
+                        // ステータス判定をインライン化
+                        const status = task.progress === 100
+                          ? "completed"
+                          : task.progress > 0
+                            ? "in-progress"
+                            : task.id === nextTaskId
+                              ? "not-started"
+                              : "locked";
                         return (
                           <TaskCard
                             key={task.id}
@@ -225,7 +220,7 @@ export default function Dashboard() {
                             tag={task.tag}
                             onStart={handleStartTask}
                             priority={index < 3}
-                            isLocked={taskStatus === "locked"}
+                            isLocked={status === "locked"}
                           />
                         )
                       })}

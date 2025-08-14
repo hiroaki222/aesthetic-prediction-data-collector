@@ -120,7 +120,18 @@ export async function makeUserAnnotationTasks(uuid: string): Promise<boolean> {
     task.data.urls = task.data.urls.sort(() => Math.random() - 0.5);
 
     const divideInto = Math.floor(task.data.urls.length / 6);
-    let order: number = 0;
+    let order: number = 0.1;
+    switch (task.data.genre) {
+      case "アート作品":
+        order += 1;
+        break;
+      case "ファッション":
+        order += 2;
+        break;
+      case "映像":
+        order += 3;
+        break;
+    }
     for (let i = 0; i < task.data.urls.length; i += divideInto) {
       const endIndex = Math.min(i + divideInto);
       const urlsChunk = task.data.urls.slice(i, endIndex);
@@ -134,7 +145,7 @@ export async function makeUserAnnotationTasks(uuid: string): Promise<boolean> {
         urls: urlsChunk,
         result: resultChunk,
       };
-
+      order = Math.floor(order * 100) / 100;
       const insertTask = {
         uuid: uuid,
         master_task_id: task.task_id,
@@ -154,7 +165,8 @@ export async function makeUserAnnotationTasks(uuid: string): Promise<boolean> {
         console.error("Error inserting user annotation task:", error);
         return false;
       }
-      order += 1;
+
+      order += 0.1;
     }
   }
 

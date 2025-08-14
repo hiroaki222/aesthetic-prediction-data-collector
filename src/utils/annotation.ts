@@ -120,7 +120,7 @@ export async function makeUserAnnotationTasks(uuid: string): Promise<boolean> {
     task.data.urls = task.data.urls.sort(() => Math.random() - 0.5);
 
     const divideInto = Math.floor(task.data.urls.length / 6);
-    let order: number = 0;
+    let order: number = 0.1;
     for (let i = 0; i < task.data.urls.length; i += divideInto) {
       const endIndex = Math.min(i + divideInto);
       const urlsChunk = task.data.urls.slice(i, endIndex);

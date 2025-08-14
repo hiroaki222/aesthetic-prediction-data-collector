@@ -121,6 +121,17 @@ export async function makeUserAnnotationTasks(uuid: string): Promise<boolean> {
 
     const divideInto = Math.floor(task.data.urls.length / 6);
     let order: number = 0.1;
+    switch (task.data.genre) {
+      case "アート作品":
+        order += 1;
+        break;
+      case "ファッション":
+        order += 2;
+        break;
+      case "映像":
+        order += 3;
+        break;
+    }
     for (let i = 0; i < task.data.urls.length; i += divideInto) {
       const endIndex = Math.min(i + divideInto);
       const urlsChunk = task.data.urls.slice(i, endIndex);
@@ -155,17 +166,7 @@ export async function makeUserAnnotationTasks(uuid: string): Promise<boolean> {
         return false;
       }
 
-      switch (task.data.genre) {
-        case "アート作品":
-          order += 1;
-          break;
-        case "ファッション":
-          order += 2;
-          break;
-        case "映像":
-          order += 3;
-          break;
-      }
+      console.log(`${task.data.genre}\t${order}`);
       order += 0.1;
     }
   }

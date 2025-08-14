@@ -154,7 +154,19 @@ export async function makeUserAnnotationTasks(uuid: string): Promise<boolean> {
         console.error("Error inserting user annotation task:", error);
         return false;
       }
-      order += 1;
+
+      switch (task.data.genre) {
+        case "アート作品":
+          order += 1;
+          break;
+        case "ファッション":
+          order += 2;
+          break;
+        case "映像":
+          order += 3;
+          break;
+      }
+      order += 0.1;
     }
   }
 

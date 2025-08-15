@@ -119,7 +119,6 @@ export async function makeUserAnnotationTasks(uuid: string): Promise<boolean> {
   for (const task of tasks) {
     task.data.urls = task.data.urls.sort(() => Math.random() - 0.5);
 
-    const divideInto = Math.floor(task.data.urls.length / 6);
     let order: number = 0.1;
     switch (task.data.genre) {
       case "アート作品":
@@ -132,10 +131,12 @@ export async function makeUserAnnotationTasks(uuid: string): Promise<boolean> {
         order += 3;
         break;
     }
-    for (let i = 0; i < task.data.urls.length; i += divideInto) {
-      const endIndex = Math.min(i + divideInto);
-      const urlsChunk = task.data.urls.slice(i, endIndex);
-      const resultChunk = task.data.result.slice(i, endIndex);
+    const total = task.data.urls.length;
+    for (let chunkIndex = 0; chunkIndex < 6; chunkIndex++) {
+      const startIndex = Math.floor((chunkIndex * total) / 6);
+      const endIndex = Math.floor(((chunkIndex + 1) * total) / 6);
+      const urlsChunk = task.data.urls.slice(startIndex, endIndex);
+      const resultChunk = task.data.result.slice(startIndex, endIndex);
 
       const data: AnnotationTask = {
         title: task.data.title,

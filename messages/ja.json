@@ -349,6 +349,7 @@
   "footer": {
     "copyright": "© {year} Takahara Hiroaki | MITライセンス下で公開",
     "links": {
+      "research-guide": "研究説明",
       "contact": "問い合わせ",
       "license": "ライセンス",
       "privacy": "プライバシーポリシー",

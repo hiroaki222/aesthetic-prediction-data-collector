@@ -89,7 +89,7 @@ export function AgreementForm({ onAgree }: { onAgree: () => void }) {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <div className="container mx-auto px-4 py-8 max-w-4xl">
-        -        <div className="text-center mb-8">
+        <div className="text-center mb-8">
           <h1 className="text-4xl font-bold mb-6">研究参加同意書</h1>
           <Card className="">
             <CardContent className="pt-6">
@@ -163,7 +163,7 @@ export function AgreementForm({ onAgree }: { onAgree: () => void }) {
         <Card className="mb-8">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <label htmlFor="signature" className="">署名</label>
+              <label htmlFor="signature" className="">署名欄</label>
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">

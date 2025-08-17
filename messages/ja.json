@@ -441,5 +441,28 @@
       "issue": "Issueを作成",
       "discussion": "Discussionを投稿"
     }
+  },
+  "research-guide": {
+    "appTitle": "Aesthetic Prediction Data Collector",
+    "backHome": "ホームに戻る",
+    "header": {
+      "title": "研究参加説明書",
+      "description": "「視聴覚刺激に対する美的評価アノテーション」にご協力いただく方への説明書"
+    },
+    "stats": {
+      "time": {
+        "title": "所要時間",
+        "value": "概ね20時間程度"
+      },
+      "samples": {
+        "title": "評価サンプル",
+        "value": "合計700サンプル程度"
+      },
+      "protection": {
+        "title": "データ保護",
+        "value": "完全匿名化"
+      }
+    },
+    "agreementButton": "同意書に進む"
   }
 }

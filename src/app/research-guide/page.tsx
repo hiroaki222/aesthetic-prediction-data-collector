@@ -231,6 +231,20 @@ export default function ResearchGuidePage() {
                 </CardContent>
               </Card>
             </div>
+            <Card className="bg-pink-50 border-pink-200 mt-8">
+              <CardHeader>
+                <CardTitle className="text-lg text-pink-800 flex items-center gap-2">
+                  <Shield className="h-5 w-5" />
+                  アプリケーションに関するお問い合わせ・報告先
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2 text-sm">
+                <p>{t('sections.contacts.developer.description')}</p>
+                <Button>
+                  {t('sections.contacts.developer.button')}
+                </Button>
+              </CardContent>
+            </Card>
           </CardContent>
         </Card>
 

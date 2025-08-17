@@ -250,13 +250,13 @@
       },
       "scale-options": {
         "select": "選択してください",
-        "strongly-agree": "1: 強くそう思う",
-        "moderately-agree": "2: まあまあそう思う",
-        "slightly-agree": "3: 少しそう思う",
+        "strongly-agree": "7: 強くそう思う",
+        "moderately-agree": "6: まあまあそう思う",
+        "slightly-agree": "5: 少しそう思う",
         "neither": "4: どちらでもない",
-        "slightly-disagree": "5: 少し違うと思う",
-        "moderately-disagree": "6: おおよそ違うと思う",
-        "strongly-disagree": "7: 全く違うと思う"
+        "slightly-disagree": "3: 少し違うと思う",
+        "moderately-disagree": "2: おおよそ違うと思う",
+        "strongly-disagree": "1: 全く違うと思う"
       },
       "statements": {
         "1": "1: 活発，外向的だと思う．",

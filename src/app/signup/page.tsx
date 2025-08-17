@@ -1,7 +1,24 @@
+"use client";
 import { SignupForm } from "@/components/signup-form"
 import { FilePenLine } from "lucide-react"
+import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
 
 export default function SignupPage() {
+  const router = useRouter()
+  const [allowed, setAllowed] = useState(false)
+
+  useEffect(() => {
+    const agreed = document.cookie.includes('agreementAgreed=true')
+    if (!agreed) {
+      router.replace('/research-guide')
+    } else {
+      setAllowed(true)
+    }
+  }, [router])
+
+  if (!allowed) return null
+
   return (
     <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-muted p-6 md:p-10">
       <div className="flex w-full max-w-sm flex-col gap-6">

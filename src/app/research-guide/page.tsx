@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
-import { Clock, Users, Shield, Phone, Mail, AlertTriangle, FilePenLine } from "lucide-react"
+import { Clock, Users, Shield, Phone, Mail, AlertTriangle, FilePenLine, MessageCircleWarning } from "lucide-react"
 import { Footer } from "@/components/footer"
 import Link from "next/link"
 import { useState, useEffect, Suspense } from "react"
@@ -231,6 +231,22 @@ export default function ResearchGuidePage() {
                 </CardContent>
               </Card>
             </div>
+            <Card className="bg-pink-50 border-pink-200 mt-8">
+              <CardHeader>
+                <CardTitle className="text-lg text-pink-800 flex items-center gap-2">
+                  <MessageCircleWarning className="h-5 w-5" />
+                  {t('sections.contacts.developer.title')}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2 text-sm">
+                <p>{t('sections.contacts.developer.description')}</p>
+                <Button className="bg-pink-600 mt-2 hover:bg-pink-700">
+                  <Link href="/contact" className="text-white no-underline">
+                    {t('sections.contacts.developer.button')}
+                  </Link>
+                </Button>
+              </CardContent>
+            </Card>
           </CardContent>
         </Card>
 

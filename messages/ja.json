@@ -540,6 +540,11 @@
           ],
           "phone": "0761-51-1215",
           "email": "hasegawa@jaist.ac.jp"
+        },
+        "developer": {
+          "title": "アプリケーションに関するお問い合わせ・バグ等の問題の報告先",
+          "description": "問い合わせフォームよりご連絡ください．",
+          "button": "問い合わフォーム"
         }
       }
     }

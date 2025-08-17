@@ -10,7 +10,7 @@ export default function AnnotationTargetViewer({ url, setIsExpanded, isMobile, d
   const t = useTranslations('annotation');
 
   useEffect(() => {
-    if (dataType === 'video' && videoRef.current) {
+    if (dataType === 'video' && videoRef.current && isFullScreen) {
       const video = videoRef.current;
 
       const playVideo = async () => {
@@ -31,7 +31,7 @@ export default function AnnotationTargetViewer({ url, setIsExpanded, isMobile, d
         video.removeEventListener('loadeddata', playVideo);
       };
     }
-  }, [dataType]);
+  }, [dataType, isFullScreen]);
 
   if (dataType === 'video') isMobile = true;
   return (

@@ -33,7 +33,7 @@ export async function updateSession(request: NextRequest) {
     const agreementCookie = request.cookies.get("agreementAgreed");
     if (!agreementCookie || agreementCookie.value !== "true") {
       const redirectUrl = request.nextUrl.clone();
-      redirectUrl.pathname = "/agreement";
+      redirectUrl.pathname = "/research-guide";
       return NextResponse.redirect(redirectUrl);
     }
   }

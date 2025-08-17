@@ -316,13 +316,13 @@ export function TIPIJSetupContent1({ handleStepComplete, updateProfileData, prof
   }
 
   const scaleOptions = [
-    { value: '7', label: t('scale-options.strongly-agree') },
-    { value: '6', label: t('scale-options.moderately-agree') },
-    { value: '5', label: t('scale-options.slightly-agree') },
-    { value: '4', label: t('scale-options.neither') },
-    { value: '3', label: t('scale-options.slightly-disagree') },
-    { value: '2', label: t('scale-options.moderately-disagree') },
     { value: '1', label: t('scale-options.strongly-disagree') },
+    { value: '2', label: t('scale-options.moderately-disagree') },
+    { value: '3', label: t('scale-options.slightly-disagree') },
+    { value: '4', label: t('scale-options.neither') },
+    { value: '5', label: t('scale-options.slightly-agree') },
+    { value: '6', label: t('scale-options.moderately-agree') },
+    { value: '7', label: t('scale-options.strongly-agree') },
   ]
 
   const tableRows = options.map(option => {

@@ -129,7 +129,7 @@ const divideTask = async (task: AnnotationTask): Promise<AnnotationTask[]> => {
       divideInto = 235;
       break;
     case "ファッション":
-      divideInto = 210;
+      divideInto = 209;
       break;
     case "映像":
       divideInto = 210;

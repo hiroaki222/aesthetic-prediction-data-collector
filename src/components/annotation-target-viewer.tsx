@@ -5,12 +5,12 @@ import { useTranslations } from "next-intl";
 
 export default function AnnotationTargetViewer({ url, setIsExpanded, isMobile, dataType, isFullScreen = false }: { url: string; setIsExpanded: (isExpanded: boolean) => void; isMobile: boolean; dataType: string; isFullScreen?: boolean }) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  /*   url = "https://bvy3dtfuknsslhnc.public.blob.vercel-storage.com/__GEoXDwIjI_0089636_0091436.mp4"
-    dataType = "video"; */
+  /* url = "https://bvy3dtfuknsslhnc.public.blob.vercel-storage.com/__GEoXDwIjI_0089636_0091436.mp4"
+  dataType = "video"; */
   const t = useTranslations('annotation');
 
   useEffect(() => {
-    if (dataType === 'video' && videoRef.current) {
+    if (dataType === 'video' && videoRef.current && isFullScreen === true) {
       const video = videoRef.current;
 
       const playVideo = async () => {

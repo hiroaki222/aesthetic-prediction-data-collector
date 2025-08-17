@@ -85,7 +85,7 @@ export async function fetchTasks(setNum: number): Promise<AnnotationTasks[]> {
   }
 
   let newSetNum = setNum + 1;
-  if (newSetNum >= 6) {
+  if (newSetNum >= 10) {
     newSetNum = 0;
   }
 

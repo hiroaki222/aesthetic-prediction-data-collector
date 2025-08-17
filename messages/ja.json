@@ -241,7 +241,7 @@
         "statement": "設問",
         "rating": "評価",
         "strongly-agree": "強くそう思う",
-        "moderately-agree": "まぁまぁそう思う",
+        "moderately-agree": "まあまあそう思う",
         "slightly-agree": "少しそう思う",
         "neither": "どちらでもない",
         "slightly-disagree": "少し違うと思う",
@@ -250,13 +250,13 @@
       },
       "scale-options": {
         "select": "選択してください",
-        "strongly-agree": "1: 強くそう思う",
-        "moderately-agree": "2: まぁまぁそう思う",
-        "slightly-agree": "3: 少しそう思う",
+        "strongly-agree": "7: 強くそう思う",
+        "moderately-agree": "6: まあまあそう思う",
+        "slightly-agree": "5: 少しそう思う",
         "neither": "4: どちらでもない",
-        "slightly-disagree": "5: 少し違うと思う",
-        "moderately-disagree": "6: おおよそ違うと思う",
-        "strongly-disagree": "7: 全く違うと思う"
+        "slightly-disagree": "3: 少し違うと思う",
+        "moderately-disagree": "2: おおよそ違うと思う",
+        "strongly-disagree": "1: 全く違うと思う"
       },
       "statements": {
         "1": "1: 活発，外向的だと思う．",
@@ -377,7 +377,7 @@
       "first": "次の感情をどれくらい強く感じましたか？",
       "second": "この{genre}が表現していた感情ではなく，",
       "third": "この{genre}を見た際にあなた自身が感じた感情に基づいて答えてください",
-      "expansion": "1点: 全く感じなかった, 2点: あまり感じなかった, 3点: どちらともいえない, 4点: やや感じた, 5点: とても感じた",
+      "expansion": "「1点: 全く感じなかった」〜「5点: とても感じた」",
       "overall": "総合的に，この{genre}をどれくらい美的だと感じましたか?",
       "overall-expansion": "1点: 全く美的でない, 2点: 美的でない, 3点: あまり美的でない, 4点: どちらともいえない, 5点: やや美的, 6点: 美的, 7点: とても美的"
     },

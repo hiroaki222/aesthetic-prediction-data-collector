@@ -11,7 +11,7 @@ export default function AgreementPage() {
   useEffect(() => {
     const agreed = document.cookie.includes('agreementAgreed=true')
     if (agreed) {
-      router.replace('/')
+      router.replace('/signup')
     } else {
       setAllowed(true)
     }

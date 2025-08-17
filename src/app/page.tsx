@@ -28,7 +28,7 @@ export default function HomePage() {
                 <a href="/signin">{t('sign-in')}</a>
               </Button>
               <Button asChild variant="outline" className="w-full bg-transparent">
-                <a href="/signup">{t('sign-up')}</a>
+                <a href="/research-guide?fromHome=true">{t('sign-up')}</a>
               </Button>
             </CardContent>
           </Card>

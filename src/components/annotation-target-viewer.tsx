@@ -31,7 +31,7 @@ export default function AnnotationTargetViewer({ url, setIsExpanded, isMobile, d
         video.removeEventListener('loadeddata', playVideo);
       };
     }
-  }, [dataType]);
+  }, [dataType, isFullScreen]);
 
   if (dataType === 'video') isMobile = true;
   return (

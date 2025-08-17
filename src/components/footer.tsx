@@ -12,6 +12,9 @@ export function Footer() {
             {t('copyright', { year: currentYear })}
           </p>
           <div className="flex items-center gap-4">
+            <a href="/research-guide" target="_blank" className="text-xs text-muted-foreground hover:text-foreground">
+              {t('links.research-guide')}
+            </a>
             <a href="/contact" target="_blank" className="text-xs text-muted-foreground hover:text-foreground">
               {t('links.contact')}
             </a>

@@ -63,7 +63,6 @@ export function AgreementForm({ onAgree }: { onAgree: () => void }) {
     },
   ])
   const [showError, setShowError] = useState(false)
-  // 署名欄の状態
   const [signature, setSignature] = useState("")
 
   const handleCheckboxChange = (sectionIndex: number, itemIndex: number) => {
@@ -83,7 +82,6 @@ export function AgreementForm({ onAgree }: { onAgree: () => void }) {
   }
 
   const allItemsChecked = sections.every((section) => section.items.every((item) => item.checked))
-  // フォームが有効か（全項目チェック済みかつ署名入力済み）
   const isFormValid = allItemsChecked && signature.trim() !== ""
   const totalItems = sections.reduce((acc, section) => acc + section.items.length, 0)
   const checkedItems = sections.reduce((acc, section) => acc + section.items.filter((item) => item.checked).length, 0)

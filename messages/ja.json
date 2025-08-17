@@ -542,7 +542,8 @@
           "email": "hasegawa@jaist.ac.jp"
         },
         "developer": {
-          "description": "問い合わせページよりご連絡ください．",
+          "title": "アプリケーションに関するお問い合わせ・バグ等の問題の報告先",
+          "description": "問い合わせフォームよりご連絡ください．",
           "button": "問い合わフォーム"
         }
       }

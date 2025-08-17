@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Clock, Users, Shield, Phone, Mail, AlertTriangle, FilePenLine } from "lucide-react"
 import { Footer } from "@/components/footer"
 import Link from "next/link"
-import { useState, useEffect } from "react"
+import { useState, useEffect, Suspense } from "react"
 import { useSearchParams } from 'next/navigation'
 import { createClient } from "@/utils/supabase/client"
 import type { Session } from "@supabase/supabase-js"
@@ -235,7 +235,9 @@ export default function ResearchGuidePage() {
         </Card>
 
         <div className="w-full flex justify-center items-center">
-          <AgreementButton />
+          <Suspense fallback={null}>
+            <AgreementButton />
+          </Suspense>
         </div>
       </div>
 

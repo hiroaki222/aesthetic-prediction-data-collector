@@ -29,6 +29,14 @@ export async function updateSession(request: NextRequest) {
     }
   );
 
+  if (request.nextUrl.pathname === "/signup") {
+    const agreementCookie = request.cookies.get("agreementAgreed");
+    if (!agreementCookie || agreementCookie.value !== "true") {
+      const redirectUrl = request.nextUrl.clone();
+      redirectUrl.pathname = "/agreement";
+      return NextResponse.redirect(redirectUrl);
+    }
+  }
   // Do not run code between createServerClient and
   // supabase.auth.getUser(). A simple mistake could make it very hard to debug
   // issues with users being randomly logged out.

@@ -241,7 +241,7 @@
         "statement": "設問",
         "rating": "評価",
         "strongly-agree": "強くそう思う",
-        "moderately-agree": "まぁまぁそう思う",
+        "moderately-agree": "まあまあそう思う",
         "slightly-agree": "少しそう思う",
         "neither": "どちらでもない",
         "slightly-disagree": "少し違うと思う",
@@ -251,7 +251,7 @@
       "scale-options": {
         "select": "選択してください",
         "strongly-agree": "1: 強くそう思う",
-        "moderately-agree": "2: まぁまぁそう思う",
+        "moderately-agree": "2: まあまあそう思う",
         "slightly-agree": "3: 少しそう思う",
         "neither": "4: どちらでもない",
         "slightly-disagree": "5: 少し違うと思う",

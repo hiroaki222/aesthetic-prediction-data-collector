@@ -4,6 +4,7 @@ export interface ProfileData {
   age: number;
   gender: string;
   edu: string;
+  nationality: string;
   experience: ExperienceData;
   titpj: Record<string, unknown>;
 }

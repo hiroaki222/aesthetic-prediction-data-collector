@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { ProfileData } from "@/types/profile"
+import { CountryDropdown } from "@/components/ui/country-dropdown";
 
 import {
   Table,
@@ -158,6 +159,16 @@ export function ProfileSetupContent({ handleStepComplete, updateProfileData, pro
             />
           </div>
         )}
+      </div>
+      <div className="grid gap-2">
+        <Label htmlFor="nationality">{t('placeholders.nationality')}</Label>
+        <CountryDropdown
+          placeholder={t('placeholders.placeholder-nationality')}
+          defaultValue={profileData?.nationality || ''}
+          onChange={(country) => {
+            updateProfileData({ nationality: country.alpha3 });
+          }}
+        />
       </div>
     </form>
   )

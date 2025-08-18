@@ -170,7 +170,9 @@
         "name": "名前を入力してください",
         "age": "年齢を入力してください",
         "gender-other": "性別を入力してください",
-        "education-other": "学歴を入力してください"
+        "education-other": "学歴を入力してください",
+        "nationality": "国籍を入力してください",
+        "placeholder-nationality": "国籍を選択"
       },
       "gender-options": {
         "select": "性別を選択",

@@ -30,6 +30,7 @@ function GetStartedPageContent() {
     age: 0,
     gender: '',
     edu: '',
+    nationality: '',
     experience: {
       art: { learn: { learnedAt: '', year: -1, month: -1 }, job: undefined, interest: -1 },
       fashion: { learn: { learnedAt: '', year: -1, month: -1 }, job: undefined, interest: -1 },
@@ -51,6 +52,7 @@ function GetStartedPageContent() {
       age: 0,
       gender: '',
       edu: '',
+      nationality: '',
       experience: {
         art: { learn: { learnedAt: '', year: -1, month: -1 }, job: undefined, interest: -1 },
         fashion: { learn: { learnedAt: '', year: -1, month: -1 }, job: undefined, interest: -1 },

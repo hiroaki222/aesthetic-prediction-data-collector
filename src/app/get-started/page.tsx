@@ -150,6 +150,21 @@ function GetStartedPageContent() {
     )
   }
 
+  const isProfileSetupComplete = () => {
+    if (!profileData) return false
+    const { age, gender, edu, nationality } = profileData
+    if (!age || age <= 0) return false
+    if (!gender) return false
+    if (!edu) return false
+    if (!nationality) return false
+    return true
+  }
+
+  const isExperienceSetupComplete = () => {
+    if (!profileData?.experience) return false
+    return Object.values(profileData.experience).every(exp => typeof exp.interest === 'number' && exp.interest >= 0)
+  }
+
   const steps = [
     {
       id: 1,
@@ -227,7 +242,11 @@ function GetStartedPageContent() {
         isFirst={currentStep === 1}
         isLast={currentStep === steps.length}
         isFinishDisabled={isCompleting || isProfileDataUnchanged() || (currentStep === steps.length && !isTIPIJComplete())}
-        isNextDisabled={currentStep === 1 && !isSignedIn}
+        isNextDisabled={
+          (currentStep === 1 && !isSignedIn) ||
+          (currentStep === 2 && !isProfileSetupComplete()) ||
+          (currentStep === 3 && !isExperienceSetupComplete())
+        }
       />
     </div>
   )

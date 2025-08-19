@@ -96,7 +96,7 @@ export function SigninForm({
             </form>
             <div className="text-center text-sm">
               {t('sign-up.text')}{" "}
-              <a href="/signup" className="underline underline-offset-4">
+              <a href="/research-guide?fromHome=true" className="underline underline-offset-4">
                 {t('sign-up.link')}
               </a>
             </div>

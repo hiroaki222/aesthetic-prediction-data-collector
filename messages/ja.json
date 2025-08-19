@@ -164,7 +164,7 @@
         "name": "名前",
         "age": "年齢",
         "gender": "性別",
-        "education": "学歴"
+        "education": "最終学歴"
       },
       "placeholders": {
         "name": "名前を入力してください",

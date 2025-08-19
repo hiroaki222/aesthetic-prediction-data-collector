@@ -136,7 +136,7 @@
     "title": "アカウントを作成",
     "labels": {
       "email": "メールアドレス",
-      "is-jaist-student": "JAISTの学生ですか？",
+      "is-jaist-student": "JAISTアドレスをお持ちですか?",
       "password": "パスワード",
       "confirm-password": "パスワードの再入力"
     },

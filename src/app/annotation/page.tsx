@@ -120,6 +120,23 @@ function AnnotationContent() {
     }
   }, [step, startTime, annotationResult])
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (isExpanded && e.key === 'Enter') {
+        e.preventDefault();
+        e.stopPropagation();
+        setIsExpanded(false);
+      }
+    };
+
+    if (isExpanded) {
+      document.addEventListener('keydown', handleKeyDown, true);
+      return () => {
+        document.removeEventListener('keydown', handleKeyDown, true);
+      };
+    }
+  }, [isExpanded]);
+
   return (
     <>
       {
@@ -156,6 +173,11 @@ function AnnotationContent() {
                 onClick={() => { if (dataType.current !== 'video') setIsExpanded(false); }}
                 onKeyDown={(e) => {
                   if (e.key === 'Escape') {
+                    setIsExpanded(false);
+                  }
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    e.stopPropagation();
                     setIsExpanded(false);
                   }
                 }}

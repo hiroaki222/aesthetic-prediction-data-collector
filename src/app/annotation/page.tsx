@@ -125,6 +125,7 @@ function AnnotationContent() {
       if (isExpanded && e.key === 'Enter') {
         e.preventDefault();
         e.stopPropagation();
+        setIsExpanded(false);
       }
     };
 
@@ -177,6 +178,7 @@ function AnnotationContent() {
                   if (e.key === 'Enter') {
                     e.preventDefault();
                     e.stopPropagation();
+                    setIsExpanded(false);
                   }
                 }}
                 tabIndex={-1}

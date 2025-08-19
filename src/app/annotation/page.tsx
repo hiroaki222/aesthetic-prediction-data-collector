@@ -120,6 +120,22 @@ function AnnotationContent() {
     }
   }, [step, startTime, annotationResult])
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (isExpanded && e.key === 'Enter') {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    };
+
+    if (isExpanded) {
+      document.addEventListener('keydown', handleKeyDown, true);
+      return () => {
+        document.removeEventListener('keydown', handleKeyDown, true);
+      };
+    }
+  }, [isExpanded]);
+
   return (
     <>
       {
@@ -157,6 +173,10 @@ function AnnotationContent() {
                 onKeyDown={(e) => {
                   if (e.key === 'Escape') {
                     setIsExpanded(false);
+                  }
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    e.stopPropagation();
                   }
                 }}
                 tabIndex={-1}

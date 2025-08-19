@@ -1,5 +1,4 @@
-//import { ChevronLeft, ChevronRight } from "lucide-react";
-import { ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { FinishConfirmationDialog } from "./finish-confirmation-dialog";
 import { useTranslations } from "next-intl";
@@ -26,13 +25,13 @@ export default function AnnotationControl({
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
   const t = useTranslations('annotation-control');
 
-  /* const onClickPrev = () => {
+  const onClickPrev = () => {
     if (step > 1) {
       if (!annotationTargets || !annotationResult || !uuid) return;
       saveAnnotation(annotationTargets.task_id, annotationResult, annotationTargets, step, uuid);
       setStep(step - 1)
     }
-  } */
+  }
   const onClickNext = () => {
     if (step < range) {
       if (!annotationTargets || !annotationResult || !uuid) return;
@@ -55,13 +54,13 @@ export default function AnnotationControl({
     }
   }
 
-  /* const isPrevDisabled = step <= 1 */
+  const isPrevDisabled = step <= 1
   const isLastStep = step >= range
 
   return (
     <>
       <div className="flex items-center justify-between w-full py-5">
-        {/* <button
+        <button
           className={`p-2 md:px-40 mx-10 rounded-full transition-colors ${isPrevDisabled
             ? 'bg-gray-100 cursor-not-allowed'
             : 'bg-gray-300 hover:bg-gray-200'
@@ -70,7 +69,7 @@ export default function AnnotationControl({
           disabled={isPrevDisabled}
         >
           <ChevronLeft className={`size-8 ${isPrevDisabled ? 'text-gray-400' : 'text-gray-700'}`} />
-        </button> */}
+        </button>
         <div className="flex-1"></div>
         {isLastStep ? (
           <button

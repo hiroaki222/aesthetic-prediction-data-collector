@@ -11,7 +11,7 @@ export default function SignupPage() {
   useEffect(() => {
     const agreed = document.cookie.includes('agreementAgreed=true')
     if (!agreed) {
-      router.replace('/research-guide')
+      router.replace("/research-guide?fromHome=true")
     } else {
       setAllowed(true)
     }

@@ -136,7 +136,7 @@
     "title": "アカウントを作成",
     "labels": {
       "email": "メールアドレス",
-      "is-jaist-student": "JAISTの学生ですか？",
+      "is-jaist-student": "JAISTアドレスをお持ちですか?",
       "password": "パスワード",
       "confirm-password": "パスワードの再入力"
     },
@@ -164,7 +164,7 @@
         "name": "名前",
         "age": "年齢",
         "gender": "性別",
-        "education": "学歴"
+        "education": "最終学歴"
       },
       "placeholders": {
         "name": "名前を入力してください",

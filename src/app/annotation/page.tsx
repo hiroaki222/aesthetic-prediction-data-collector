@@ -117,6 +117,8 @@ function AnnotationContent() {
       }
       setStartTime(performance.now() / 1000);
       prevStepRef.current = step;
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }, [step, startTime, annotationResult])
 

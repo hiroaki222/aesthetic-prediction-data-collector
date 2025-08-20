@@ -15,10 +15,17 @@ import { useRouter } from "next/navigation";
 
 function AgreementButton() {
   const [session, setSession] = useState<Session | null>(null)
+  const [fromHome, setFromHome] = useState<boolean>(false)
   const supabase = createClient()
   const t = useTranslations('research-guide');
   const searchParams = useSearchParams()
-  const fromHome = searchParams.get('fromHome') === 'true'
+
+  useEffect(() => {
+    const formData = searchParams.get('fromHome')
+    setFromHome(formData === 'true')
+    const agreed = document.cookie.includes('agreementAgreed=true')
+    if (agreed) { setFromHome(false) }
+  }, [searchParams])
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => setSession(session))
   }, [supabase])

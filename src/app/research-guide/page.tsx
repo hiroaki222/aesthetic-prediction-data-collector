@@ -31,8 +31,20 @@ function AgreementButton() {
   )
 }
 
+
 export default function ResearchGuidePage() {
+  const [isJaistStudent, setIsJaistStudent] = useState<boolean>(false);
   const t = useTranslations('research-guide');
+
+  useEffect(() => {
+    (async () => {
+      const supabase = await createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user?.['email'] && user?.['email'].endsWith('@jaist.ac.jp')) {
+        setIsJaistStudent(true);
+      }
+    })()
+  }, [])
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <div className="border-b">
@@ -179,10 +191,22 @@ export default function ResearchGuidePage() {
             {t('sections.alertNote')}
           </AlertDescription>
         </Alert>
+        {isJaistStudent ? (
+
+          <Card className="mb-8">
+            <CardHeader>
+              <CardTitle className="text-2xl text-blue-600">{t('for-jaist.title')}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="leading-relaxed">{t('for-jaist.paragraph1')}</p>
+              <p className="leading-relaxed">{t('for-jaist.paragraph2')}</p>
+            </CardContent>
+          </Card>
+        ) : null}
 
         <Card className="mb-8">
           <CardHeader>
-            <CardTitle className="text-2xl text-blue-600">本件に関する問い合わせ先</CardTitle>
+            <CardTitle className="text-2xl text-blue-600">{t('sections.contacts.title')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid md:grid-cols-2 gap-6">

@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
-import { Clock, Users, Shield, Phone, Mail, AlertTriangle, FilePenLine, MessageCircleWarning } from "lucide-react"
+import { Clock, Users, Shield, Phone, Mail, AlertTriangle, FilePenLine, MessageCircleWarning, ArrowLeft } from "lucide-react"
 import { Footer } from "@/components/footer"
 import Link from "next/link"
 import { useState, useEffect, Suspense } from "react"
@@ -11,6 +11,7 @@ import { useSearchParams } from 'next/navigation'
 import { createClient } from "@/utils/supabase/client"
 import type { Session } from "@supabase/supabase-js"
 import { useTranslations } from 'next-intl';
+import { useRouter } from "next/navigation";
 
 function AgreementButton() {
   const [session, setSession] = useState<Session | null>(null)
@@ -36,6 +37,8 @@ export default function ResearchGuidePage() {
   const [isJaistStudent, setIsJaistStudent] = useState<boolean>(false);
   const t = useTranslations('research-guide');
 
+  const router = useRouter();
+
   useEffect(() => {
     (async () => {
       const supabase = await createClient();
@@ -56,6 +59,11 @@ export default function ResearchGuidePage() {
               </div>
               {t('appTitle')}
             </div>
+            <Button
+              onClick={() => { router.push('/'); }}>
+              <ArrowLeft />
+              <a>{t('backHome')}</a>
+            </Button>
           </div>
         </div>
       </div>

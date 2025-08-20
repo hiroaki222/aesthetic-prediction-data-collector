@@ -96,6 +96,7 @@ export default function ResearchGuidePage() {
             <div className="space-y-4">
               <p className="leading-relaxed">{t('sections.method.paragraph1')}</p>
               <p className="leading-relaxed">{t('sections.method.paragraph2')}</p>
+              <p className="leading-relaxed">{t('sections.method.paragraph3')}</p>
             </div>
 
             <div className="bg-blue-50 p-6 rounded-lg border border-blue-200">

@@ -1,53 +1,26 @@
-"use client";
+'use client'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
-import { Clock, Users, Shield, Phone, Mail, AlertTriangle, FilePenLine, MessageCircleWarning, ArrowLeft } from "lucide-react"
+import { Clock, Users, Shield, Phone, Mail, AlertTriangle, FilePenLine, MessageCircleWarning } from "lucide-react"
 import { Footer } from "@/components/footer"
 import Link from "next/link"
-import { useState, useEffect, Suspense } from "react"
-import { useSearchParams } from 'next/navigation'
-import { createClient } from "@/utils/supabase/client"
-import type { Session } from "@supabase/supabase-js"
 import { useTranslations } from 'next-intl';
-import { useRouter } from "next/navigation";
-
-function AgreementButton() {
-  const [session, setSession] = useState<Session | null>(null)
-  const supabase = createClient()
-  const t = useTranslations('research-guide');
-  const searchParams = useSearchParams()
-  const fromHome = searchParams.get('fromHome') === 'true'
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => setSession(session))
-  }, [supabase])
-  if (session || !fromHome) return null
-  return (
-    <Button size="lg" asChild className="w-full">
-      <Link href="/agreement">
-        {t('agreementButton')}
-      </Link>
-    </Button>
-  )
-}
-
+import { useRouter } from "next/navigation"
+import { useEffect } from "react"
 
 export default function ResearchGuidePage() {
-  const [isJaistStudent, setIsJaistStudent] = useState<boolean>(false);
-  const t = useTranslations('research-guide');
-
-  const router = useRouter();
+  const router = useRouter()
 
   useEffect(() => {
-    (async () => {
-      const supabase = await createClient();
-      const { data: { user } } = await supabase.auth.getUser();
-      if (user?.['email'] && user?.['email'].endsWith('@jaist.ac.jp')) {
-        setIsJaistStudent(true);
-      }
-    })()
-  }, [])
+    const agreed = document.cookie.includes('agreementAgreed=true')
+    if (agreed) {
+      router.replace('/research-guide')
+    }
+  }, [router])
+
+  const t = useTranslations('research-guide');
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <div className="border-b">
@@ -59,11 +32,6 @@ export default function ResearchGuidePage() {
               </div>
               {t('appTitle')}
             </div>
-            <Button
-              onClick={() => { router.push('/'); }}>
-              <ArrowLeft />
-              <a>{t('backHome')}</a>
-            </Button>
           </div>
         </div>
       </div>
@@ -199,18 +167,16 @@ export default function ResearchGuidePage() {
             {t('sections.alertNote')}
           </AlertDescription>
         </Alert>
-        {isJaistStudent ? (
 
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle className="text-2xl text-blue-600">{t('for-jaist.title')}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="leading-relaxed">{t('for-jaist.paragraph1')}</p>
-              <p className="leading-relaxed">{t('for-jaist.paragraph2')}</p>
-            </CardContent>
-          </Card>
-        ) : null}
+        <Card className="mb-8">
+          <CardHeader>
+            <CardTitle className="text-2xl text-blue-600">{t('for-jaist.title')}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="leading-relaxed">{t('for-jaist.paragraph1')}</p>
+            <p className="leading-relaxed">{t('for-jaist.paragraph2')}</p>
+          </CardContent>
+        </Card>
 
         <Card className="mb-8">
           <CardHeader>
@@ -284,9 +250,11 @@ export default function ResearchGuidePage() {
         </Card>
 
         <div className="w-full flex justify-center items-center">
-          <Suspense fallback={null}>
-            <AgreementButton />
-          </Suspense>
+          <Button size="lg" asChild className="w-full">
+            <Link href="/agreement">
+              {t('agreementButton')}
+            </Link>
+          </Button>
         </div>
       </div>
 

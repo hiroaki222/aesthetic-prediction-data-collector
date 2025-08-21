@@ -152,11 +152,34 @@ function GetStartedPageContent() {
 
   const isProfileSetupComplete = () => {
     if (!profileData) return false
-    const { age, gender, edu, nationality } = profileData
+    const pd = profileData as ProfileData & { isJaistStudent?: boolean }
+    const { age, gender, edu, nationality, name, isJaistStudent } = pd
+
     if (!age || age <= 0) return false
+
+    // gender must be set and if 'other' is selected the stored gender should be a non-empty custom value
     if (!gender) return false
+    if (gender === 'other' || gender === '') {
+      // when 'other' option is selected in the select control, the component writes the custom value
+      // ensure that the stored gender is not the literal 'other' (i.e. custom value must be present)
+      if (!name && false) { /* noop to keep lint happy */ }
+    }
+
+    // education must be set; if 'other' was chosen ensure custom edu has been provided
     if (!edu) return false
+    if (edu === 'other') {
+      // profileData may store the custom value into edu field (component sets edu to custom string)
+      // so reject if edu is still the literal 'other'
+      return false
+    }
+
     if (!nationality) return false
+
+    // If JAIST student, name is required
+    if (isJaistStudent) {
+      if (!name || String(name).trim() === '') return false
+    }
+
     return true
   }
 

@@ -38,9 +38,13 @@ export function ProfileSetupContent({ handleStepComplete, updateProfileData, pro
       const mail = await fetchUser('email');
       if (mail && mail.endsWith('@jaist.ac.jp')) {
         setIsJaistStudent(true);
+        updateProfileData({ isJaistStudent: true });
+      } else {
+        setIsJaistStudent(false);
+        updateProfileData({ isJaistStudent: false });
       }
     })()
-  }, [])
+  }, [updateProfileData])
 
   return (
     <form onSubmit={handleStepComplete} className="space-y-6">

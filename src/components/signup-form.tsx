@@ -23,9 +23,14 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
     const formData = new FormData(event.currentTarget)
 
     if (isCheckboxChecked) {
-      const emailInput = formData.get('email') as string
-      if (emailInput && !emailInput.includes('@')) {
-        formData.set('email', `${emailInput}@jaist.ac.jp`)
+      const raw = (formData.get('email') as string) || ''
+      const email = raw.trim().replace('＠', '@')
+      const atIndex = email.indexOf('@')
+
+      if (atIndex === -1 || atIndex === email.length - 1) {
+        formData.set('email', `${email}@jaist.ac.jp`)
+      } else {
+        formData.set('email', email)
       }
     }
 

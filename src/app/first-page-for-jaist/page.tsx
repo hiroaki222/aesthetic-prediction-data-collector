@@ -250,8 +250,9 @@ export default function ResearchGuidePage() {
         </Card>
 
         <div className="w-full flex items-center justify-center flex-col">
-          <p className="text-xl">現在アカウント作成に関する不具合が報告されています．修正次第開放いたします．</p>
-          <Button size="lg" className="w-full" disabled={true} onClick={() => { redirect('/agreement') }}>
+          {/* <p className="text-xl">現在アカウント作成に関する不具合が報告されています．修正次第開放いたします．</p>
+          <Button size="lg" className="w-full" disabled={true} onClick={() => { redirect('/agreement') }}> */}
+          <Button size="lg" className="w-full" onClick={() => { redirect('/agreement') }}>
             {t('agreementButton')}
           </Button>
         </div>

@@ -7,7 +7,7 @@ import { Clock, Users, Shield, Phone, Mail, AlertTriangle, FilePenLine, MessageC
 import { Footer } from "@/components/footer"
 import Link from "next/link"
 import { useTranslations } from 'next-intl';
-import { useRouter } from "next/navigation"
+import { redirect, useRouter } from "next/navigation"
 import { useEffect } from "react"
 
 export default function ResearchGuidePage() {
@@ -249,11 +249,10 @@ export default function ResearchGuidePage() {
           </CardContent>
         </Card>
 
-        <div className="w-full flex justify-center items-center">
-          <Button size="lg" asChild className="w-full">
-            <Link href="/agreement">
-              {t('agreementButton')}
-            </Link>
+        <div className="w-full flex items-center justify-center flex-col">
+          <p className="text-xl">現在アカウント作成に関する不具合が報告されています．修正次第開放いたします．</p>
+          <Button size="lg" className="w-full" disabled={true} onClick={() => { redirect('/agreement') }}>
+            {t('agreementButton')}
           </Button>
         </div>
       </div>

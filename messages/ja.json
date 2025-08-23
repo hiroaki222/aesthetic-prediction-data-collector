@@ -18,7 +18,7 @@
     },
     "sender-info": {
       "sender": "送信元名:",
-      "sender-name": "Supabase Auth",
+      "sender-name": "Takato Hayashi",
       "email-from": "送信元アドレス:",
       "email-sent-to": "送信先:"
     },
@@ -26,7 +26,7 @@
       "next-steps-title": "やること:",
       "steps": {
         "check-inbox": "メールボックスを確認",
-        "look-for-email": "Supabase Authからのメールを探す",
+        "look-for-email": "Takato Hayashiからのメールを探す",
         "click-verification-link": "メール内の確認リンクをクリック",
         "click-reset-link": "メール内のリセットリンクをクリック",
         "complete-setup": "アカウント設定を完了"

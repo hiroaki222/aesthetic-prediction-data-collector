@@ -49,7 +49,7 @@ export function EmailVerificationForm({
                 <strong>{t('sender-info.sender')} </strong>
                 <a>{t('sender-info.sender-name')}</a>
               </div>
-              <strong>{t('sender-info.email-from')}</strong> noreply@mail.app.supabase.io<br />
+              <strong>{t('sender-info.email-from')}</strong> hayashi0884@jaist.ac.jp<br />
               <strong>{t('sender-info.email-sent-to')}</strong> {email}
             </AlertDescription>
           </Alert>

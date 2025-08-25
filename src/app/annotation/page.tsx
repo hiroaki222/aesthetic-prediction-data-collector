@@ -2,7 +2,7 @@
 
 import { AnnotationHeader } from "@/components/annotation-header";
 import AnnotationTarget from "@/components/annotation-target";
-import AnnotationInput from "@/components/annotation.input";
+import AnnotationInput from "@/components/annotation-input";
 import { Card } from "@/components/ui/card";
 import { UserTasks } from "@/types/annotation";
 import { fetchAnnotation, saveAnnotation } from "@/utils/annotation";

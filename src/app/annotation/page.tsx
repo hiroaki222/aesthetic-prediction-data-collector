@@ -2,7 +2,7 @@
 
 import { AnnotationHeader } from "@/components/annotation-header";
 import AnnotationTarget from "@/components/annotation-target";
-import AnnotationInput from "@/components/annotation.input";
+import AnnotationInput from "@/components/annotation-input";
 import { Card } from "@/components/ui/card";
 import { UserTasks } from "@/types/annotation";
 import { fetchAnnotation, saveAnnotation } from "@/utils/annotation";
@@ -22,8 +22,8 @@ function AnnotationContent() {
   const [isMobile, setIsMobile] = useState(false);
   const [uuid, setUuid] = useState<string | null>(null);
   const [startTime, setStartTime] = useState<number>(performance.now() / 1000);
+  const [finishFlag, setFinishFlag] = useState<boolean[]>([false, false]);
   const prevStepRef = useRef<number>(1);
-
   const dataType = useRef<string>('');
 
   const router = useRouter();
@@ -93,9 +93,7 @@ function AnnotationContent() {
   }, [annotationTargets, annotationResult])
 
   const handleFinish = () => {
-    if (!annotationTargets || !annotationResult || !uuid) return;
-    saveAnnotation(annotationTargets.task_id, annotationResult, annotationTargets, step, uuid);
-    router.push('/dashboard');
+    setFinishFlag([true, false]);
   };
 
   useEffect(() => {
@@ -120,7 +118,26 @@ function AnnotationContent() {
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-  }, [step, startTime, annotationResult])
+    if (!annotationTargets || !annotationResult || !uuid) return;
+    if (step >= annotationTargets.data.urls.length) {
+      if (finishFlag[0]) {
+        setFinishFlag([false, true]);
+        const duration = performance.now() / 1000 - startTime;
+        setAnnotationResult(prevResult => {
+          if (prevResult) {
+            const updatedResult = [...prevResult];
+            updatedResult[prevStepRef.current - 1][10] += duration;
+            return updatedResult;
+          }
+          return prevResult;
+        });
+      }
+      if (finishFlag[1]) {
+        saveAnnotation(annotationTargets.task_id, annotationResult, annotationTargets, step, uuid);
+        router.push('/dashboard');
+      }
+    }
+  }, [step, startTime, annotationResult, finishFlag])
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {

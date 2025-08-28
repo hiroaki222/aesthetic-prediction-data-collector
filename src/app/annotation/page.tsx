@@ -10,8 +10,42 @@ import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState, Suspense, useRef } from "react"
 import AnnotationControl from "@/components/annotation-control";
 import AnnotationTargetViewer from "@/components/annotation-target-viewer";
-import { LoaderCircle, X } from "lucide-react";
+import { LoaderCircle, TriangleAlert, X } from "lucide-react";
 import { fetchUser } from "@/utils/supabase/actions";
+import { toast } from "sonner";
+
+function WarnToShortTime(duration: number) {
+  return (
+    toast((
+      <div
+        className="flex items-start whitespace-normal text-white bg-red-600 rounded-lg p-4 border-l-4 border-red-800"
+        style={{ maxWidth: 'min(90vw, 760px)' }}
+      >
+        <TriangleAlert className="mr-3 mt-1 animate-pulse" size={28} />
+        <div>
+          <p className="text-lg font-bold leading-tight">入力が非常に短時間で行われています ({duration.toFixed(2)}秒)．</p>
+          <p className="text-sm leading-snug opacity-95">提示された刺激を十分に確認してから評価してください．</p>
+        </div>
+      </div>
+    ), {
+      duration: 30000,
+      position: 'top-center',
+      style: {
+        background: 'transparent',
+        boxShadow: 'none',
+        padding: 0,
+        minWidth: '520px',
+        maxWidth: '90vw',
+        border: 'none',
+        outline: 'none',
+        overflow: 'visible',
+        WebkitBoxShadow: 'none',
+        WebkitTapHighlightColor: 'transparent',
+        backgroundClip: 'padding-box'
+      },
+    })
+  )
+}
 
 function AnnotationContent() {
   const [annotationTargets, setAnnotationTargets] = useState<UserTasks>();
@@ -114,6 +148,14 @@ function AnnotationContent() {
         });
       }
       setStartTime(performance.now() / 1000);
+      if (0.2 < duration) {
+        if (duration < 30) {
+          WarnToShortTime(duration);
+        } else if (dataType.current === 'video' && duration < 60) {
+          WarnToShortTime(duration);
+        }
+      }
+
       prevStepRef.current = step;
 
       window.scrollTo({ top: 0, behavior: 'smooth' });

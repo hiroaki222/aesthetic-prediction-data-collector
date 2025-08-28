@@ -82,9 +82,9 @@ export default function Dashboard() {
   }, [])
 
   useEffect(() => {
-    if (tabIcons[2] === 1) {
+    if (tabIcons[2] >= 1) {
       setActiveTab("not-started");
-    } else if (tabIcons[3] === 1) {
+    } else if (tabIcons[3] >= 1) {
       setActiveTab("in-progress");
     }
   }, [tabIcons])

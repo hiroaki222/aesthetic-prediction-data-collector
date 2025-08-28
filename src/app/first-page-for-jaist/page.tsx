@@ -161,13 +161,6 @@ export default function ResearchGuidePage() {
           </CardContent>
         </Card>
 
-        <Alert className="mb-8 border-yellow-200 bg-yellow-50">
-          <AlertTriangle className="h-4 w-4 text-yellow-600" />
-          <AlertDescription>
-            {t('sections.alertNote')}
-          </AlertDescription>
-        </Alert>
-
         <Card className="mb-8">
           <CardHeader>
             <CardTitle className="text-2xl text-blue-600">{t('for-jaist.title')}</CardTitle>
@@ -175,8 +168,33 @@ export default function ResearchGuidePage() {
           <CardContent>
             <p className="leading-relaxed">{t('for-jaist.paragraph1')}</p>
             <p className="leading-relaxed">{t('for-jaist.paragraph2')}</p>
+            <div className="mt-6 p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded">
+              <div className="font-bold mb-2">【アノテーションに関する注意事項】</div>
+              <p className="mb-2">
+                本実験では，動画・アート作品画像・ファッション画像といった多様な刺激に対して，美的感情や総合的な評価をお願いしています．
+              </p>
+              <p className="mb-2">
+                とくに動画刺激については 1サンプルあたり約1分の長さがあり，実際に視聴していただくことを前提として謝金を算出しております．
+              </p>
+              <p className="mb-2">
+                短時間で十分に確認せずに評価を行うことは，研究の信頼性を損なうだけでなく，真剣に取り組んでいただいている他の参加者のご協力に対しても不公平となります．
+              </p>
+              <p className="mb-2">
+                また，アート作品やファッション画像に関しても，提示された刺激を丁寧に確認し，ご自身の感覚に基づいて誠実に判断していただきますようお願いいたします．
+              </p>
+              <p>
+                不適切なアノテーションが確認された場合には，該当部分の再アノテーションをお願いする可能性があります．研究の趣旨をご理解いただき，誠実なご協力を改めてお願い申し上げます．
+              </p>
+            </div>
           </CardContent>
         </Card>
+
+        <Alert className="mb-8 border-yellow-200 bg-yellow-50">
+          <AlertTriangle className="h-4 w-4 text-yellow-600" />
+          <AlertDescription>
+            {t('sections.alertNote')}
+          </AlertDescription>
+        </Alert>
 
         <Card className="mb-8">
           <CardHeader>

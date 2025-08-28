@@ -9,14 +9,22 @@ import {
   ArrowDownRight,
   Clock,
 } from "lucide-react"
+import { getCumulativeUserComparison } from "@/utils/admin"
+import { useEffect, useState } from "react"
 
 export function AdminDashboard() {
+  const [yesterdayData, setYesterdayData] = useState<{ change: string; upDown: "up" | "down"; todayCount: number }>({ change: "0", upDown: "down", todayCount: 0 })
+
+  useEffect(() => {
+    getCumulativeUserComparison().then(data => setYesterdayData(data))
+  }, [])
+
   const stats = [
     {
       title: "総ユーザー数",
-      value: "1,234",
-      change: "+12%",
-      trend: "up",
+      value: yesterdayData?.todayCount + '人' || 0,
+      change: yesterdayData?.change + '%' || "0%",
+      trend: yesterdayData?.upDown || "up",
       icon: Users,
       color: "text-blue-600",
     }, {
@@ -91,7 +99,7 @@ export function AdminDashboard() {
                   <ArrowDownRight className="h-3 w-3 text-red-600 mr-1" />
                 )}
                 <span className={stat.trend === "up" ? "text-green-600" : "text-red-600"}>{stat.change}</span>
-                <span className="ml-1">前日比</span>
+                <span className="ml-1">先週比</span>
               </div>
             </CardContent>
           </Card>

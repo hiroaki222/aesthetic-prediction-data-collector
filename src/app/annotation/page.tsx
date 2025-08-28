@@ -130,6 +130,12 @@ function AnnotationContent() {
     setFinishFlag([true, false]);
   };
 
+  const handleClose = () => {
+    if (!annotationTargets || !annotationResult || !uuid) return;
+    saveAnnotation(annotationTargets.task_id, annotationResult, annotationTargets, step, uuid);
+    router.push('/dashboard');
+  }
+
   useEffect(() => {
     setIsExpanded(isMobile ? false : true);
   }, [annotationTargets, step, isMobile]);
@@ -203,7 +209,7 @@ function AnnotationContent() {
       {
         annotationTargets ? (
           <div className="min-h-screen bg-background flex flex-col">
-            <AnnotationHeader currentStep={step} totalSteps={Object.keys(annotationTargets.data.urls).length} taskName={annotationTargets.data.title} handleFinish={handleFinish} />
+            <AnnotationHeader currentStep={step} totalSteps={Object.keys(annotationTargets.data.urls).length} taskName={annotationTargets.data.title} handleClose={handleClose} />
             <Card className="flex-1 mx-5 mt-5 flex flex-col md:flex-row items-start justify-center p-5">
               <AnnotationTarget
                 url={url}

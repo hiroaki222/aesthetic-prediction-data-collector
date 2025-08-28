@@ -200,12 +200,6 @@ export default function ResearchGuidePage() {
           </CardContent>
         </Card>
 
-        <Alert className="mb-8 border-yellow-200 bg-yellow-50">
-          <AlertTriangle className="h-4 w-4 text-yellow-600" />
-          <AlertDescription>
-            {t('sections.alertNote')}
-          </AlertDescription>
-        </Alert>
         {isJaistStudent ? (
 
           <Card className="mb-8">
@@ -218,6 +212,13 @@ export default function ResearchGuidePage() {
             </CardContent>
           </Card>
         ) : null}
+
+        <Alert className="mb-8 border-yellow-200 bg-yellow-50">
+          <AlertTriangle className="h-4 w-4 text-yellow-600" />
+          <AlertDescription>
+            {t('sections.alertNote')}
+          </AlertDescription>
+        </Alert>
 
         <Card className="mb-8">
           <CardHeader>

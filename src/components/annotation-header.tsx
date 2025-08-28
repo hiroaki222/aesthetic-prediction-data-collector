@@ -9,10 +9,10 @@ interface AnnotationHeaderProps {
   currentStep: number
   totalSteps: number
   taskName: string
-  handleFinish: () => void;
+  handleClose: () => void;
 }
 
-export function AnnotationHeader({ currentStep, totalSteps, taskName, handleFinish }: AnnotationHeaderProps) {
+export function AnnotationHeader({ currentStep, totalSteps, taskName, handleClose }: AnnotationHeaderProps) {
   const t = useTranslations('annotation-header')
   const progress = (currentStep / totalSteps) * 100
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
@@ -22,7 +22,7 @@ export function AnnotationHeader({ currentStep, totalSteps, taskName, handleFini
   }
 
   const handleConfirmFinish = () => {
-    handleFinish()
+    handleClose()
   }
 
 

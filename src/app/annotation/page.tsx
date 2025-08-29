@@ -23,12 +23,12 @@ function WarnToShortTime(duration: number) {
       >
         <TriangleAlert className="mr-3 mt-1 animate-pulse" size={28} />
         <div>
-          <p className="text-lg font-bold leading-tight">入力が非常に短時間で行われています ({duration.toFixed(2)}秒)．</p>
+          <p className="text-lg font-bold leading-tight">入力が非常に短時間で行われました ({duration.toFixed(2)}秒)．</p>
           <p className="text-sm leading-snug opacity-95">提示された刺激を十分に確認してから評価してください．</p>
         </div>
       </div>
     ), {
-      duration: 30000,
+      duration: 20000,
       position: 'top-center',
       style: {
         background: 'transparent',
@@ -155,7 +155,7 @@ function AnnotationContent() {
       }
       setStartTime(performance.now() / 1000);
       if (0.2 < duration) {
-        if (duration < 30) {
+        if (duration < 25) {
           WarnToShortTime(duration);
         } else if (dataType.current === 'video' && duration < 60) {
           WarnToShortTime(duration);

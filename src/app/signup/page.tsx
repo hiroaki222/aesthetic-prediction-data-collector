@@ -9,6 +9,7 @@ export default function SignupPage() {
   const [allowed, setAllowed] = useState(false)
 
   useEffect(() => {
+    router.replace('/recruitment-closed')
     const agreed = document.cookie.includes('agreementAgreed=true')
     if (!agreed) {
       router.replace("/research-guide?fromHome=true")

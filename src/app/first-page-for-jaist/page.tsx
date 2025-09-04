@@ -14,7 +14,7 @@ export default function ResearchGuidePage() {
   const router = useRouter()
 
   useEffect(() => {
-    router.replace('/recruitment-closed')
+    //router.replace('/recruitment-closed')
     const agreed = document.cookie.includes('agreementAgreed=true')
     if (agreed) {
       router.replace('/research-guide')
